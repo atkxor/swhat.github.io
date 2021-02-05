@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset = "utf-8">
+<title>网页</title>
+<style>
+html{
+ perspective:800px;
+}
+.cube{
+ width: 200px;
+ height: 200px;
+ margin: 100px auto;
+ transform-style: preserve-3d;
+ animation: rotate 20s infinite linear;
+}
+.cube>div {
+ width: 200px;
+ height: 200px; 
+ opacity: 0.7;
+ position: absolute;
+}
+img{
+ width: 200px;
+ height: 200px; 
+ vertical-align: top;
+}
+.box1{
+ transform: rotateY(90deg) translateZ(100px);
+}
+.box2{
+ transform: rotateY(-90deg) translateZ(100px);
+}
+.box3{
+ transform: rotateX(90deg) translateZ(100px);
+}
+.box4{
+ transform: rotateX(-90deg) translateZ(100px);
+}
+.box5{
+ transform:  rotateY(180deg) translateZ(100px);
+}
+.box6{
+ transform: rotateY(0deg) translateZ(100px);
+}
+ @keyframes rotate{
+ from{
+ transform: rotateX(0) rotateZ(0);
+}
+ to{
+ transform: rotateX(1turn) rotateZ(1turn);
+}
+}
+</style>
+</head>
+<body>
+<audio  controls="controls" autoplay="autoplay" >
+<source src="0.mp3" />
+</audio>
+<div class="cube">
+<div class="box1">
+<img src="1.jpg">
+</div>
+<div class="box2">
+<img src="2.jpg">
+</div>
+<div class="box3">
+<img src="3.jpg">
+</div>
+<div class="box4">
+<img src="4.jpg">
+</div>
+<div class="box5">
+<img src="5.jpg">
+</div>
+<div class="box6">
+<img src="6.jpg">
+</div>
+</div>
+</body>
+</html>
