@@ -6,17 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://atkx.gitee.io">
-  <title>Archives: 2020/10 | Atkx&#39; blog</title>
+  <title>USB流量分析 | Atkx&#39; blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Atkx&#39; blog">
-<meta property="og:url" content="https://atkx.gitee.io/archives/2020/10/index.html">
+  <meta name="description" content="摘要：USB流量分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USB流量分析">
+<meta property="og:url" content="https://atkx.gitee.io/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Atkx&#39; blog">
+<meta property="og:description" content="摘要：USB流量分析">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405124259780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405124552237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405125011771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405115902138.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404201547272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021040418495794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404185033903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404185301518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405115616535.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405120456614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-04-12T04:58:33.024Z">
+<meta property="article:modified_time" content="2021-04-12T05:02:32.463Z">
 <meta property="article:author" content="Atkx">
+<meta property="article:tag" content="流量分析">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210405124259780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="Atkx&#39; blog" type="application/atom+xml">
   
@@ -191,200 +207,291 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-USB流量分析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/" class="archive-article-date">
-        <time datetime="2020-10-24T15:55:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-24</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/" target="_blank">CTFHub-Web-信息泄露练习</a>
   
+    <h1 class="article-title" itemprop="name">
+      USB流量分析
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+<a href="/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" class="archive-article-date">
+        <time datetime="2021-04-12T04:58:33.024Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-12</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">3.5k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">20分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>摘要：USB流量分析</p>
+ <a id="more"></a>
+
+<h2 id="鼠标流量"><a href="#鼠标流量" class="headerlink" title="鼠标流量"></a>鼠标流量</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>USB协议鼠标数据部分在Leftover Capture Data域中，数据长度为四个字节</p>
+<p>第一个字节,代表按键</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">当取0×00时,代表没有按键</span><br><span class="line">当取0×01时,代表按左键</span><br><span class="line">当取0×02时,代表当前按键为右键</span><br></pre></td></tr></table></figure>
+<p>第二个字节,可看作为signed byte类型，其最高位为符号位，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当值为正时，代表鼠标右移像素位；</span><br><span class="line">值为负时，代表鼠标左移像素位。</span><br></pre></td></tr></table></figure>
+<p>第三个字节,代表垂直上下移动的偏移。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当值为正时，代表鼠标上移像素位；</span><br><span class="line">值为负时，代表鼠标下移像素位。</span><br></pre></td></tr></table></figure>
+<h3 id="实战练习"><a href="#实战练习" class="headerlink" title="实战练习"></a>实战练习</h3><p>flag隐藏在usb流量中，通过USB协议数据中的鼠标移动轨迹转换成flag</p>
+<p>方法1：<br>使用<a target="_blank" rel="noopener" href="https://github.com/WangYihang/UsbMiceDataHacker">UsbMiceDataHacker.py</a>脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 UsbMiceDataHacker.py usb2.pcap RIGHT</span><br></pre></td></tr></table></figure>
+<p>得到<br><img src="https://img-blog.csdnimg.cn/20210405124259780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>方法2：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45555226/article/details/102810474">https://blog.csdn.net/qq_45555226/article/details/102810474</a><br>提取鼠标流量数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r usb2.pcap -T fields -e usb.capdata &gt; usbdata.txt</span><br></pre></td></tr></table></figure>
+<p>查看usbdata.txt<br><img src="https://img-blog.csdnimg.cn/20210405124552237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>没有冒号，使用脚本添加冒号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">&#x27;usbdata.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="keyword">fi</span>=open(<span class="string">&#x27;out.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">while</span> 1:</span><br><span class="line">    a=f.readline().strip()</span><br><span class="line">    <span class="keyword">if</span> a:</span><br><span class="line">        <span class="keyword">if</span> len(a)==8: <span class="comment"># 键盘流量len=16，鼠标流量len=8</span></span><br><span class="line">            out=<span class="string">&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(0,len(a),2):</span><br><span class="line">                <span class="keyword">if</span> i+2 != len(a):</span><br><span class="line">                    out+=a[i]+a[i+1]+<span class="string">&quot;:&quot;</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    out+=a[i]+a[i+1]</span><br><span class="line">            fi.write(out)</span><br><span class="line">            fi.write(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">break</span></span><br><span class="line"></span><br><span class="line">fi.close()</span><br></pre></td></tr></table></figure>
+<p>运行脚本，得到out.txt<br><img src="https://img-blog.csdnimg.cn/20210405125011771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>使用mouse.py测试信息隐藏位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">nums = []</span><br><span class="line">keys = <span class="built_in">open</span>(<span class="string">&#x27;out.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;xy.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">posx = <span class="number">0</span></span><br><span class="line">posy = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> keys:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(line) != <span class="number">12</span> :</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    x = <span class="built_in">int</span>(line[<span class="number">3</span>:<span class="number">5</span>],<span class="number">16</span>)</span><br><span class="line">    y = <span class="built_in">int</span>(line[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>)</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">127</span> :</span><br><span class="line">        x -= <span class="number">256</span></span><br><span class="line">    <span class="keyword">if</span> y &gt; <span class="number">127</span> :</span><br><span class="line">        y -= <span class="number">256</span></span><br><span class="line">    posx += x</span><br><span class="line">    posy += y</span><br><span class="line">    btn_flag = <span class="built_in">int</span>(line[<span class="number">0</span>:<span class="number">2</span>],<span class="number">16</span>)  <span class="comment"># 1 for left , 2 for right , 0 for nothing</span></span><br><span class="line">    <span class="keyword">if</span> btn_flag == <span class="number">2</span> : <span class="comment"># 1 代表左键</span></span><br><span class="line">        f.write(<span class="built_in">str</span>(posx))</span><br><span class="line">        f.write(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">        f.write(<span class="built_in">str</span>(posy))</span><br><span class="line">        f.write(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">f.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>题目</strong></p>
+<h2 id="键盘流量"><a href="#键盘流量" class="headerlink" title="键盘流量"></a>键盘流量</h2><h3 id="基础知识-1"><a href="#基础知识-1" class="headerlink" title="基础知识"></a>基础知识</h3><p>USB协议数据部分在Leftover Capture Data域中，数据长度为八个字节。</p>
+<p>击键信息集中在第3个字节，每次击键都会产生一个数据包。</p>
+<p><a target="_blank" rel="noopener" href="https://max.book118.com/html/2017/0407/99227972.shtm">参考文档</a>：USB keyboard映射表<br><img src="https://img-blog.csdnimg.cn/20210405115902138.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="实战练习-1"><a href="#实战练习-1" class="headerlink" title="实战练习"></a>实战练习</h3><p>flag信息一般隐藏在USB流量中，通过USB协议数据中的键盘键码转换成键位。</p>
+<p><strong>题目1：</strong><br>分析流量包，发现数据是16位，所以是USB键盘流量<br><img src="https://img-blog.csdnimg.cn/20210404201547272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>tshark提取USB流量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r bingbing.pcapng -T fields -e usb.capdata &gt; usbdata.txt </span><br></pre></td></tr></table></figure>
+<p>usbdata.txt文件内容<br><img src="https://img-blog.csdnimg.cn/2021040418495794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现提取出来包含空行，使用命令剔除空行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r bingbing.pcapng -T fields -e usb.capdata | sed <span class="string">&#x27;/^\s*$/d&#x27;</span> &gt; usbdata.txt</span><br></pre></td></tr></table></figure>
+<p>查看usbdata.txt空余行消失<br><img src="https://img-blog.csdnimg.cn/20210404185033903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>提取出来的数据可能会带冒号，也可能不带，但是一般的脚本都会按照有冒号的数据来识别。有冒号时提取数据的<code>[6:8]</code>，无冒号时数据在<code>[4:6]</code></p>
+<p>可以利用脚本加上冒号</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;usbdata.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">fi=<span class="built_in">open</span>(<span class="string">&#x27;out.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    a=f.readline().strip()</span><br><span class="line">    <span class="keyword">if</span> a:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(a)==<span class="number">16</span>: <span class="comment"># 键盘流量len=16，鼠标流量len=8</span></span><br><span class="line">            out=<span class="string">&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(a),<span class="number">2</span>):</span><br><span class="line">                <span class="keyword">if</span> i+<span class="number">2</span> != <span class="built_in">len</span>(a):</span><br><span class="line">                    out+=a[i]+a[i+<span class="number">1</span>]+<span class="string">&quot;:&quot;</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    out+=a[i]+a[i+<span class="number">1</span>]</span><br><span class="line">            fi.write(out)</span><br><span class="line">            fi.write(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">fi.close()</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210404185301518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在网上找到两个键盘流量脚本</p>
+<p>keyboard1.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mappings = &#123; <span class="number">0x04</span>:<span class="string">&quot;A&quot;</span>,  <span class="number">0x05</span>:<span class="string">&quot;B&quot;</span>,  <span class="number">0x06</span>:<span class="string">&quot;C&quot;</span>, <span class="number">0x07</span>:<span class="string">&quot;D&quot;</span>, <span class="number">0x08</span>:<span class="string">&quot;E&quot;</span>, <span class="number">0x09</span>:<span class="string">&quot;F&quot;</span>, <span class="number">0x0A</span>:<span class="string">&quot;G&quot;</span>,  <span class="number">0x0B</span>:<span class="string">&quot;H&quot;</span>, <span class="number">0x0C</span>:<span class="string">&quot;I&quot;</span>,  <span class="number">0x0D</span>:<span class="string">&quot;J&quot;</span>, <span class="number">0x0E</span>:<span class="string">&quot;K&quot;</span>, <span class="number">0x0F</span>:<span class="string">&quot;L&quot;</span>, <span class="number">0x10</span>:<span class="string">&quot;M&quot;</span>, <span class="number">0x11</span>:<span class="string">&quot;N&quot;</span>,<span class="number">0x12</span>:<span class="string">&quot;O&quot;</span>,  <span class="number">0x13</span>:<span class="string">&quot;P&quot;</span>, <span class="number">0x14</span>:<span class="string">&quot;Q&quot;</span>, <span class="number">0x15</span>:<span class="string">&quot;R&quot;</span>, <span class="number">0x16</span>:<span class="string">&quot;S&quot;</span>, <span class="number">0x17</span>:<span class="string">&quot;T&quot;</span>, <span class="number">0x18</span>:<span class="string">&quot;U&quot;</span>,<span class="number">0x19</span>:<span class="string">&quot;V&quot;</span>, <span class="number">0x1A</span>:<span class="string">&quot;W&quot;</span>, <span class="number">0x1B</span>:<span class="string">&quot;X&quot;</span>, <span class="number">0x1C</span>:<span class="string">&quot;Y&quot;</span>, <span class="number">0x1D</span>:<span class="string">&quot;Z&quot;</span>, <span class="number">0x1E</span>:<span class="string">&quot;1&quot;</span>, <span class="number">0x1F</span>:<span class="string">&quot;2&quot;</span>, <span class="number">0x20</span>:<span class="string">&quot;3&quot;</span>, <span class="number">0x21</span>:<span class="string">&quot;4&quot;</span>, <span class="number">0x22</span>:<span class="string">&quot;5&quot;</span>,  <span class="number">0x23</span>:<span class="string">&quot;6&quot;</span>, <span class="number">0x24</span>:<span class="string">&quot;7&quot;</span>, <span class="number">0x25</span>:<span class="string">&quot;8&quot;</span>, <span class="number">0x26</span>:<span class="string">&quot;9&quot;</span>, <span class="number">0x27</span>:<span class="string">&quot;0&quot;</span>, <span class="number">0x28</span>:<span class="string">&quot;\n&quot;</span>, <span class="number">0x2a</span>:<span class="string">&quot;[DEL]&quot;</span>,  <span class="number">0X2B</span>:<span class="string">&quot;    &quot;</span>, <span class="number">0x2C</span>:<span class="string">&quot; &quot;</span>,  <span class="number">0x2D</span>:<span class="string">&quot;-&quot;</span>, <span class="number">0x2E</span>:<span class="string">&quot;=&quot;</span>, <span class="number">0x2F</span>:<span class="string">&quot;[&quot;</span>,  <span class="number">0x30</span>:<span class="string">&quot;]&quot;</span>,  <span class="number">0x31</span>:<span class="string">&quot;\\&quot;</span>, <span class="number">0x32</span>:<span class="string">&quot;~&quot;</span>, <span class="number">0x33</span>:<span class="string">&quot;;&quot;</span>,  <span class="number">0x34</span>:<span class="string">&quot;&#x27;&quot;</span>, <span class="number">0x36</span>:<span class="string">&quot;,&quot;</span>,  <span class="number">0x37</span>:<span class="string">&quot;.&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line">nums = []</span><br><span class="line">keys = <span class="built_in">open</span>(<span class="string">&#x27;out.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> keys:</span><br><span class="line">    <span class="keyword">if</span> line[<span class="number">0</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">1</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">3</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">4</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">9</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">10</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">12</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">13</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">15</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">16</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">18</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">19</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">21</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">22</span>]!=<span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">         <span class="keyword">continue</span></span><br><span class="line">    nums.append(<span class="built_in">int</span>(line[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>))</span><br><span class="line"></span><br><span class="line">keys.close()</span><br><span class="line"></span><br><span class="line">output = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span> :</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> n <span class="keyword">in</span> mappings:</span><br><span class="line">        output += mappings[n]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        output += <span class="string">&#x27;[unknown]&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;output :\n&#x27;</span> + output</span><br></pre></td></tr></table></figure>
+<p>运行脚本得到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~/桌面/Python/USB]</span><br><span class="line">└─$ python keyboard.py                 </span><br><span class="line">output :</span><br><span class="line">666C61677B3866396564326639333365662[DEL]31346138643035323364303334396531323939637D</span><br></pre></td></tr></table></figure>
+<p>因为[DEL]是删除键，所以</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">666C61677B38663965643266393333656631346138643035323364303334396531323939637D</span><br></pre></td></tr></table></figure>
+<p>keyboard2.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">normalKeys = &#123;</span><br><span class="line">    <span class="string">&quot;04&quot;</span>:<span class="string">&quot;a&quot;</span>, <span class="string">&quot;05&quot;</span>:<span class="string">&quot;b&quot;</span>, <span class="string">&quot;06&quot;</span>:<span class="string">&quot;c&quot;</span>, <span class="string">&quot;07&quot;</span>:<span class="string">&quot;d&quot;</span>, <span class="string">&quot;08&quot;</span>:<span class="string">&quot;e&quot;</span>,</span><br><span class="line">    <span class="string">&quot;09&quot;</span>:<span class="string">&quot;f&quot;</span>, <span class="string">&quot;0a&quot;</span>:<span class="string">&quot;g&quot;</span>, <span class="string">&quot;0b&quot;</span>:<span class="string">&quot;h&quot;</span>, <span class="string">&quot;0c&quot;</span>:<span class="string">&quot;i&quot;</span>, <span class="string">&quot;0d&quot;</span>:<span class="string">&quot;j&quot;</span>,</span><br><span class="line">     <span class="string">&quot;0e&quot;</span>:<span class="string">&quot;k&quot;</span>, <span class="string">&quot;0f&quot;</span>:<span class="string">&quot;l&quot;</span>, <span class="string">&quot;10&quot;</span>:<span class="string">&quot;m&quot;</span>, <span class="string">&quot;11&quot;</span>:<span class="string">&quot;n&quot;</span>, <span class="string">&quot;12&quot;</span>:<span class="string">&quot;o&quot;</span>,</span><br><span class="line">      <span class="string">&quot;13&quot;</span>:<span class="string">&quot;p&quot;</span>, <span class="string">&quot;14&quot;</span>:<span class="string">&quot;q&quot;</span>, <span class="string">&quot;15&quot;</span>:<span class="string">&quot;r&quot;</span>, <span class="string">&quot;16&quot;</span>:<span class="string">&quot;s&quot;</span>, <span class="string">&quot;17&quot;</span>:<span class="string">&quot;t&quot;</span>,</span><br><span class="line">       <span class="string">&quot;18&quot;</span>:<span class="string">&quot;u&quot;</span>, <span class="string">&quot;19&quot;</span>:<span class="string">&quot;v&quot;</span>, <span class="string">&quot;1a&quot;</span>:<span class="string">&quot;w&quot;</span>, <span class="string">&quot;1b&quot;</span>:<span class="string">&quot;x&quot;</span>, <span class="string">&quot;1c&quot;</span>:<span class="string">&quot;y&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1d&quot;</span>:<span class="string">&quot;z&quot;</span>,<span class="string">&quot;1e&quot;</span>:<span class="string">&quot;1&quot;</span>, <span class="string">&quot;1f&quot;</span>:<span class="string">&quot;2&quot;</span>, <span class="string">&quot;20&quot;</span>:<span class="string">&quot;3&quot;</span>, <span class="string">&quot;21&quot;</span>:<span class="string">&quot;4&quot;</span>,</span><br><span class="line">         <span class="string">&quot;22&quot;</span>:<span class="string">&quot;5&quot;</span>, <span class="string">&quot;23&quot;</span>:<span class="string">&quot;6&quot;</span>,<span class="string">&quot;24&quot;</span>:<span class="string">&quot;7&quot;</span>,<span class="string">&quot;25&quot;</span>:<span class="string">&quot;8&quot;</span>,<span class="string">&quot;26&quot;</span>:<span class="string">&quot;9&quot;</span>,</span><br><span class="line">         <span class="string">&quot;27&quot;</span>:<span class="string">&quot;0&quot;</span>,<span class="string">&quot;28&quot;</span>:<span class="string">&quot;&lt;RET&gt;&quot;</span>,<span class="string">&quot;29&quot;</span>:<span class="string">&quot;&lt;ESC&gt;&quot;</span>,<span class="string">&quot;2a&quot;</span>:<span class="string">&quot;&lt;DEL&gt;&quot;</span>, <span class="string">&quot;2b&quot;</span>:<span class="string">&quot;\t&quot;</span>,</span><br><span class="line">         <span class="string">&quot;2c&quot;</span>:<span class="string">&quot;&lt;SPACE&gt;&quot;</span>,<span class="string">&quot;2d&quot;</span>:<span class="string">&quot;-&quot;</span>,<span class="string">&quot;2e&quot;</span>:<span class="string">&quot;=&quot;</span>,<span class="string">&quot;2f&quot;</span>:<span class="string">&quot;[&quot;</span>,<span class="string">&quot;30&quot;</span>:<span class="string">&quot;]&quot;</span>,<span class="string">&quot;31&quot;</span>:<span class="string">&quot;\\&quot;</span>,</span><br><span class="line">         <span class="string">&quot;32&quot;</span>:<span class="string">&quot;&lt;NON&gt;&quot;</span>,<span class="string">&quot;33&quot;</span>:<span class="string">&quot;;&quot;</span>,<span class="string">&quot;34&quot;</span>:<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&quot;35&quot;</span>:<span class="string">&quot;&lt;GA&gt;&quot;</span>,<span class="string">&quot;36&quot;</span>:<span class="string">&quot;,&quot;</span>,<span class="string">&quot;37&quot;</span>:<span class="string">&quot;.&quot;</span>,</span><br><span class="line">         <span class="string">&quot;38&quot;</span>:<span class="string">&quot;/&quot;</span>,<span class="string">&quot;39&quot;</span>:<span class="string">&quot;&lt;CAP&gt;&quot;</span>,<span class="string">&quot;3a&quot;</span>:<span class="string">&quot;&lt;F1&gt;&quot;</span>,<span class="string">&quot;3b&quot;</span>:<span class="string">&quot;&lt;F2&gt;&quot;</span>, <span class="string">&quot;3c&quot;</span>:<span class="string">&quot;&lt;F3&gt;&quot;</span>,<span class="string">&quot;3d&quot;</span>:<span class="string">&quot;&lt;F4&gt;&quot;</span>,</span><br><span class="line">         <span class="string">&quot;3e&quot;</span>:<span class="string">&quot;&lt;F5&gt;&quot;</span>,<span class="string">&quot;3f&quot;</span>:<span class="string">&quot;&lt;F6&gt;&quot;</span>,<span class="string">&quot;40&quot;</span>:<span class="string">&quot;&lt;F7&gt;&quot;</span>,<span class="string">&quot;41&quot;</span>:<span class="string">&quot;&lt;F8&gt;&quot;</span>,<span class="string">&quot;42&quot;</span>:<span class="string">&quot;&lt;F9&gt;&quot;</span>,<span class="string">&quot;43&quot;</span>:<span class="string">&quot;&lt;F10&gt;&quot;</span>,</span><br><span class="line">         <span class="string">&quot;44&quot;</span>:<span class="string">&quot;&lt;F11&gt;&quot;</span>,<span class="string">&quot;45&quot;</span>:<span class="string">&quot;&lt;F12&gt;&quot;</span>&#125;</span><br><span class="line">shiftKeys = &#123;</span><br><span class="line">    <span class="string">&quot;04&quot;</span>:<span class="string">&quot;A&quot;</span>, <span class="string">&quot;05&quot;</span>:<span class="string">&quot;B&quot;</span>, <span class="string">&quot;06&quot;</span>:<span class="string">&quot;C&quot;</span>, <span class="string">&quot;07&quot;</span>:<span class="string">&quot;D&quot;</span>, <span class="string">&quot;08&quot;</span>:<span class="string">&quot;E&quot;</span>,</span><br><span class="line">     <span class="string">&quot;09&quot;</span>:<span class="string">&quot;F&quot;</span>, <span class="string">&quot;0a&quot;</span>:<span class="string">&quot;G&quot;</span>, <span class="string">&quot;0b&quot;</span>:<span class="string">&quot;H&quot;</span>, <span class="string">&quot;0c&quot;</span>:<span class="string">&quot;I&quot;</span>, <span class="string">&quot;0d&quot;</span>:<span class="string">&quot;J&quot;</span>,</span><br><span class="line">      <span class="string">&quot;0e&quot;</span>:<span class="string">&quot;K&quot;</span>, <span class="string">&quot;0f&quot;</span>:<span class="string">&quot;L&quot;</span>, <span class="string">&quot;10&quot;</span>:<span class="string">&quot;M&quot;</span>, <span class="string">&quot;11&quot;</span>:<span class="string">&quot;N&quot;</span>, <span class="string">&quot;12&quot;</span>:<span class="string">&quot;O&quot;</span>,</span><br><span class="line">       <span class="string">&quot;13&quot;</span>:<span class="string">&quot;P&quot;</span>, <span class="string">&quot;14&quot;</span>:<span class="string">&quot;Q&quot;</span>, <span class="string">&quot;15&quot;</span>:<span class="string">&quot;R&quot;</span>, <span class="string">&quot;16&quot;</span>:<span class="string">&quot;S&quot;</span>, <span class="string">&quot;17&quot;</span>:<span class="string">&quot;T&quot;</span>,</span><br><span class="line">        <span class="string">&quot;18&quot;</span>:<span class="string">&quot;U&quot;</span>, <span class="string">&quot;19&quot;</span>:<span class="string">&quot;V&quot;</span>, <span class="string">&quot;1a&quot;</span>:<span class="string">&quot;W&quot;</span>, <span class="string">&quot;1b&quot;</span>:<span class="string">&quot;X&quot;</span>, <span class="string">&quot;1c&quot;</span>:<span class="string">&quot;Y&quot;</span>,</span><br><span class="line">         <span class="string">&quot;1d&quot;</span>:<span class="string">&quot;Z&quot;</span>,<span class="string">&quot;1e&quot;</span>:<span class="string">&quot;!&quot;</span>, <span class="string">&quot;1f&quot;</span>:<span class="string">&quot;@&quot;</span>, <span class="string">&quot;20&quot;</span>:<span class="string">&quot;#&quot;</span>, <span class="string">&quot;21&quot;</span>:<span class="string">&quot;$&quot;</span>,</span><br><span class="line">          <span class="string">&quot;22&quot;</span>:<span class="string">&quot;%&quot;</span>, <span class="string">&quot;23&quot;</span>:<span class="string">&quot;^&quot;</span>,<span class="string">&quot;24&quot;</span>:<span class="string">&quot;&amp;&quot;</span>,<span class="string">&quot;25&quot;</span>:<span class="string">&quot;*&quot;</span>,<span class="string">&quot;26&quot;</span>:<span class="string">&quot;(&quot;</span>,<span class="string">&quot;27&quot;</span>:<span class="string">&quot;)&quot;</span>,</span><br><span class="line">          <span class="string">&quot;28&quot;</span>:<span class="string">&quot;&lt;RET&gt;&quot;</span>,<span class="string">&quot;29&quot;</span>:<span class="string">&quot;&lt;ESC&gt;&quot;</span>,<span class="string">&quot;2a&quot;</span>:<span class="string">&quot;&lt;DEL&gt;&quot;</span>, <span class="string">&quot;2b&quot;</span>:<span class="string">&quot;\t&quot;</span>,<span class="string">&quot;2c&quot;</span>:<span class="string">&quot;&lt;SPACE&gt;&quot;</span>,</span><br><span class="line">          <span class="string">&quot;2d&quot;</span>:<span class="string">&quot;_&quot;</span>,<span class="string">&quot;2e&quot;</span>:<span class="string">&quot;+&quot;</span>,<span class="string">&quot;2f&quot;</span>:<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;30&quot;</span>:<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;31&quot;</span>:<span class="string">&quot;|&quot;</span>,<span class="string">&quot;32&quot;</span>:<span class="string">&quot;&lt;NON&gt;&quot;</span>,<span class="string">&quot;33&quot;</span>:<span class="string">&quot;\&quot;&quot;</span>,</span><br><span class="line">          <span class="string">&quot;34&quot;</span>:<span class="string">&quot;:&quot;</span>,<span class="string">&quot;35&quot;</span>:<span class="string">&quot;&lt;GA&gt;&quot;</span>,<span class="string">&quot;36&quot;</span>:<span class="string">&quot;&lt;&quot;</span>,<span class="string">&quot;37&quot;</span>:<span class="string">&quot;&gt;&quot;</span>,<span class="string">&quot;38&quot;</span>:<span class="string">&quot;?&quot;</span>,<span class="string">&quot;39&quot;</span>:<span class="string">&quot;&lt;CAP&gt;&quot;</span>,<span class="string">&quot;3a&quot;</span>:<span class="string">&quot;&lt;F1&gt;&quot;</span>,</span><br><span class="line">          <span class="string">&quot;3b&quot;</span>:<span class="string">&quot;&lt;F2&gt;&quot;</span>, <span class="string">&quot;3c&quot;</span>:<span class="string">&quot;&lt;F3&gt;&quot;</span>,<span class="string">&quot;3d&quot;</span>:<span class="string">&quot;&lt;F4&gt;&quot;</span>,<span class="string">&quot;3e&quot;</span>:<span class="string">&quot;&lt;F5&gt;&quot;</span>,<span class="string">&quot;3f&quot;</span>:<span class="string">&quot;&lt;F6&gt;&quot;</span>,<span class="string">&quot;40&quot;</span>:<span class="string">&quot;&lt;F7&gt;&quot;</span>,</span><br><span class="line">          <span class="string">&quot;41&quot;</span>:<span class="string">&quot;&lt;F8&gt;&quot;</span>,<span class="string">&quot;42&quot;</span>:<span class="string">&quot;&lt;F9&gt;&quot;</span>,<span class="string">&quot;43&quot;</span>:<span class="string">&quot;&lt;F10&gt;&quot;</span>,<span class="string">&quot;44&quot;</span>:<span class="string">&quot;&lt;F11&gt;&quot;</span>,<span class="string">&quot;45&quot;</span>:<span class="string">&quot;&lt;F12&gt;&quot;</span>&#125;</span><br><span class="line">output = []</span><br><span class="line">keys = <span class="built_in">open</span>(<span class="string">&#x27;out.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> keys:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> line[<span class="number">0</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> (line[<span class="number">1</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">and</span> line[<span class="number">1</span>]!=<span class="string">&#x27;2&#x27;</span>) <span class="keyword">or</span> line[<span class="number">3</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">4</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">9</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">10</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">12</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">13</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">15</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">16</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">18</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">19</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">21</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">22</span>]!=<span class="string">&#x27;0&#x27;</span> <span class="keyword">or</span> line[<span class="number">6</span>:<span class="number">8</span>]==<span class="string">&quot;00&quot;</span>:</span><br><span class="line">             <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> line[<span class="number">6</span>:<span class="number">8</span>] <span class="keyword">in</span> normalKeys.keys():</span><br><span class="line">            output += [[normalKeys[line[<span class="number">6</span>:<span class="number">8</span>]]],[shiftKeys[line[<span class="number">6</span>:<span class="number">8</span>]]]][line[<span class="number">1</span>]==<span class="string">&#x27;2&#x27;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            output += [<span class="string">&#x27;[unknown]&#x27;</span>]</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">keys.close()</span><br><span class="line"></span><br><span class="line">flag=<span class="number">0</span></span><br><span class="line">print(<span class="string">&quot;&quot;</span>.join(output))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(output)):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        a=output.index(<span class="string">&#x27;&lt;DEL&gt;&#x27;</span>)</span><br><span class="line">        <span class="keyword">del</span> output[a]</span><br><span class="line">        <span class="keyword">del</span> output[a-<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(output)):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> output[i]==<span class="string">&quot;&lt;CAP&gt;&quot;</span>:</span><br><span class="line">            flag+=<span class="number">1</span></span><br><span class="line">            output.pop(i)</span><br><span class="line">            <span class="keyword">if</span> flag==<span class="number">2</span>:</span><br><span class="line">                flag=<span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> flag!=<span class="number">0</span>:</span><br><span class="line">            output[i]=output[i].upper()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (<span class="string">&#x27;output :&#x27;</span> + <span class="string">&quot;&quot;</span>.join(output))</span><br></pre></td></tr></table></figure>
+<p>运行脚本得到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~/桌面/Python/USB]</span><br><span class="line">└─$ python keyboard2.py bingbing.pcapng      </span><br><span class="line">666c61677b3866396564326639333365662&lt;DEL&gt;31346138643035323364303334396531323939637d</span><br><span class="line">output :666c61677b38663965643266393333656631346138643035323364303334396531323939637d</span><br></pre></td></tr></table></figure>
+<p>使用脚本将十六进制转换为字符串</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m=<span class="string">&quot;666C61677B38663965643266393333656631346138643035323364303334396531323939637D&quot;</span></span><br><span class="line">s=bytes.fromhex(m)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br></pre></td></tr></table></figure>
+<p>得到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b<span class="string">&#x27;flag&#123;8f9ed2f933ef14a8d0523d0349e1299c&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>题目2：</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20210405115616535.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>提取流量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r key.pcap -T fields -e usb.capdata &gt; usbdata.txt</span><br></pre></td></tr></table></figure>
+<p>查看usbdata.txt内容<br><img src="https://img-blog.csdnimg.cn/20210405120456614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>这是找到的第三个脚本<a target="_blank" rel="noopener" href="https://github.com/WangYihang/UsbKeyboardDataHacker/blob/master/UsbKeyboardDataHacker.py">UsbKeyboardDataHacker.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">DataFileName = <span class="string">&quot;usb.dat&quot;</span></span><br><span class="line"></span><br><span class="line">presses = []</span><br><span class="line"></span><br><span class="line">normalKeys = &#123;<span class="string">&quot;04&quot;</span>:<span class="string">&quot;a&quot;</span>, <span class="string">&quot;05&quot;</span>:<span class="string">&quot;b&quot;</span>, <span class="string">&quot;06&quot;</span>:<span class="string">&quot;c&quot;</span>, <span class="string">&quot;07&quot;</span>:<span class="string">&quot;d&quot;</span>, <span class="string">&quot;08&quot;</span>:<span class="string">&quot;e&quot;</span>, <span class="string">&quot;09&quot;</span>:<span class="string">&quot;f&quot;</span>, <span class="string">&quot;0a&quot;</span>:<span class="string">&quot;g&quot;</span>, <span class="string">&quot;0b&quot;</span>:<span class="string">&quot;h&quot;</span>, <span class="string">&quot;0c&quot;</span>:<span class="string">&quot;i&quot;</span>, <span class="string">&quot;0d&quot;</span>:<span class="string">&quot;j&quot;</span>, <span class="string">&quot;0e&quot;</span>:<span class="string">&quot;k&quot;</span>, <span class="string">&quot;0f&quot;</span>:<span class="string">&quot;l&quot;</span>, <span class="string">&quot;10&quot;</span>:<span class="string">&quot;m&quot;</span>, <span class="string">&quot;11&quot;</span>:<span class="string">&quot;n&quot;</span>, <span class="string">&quot;12&quot;</span>:<span class="string">&quot;o&quot;</span>, <span class="string">&quot;13&quot;</span>:<span class="string">&quot;p&quot;</span>, <span class="string">&quot;14&quot;</span>:<span class="string">&quot;q&quot;</span>, <span class="string">&quot;15&quot;</span>:<span class="string">&quot;r&quot;</span>, <span class="string">&quot;16&quot;</span>:<span class="string">&quot;s&quot;</span>, <span class="string">&quot;17&quot;</span>:<span class="string">&quot;t&quot;</span>, <span class="string">&quot;18&quot;</span>:<span class="string">&quot;u&quot;</span>, <span class="string">&quot;19&quot;</span>:<span class="string">&quot;v&quot;</span>, <span class="string">&quot;1a&quot;</span>:<span class="string">&quot;w&quot;</span>, <span class="string">&quot;1b&quot;</span>:<span class="string">&quot;x&quot;</span>, <span class="string">&quot;1c&quot;</span>:<span class="string">&quot;y&quot;</span>, <span class="string">&quot;1d&quot;</span>:<span class="string">&quot;z&quot;</span>,<span class="string">&quot;1e&quot;</span>:<span class="string">&quot;1&quot;</span>, <span class="string">&quot;1f&quot;</span>:<span class="string">&quot;2&quot;</span>, <span class="string">&quot;20&quot;</span>:<span class="string">&quot;3&quot;</span>, <span class="string">&quot;21&quot;</span>:<span class="string">&quot;4&quot;</span>, <span class="string">&quot;22&quot;</span>:<span class="string">&quot;5&quot;</span>, <span class="string">&quot;23&quot;</span>:<span class="string">&quot;6&quot;</span>,<span class="string">&quot;24&quot;</span>:<span class="string">&quot;7&quot;</span>,<span class="string">&quot;25&quot;</span>:<span class="string">&quot;8&quot;</span>,<span class="string">&quot;26&quot;</span>:<span class="string">&quot;9&quot;</span>,<span class="string">&quot;27&quot;</span>:<span class="string">&quot;0&quot;</span>,<span class="string">&quot;28&quot;</span>:<span class="string">&quot;&lt;RET&gt;&quot;</span>,<span class="string">&quot;29&quot;</span>:<span class="string">&quot;&lt;ESC&gt;&quot;</span>,<span class="string">&quot;2a&quot;</span>:<span class="string">&quot;&lt;DEL&gt;&quot;</span>, <span class="string">&quot;2b&quot;</span>:<span class="string">&quot;\t&quot;</span>,<span class="string">&quot;2c&quot;</span>:<span class="string">&quot;&lt;SPACE&gt;&quot;</span>,<span class="string">&quot;2d&quot;</span>:<span class="string">&quot;-&quot;</span>,<span class="string">&quot;2e&quot;</span>:<span class="string">&quot;=&quot;</span>,<span class="string">&quot;2f&quot;</span>:<span class="string">&quot;[&quot;</span>,<span class="string">&quot;30&quot;</span>:<span class="string">&quot;]&quot;</span>,<span class="string">&quot;31&quot;</span>:<span class="string">&quot;\\&quot;</span>,<span class="string">&quot;32&quot;</span>:<span class="string">&quot;&lt;NON&gt;&quot;</span>,<span class="string">&quot;33&quot;</span>:<span class="string">&quot;;&quot;</span>,<span class="string">&quot;34&quot;</span>:<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&quot;35&quot;</span>:<span class="string">&quot;&lt;GA&gt;&quot;</span>,<span class="string">&quot;36&quot;</span>:<span class="string">&quot;,&quot;</span>,<span class="string">&quot;37&quot;</span>:<span class="string">&quot;.&quot;</span>,<span class="string">&quot;38&quot;</span>:<span class="string">&quot;/&quot;</span>,<span class="string">&quot;39&quot;</span>:<span class="string">&quot;&lt;CAP&gt;&quot;</span>,<span class="string">&quot;3a&quot;</span>:<span class="string">&quot;&lt;F1&gt;&quot;</span>,<span class="string">&quot;3b&quot;</span>:<span class="string">&quot;&lt;F2&gt;&quot;</span>, <span class="string">&quot;3c&quot;</span>:<span class="string">&quot;&lt;F3&gt;&quot;</span>,<span class="string">&quot;3d&quot;</span>:<span class="string">&quot;&lt;F4&gt;&quot;</span>,<span class="string">&quot;3e&quot;</span>:<span class="string">&quot;&lt;F5&gt;&quot;</span>,<span class="string">&quot;3f&quot;</span>:<span class="string">&quot;&lt;F6&gt;&quot;</span>,<span class="string">&quot;40&quot;</span>:<span class="string">&quot;&lt;F7&gt;&quot;</span>,<span class="string">&quot;41&quot;</span>:<span class="string">&quot;&lt;F8&gt;&quot;</span>,<span class="string">&quot;42&quot;</span>:<span class="string">&quot;&lt;F9&gt;&quot;</span>,<span class="string">&quot;43&quot;</span>:<span class="string">&quot;&lt;F10&gt;&quot;</span>,<span class="string">&quot;44&quot;</span>:<span class="string">&quot;&lt;F11&gt;&quot;</span>,<span class="string">&quot;45&quot;</span>:<span class="string">&quot;&lt;F12&gt;&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">shiftKeys = &#123;<span class="string">&quot;04&quot;</span>:<span class="string">&quot;A&quot;</span>, <span class="string">&quot;05&quot;</span>:<span class="string">&quot;B&quot;</span>, <span class="string">&quot;06&quot;</span>:<span class="string">&quot;C&quot;</span>, <span class="string">&quot;07&quot;</span>:<span class="string">&quot;D&quot;</span>, <span class="string">&quot;08&quot;</span>:<span class="string">&quot;E&quot;</span>, <span class="string">&quot;09&quot;</span>:<span class="string">&quot;F&quot;</span>, <span class="string">&quot;0a&quot;</span>:<span class="string">&quot;G&quot;</span>, <span class="string">&quot;0b&quot;</span>:<span class="string">&quot;H&quot;</span>, <span class="string">&quot;0c&quot;</span>:<span class="string">&quot;I&quot;</span>, <span class="string">&quot;0d&quot;</span>:<span class="string">&quot;J&quot;</span>, <span class="string">&quot;0e&quot;</span>:<span class="string">&quot;K&quot;</span>, <span class="string">&quot;0f&quot;</span>:<span class="string">&quot;L&quot;</span>, <span class="string">&quot;10&quot;</span>:<span class="string">&quot;M&quot;</span>, <span class="string">&quot;11&quot;</span>:<span class="string">&quot;N&quot;</span>, <span class="string">&quot;12&quot;</span>:<span class="string">&quot;O&quot;</span>, <span class="string">&quot;13&quot;</span>:<span class="string">&quot;P&quot;</span>, <span class="string">&quot;14&quot;</span>:<span class="string">&quot;Q&quot;</span>, <span class="string">&quot;15&quot;</span>:<span class="string">&quot;R&quot;</span>, <span class="string">&quot;16&quot;</span>:<span class="string">&quot;S&quot;</span>, <span class="string">&quot;17&quot;</span>:<span class="string">&quot;T&quot;</span>, <span class="string">&quot;18&quot;</span>:<span class="string">&quot;U&quot;</span>, <span class="string">&quot;19&quot;</span>:<span class="string">&quot;V&quot;</span>, <span class="string">&quot;1a&quot;</span>:<span class="string">&quot;W&quot;</span>, <span class="string">&quot;1b&quot;</span>:<span class="string">&quot;X&quot;</span>, <span class="string">&quot;1c&quot;</span>:<span class="string">&quot;Y&quot;</span>, <span class="string">&quot;1d&quot;</span>:<span class="string">&quot;Z&quot;</span>,<span class="string">&quot;1e&quot;</span>:<span class="string">&quot;!&quot;</span>, <span class="string">&quot;1f&quot;</span>:<span class="string">&quot;@&quot;</span>, <span class="string">&quot;20&quot;</span>:<span class="string">&quot;#&quot;</span>, <span class="string">&quot;21&quot;</span>:<span class="string">&quot;$&quot;</span>, <span class="string">&quot;22&quot;</span>:<span class="string">&quot;%&quot;</span>, <span class="string">&quot;23&quot;</span>:<span class="string">&quot;^&quot;</span>,<span class="string">&quot;24&quot;</span>:<span class="string">&quot;&amp;&quot;</span>,<span class="string">&quot;25&quot;</span>:<span class="string">&quot;*&quot;</span>,<span class="string">&quot;26&quot;</span>:<span class="string">&quot;(&quot;</span>,<span class="string">&quot;27&quot;</span>:<span class="string">&quot;)&quot;</span>,<span class="string">&quot;28&quot;</span>:<span class="string">&quot;&lt;RET&gt;&quot;</span>,<span class="string">&quot;29&quot;</span>:<span class="string">&quot;&lt;ESC&gt;&quot;</span>,<span class="string">&quot;2a&quot;</span>:<span class="string">&quot;&lt;DEL&gt;&quot;</span>, <span class="string">&quot;2b&quot;</span>:<span class="string">&quot;\t&quot;</span>,<span class="string">&quot;2c&quot;</span>:<span class="string">&quot;&lt;SPACE&gt;&quot;</span>,<span class="string">&quot;2d&quot;</span>:<span class="string">&quot;_&quot;</span>,<span class="string">&quot;2e&quot;</span>:<span class="string">&quot;+&quot;</span>,<span class="string">&quot;2f&quot;</span>:<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;30&quot;</span>:<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;31&quot;</span>:<span class="string">&quot;|&quot;</span>,<span class="string">&quot;32&quot;</span>:<span class="string">&quot;&lt;NON&gt;&quot;</span>,<span class="string">&quot;33&quot;</span>:<span class="string">&quot;\&quot;&quot;</span>,<span class="string">&quot;34&quot;</span>:<span class="string">&quot;:&quot;</span>,<span class="string">&quot;35&quot;</span>:<span class="string">&quot;&lt;GA&gt;&quot;</span>,<span class="string">&quot;36&quot;</span>:<span class="string">&quot;&lt;&quot;</span>,<span class="string">&quot;37&quot;</span>:<span class="string">&quot;&gt;&quot;</span>,<span class="string">&quot;38&quot;</span>:<span class="string">&quot;?&quot;</span>,<span class="string">&quot;39&quot;</span>:<span class="string">&quot;&lt;CAP&gt;&quot;</span>,<span class="string">&quot;3a&quot;</span>:<span class="string">&quot;&lt;F1&gt;&quot;</span>,<span class="string">&quot;3b&quot;</span>:<span class="string">&quot;&lt;F2&gt;&quot;</span>, <span class="string">&quot;3c&quot;</span>:<span class="string">&quot;&lt;F3&gt;&quot;</span>,<span class="string">&quot;3d&quot;</span>:<span class="string">&quot;&lt;F4&gt;&quot;</span>,<span class="string">&quot;3e&quot;</span>:<span class="string">&quot;&lt;F5&gt;&quot;</span>,<span class="string">&quot;3f&quot;</span>:<span class="string">&quot;&lt;F6&gt;&quot;</span>,<span class="string">&quot;40&quot;</span>:<span class="string">&quot;&lt;F7&gt;&quot;</span>,<span class="string">&quot;41&quot;</span>:<span class="string">&quot;&lt;F8&gt;&quot;</span>,<span class="string">&quot;42&quot;</span>:<span class="string">&quot;&lt;F9&gt;&quot;</span>,<span class="string">&quot;43&quot;</span>:<span class="string">&quot;&lt;F10&gt;&quot;</span>,<span class="string">&quot;44&quot;</span>:<span class="string">&quot;&lt;F11&gt;&quot;</span>,<span class="string">&quot;45&quot;</span>:<span class="string">&quot;&lt;F12&gt;&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># check argv</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">&quot;Usage : &quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        python UsbKeyboardHacker.py data.pcap&quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;Tips : &quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        To use this python script , you must install the tshark first.&quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        You can use `sudo apt-get install tshark` to install it&quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;Author : &quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        WangYihang &lt;wangyihanger@gmail.com&gt;&quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        If you have any questions , please contact me by email.&quot;</span>)</span><br><span class="line">        print(<span class="string">&quot;        Thank you for using.&quot;</span>)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get argv</span></span><br><span class="line">    pcapFilePath = sys.argv[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># get data of pcap</span></span><br><span class="line">    os.system(<span class="string">&quot;tshark -r %s -T fields -e usb.capdata &#x27;usb.data_len == 8&#x27; &gt; %s&quot;</span> % (pcapFilePath, DataFileName))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># read data</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(DataFileName, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            presses.append(line[<span class="number">0</span>:-<span class="number">1</span>])</span><br><span class="line">    <span class="comment"># handle</span></span><br><span class="line">    result = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> press <span class="keyword">in</span> presses:</span><br><span class="line">        <span class="keyword">if</span> press == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;:&#x27;</span> <span class="keyword">in</span> press:</span><br><span class="line">            Bytes = press.split(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            Bytes = [press[i:i+<span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(press), <span class="number">2</span>)]</span><br><span class="line">        <span class="keyword">if</span> Bytes[<span class="number">0</span>] == <span class="string">&quot;00&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> Bytes[<span class="number">2</span>] != <span class="string">&quot;00&quot;</span> <span class="keyword">and</span> normalKeys.get(Bytes[<span class="number">2</span>]):</span><br><span class="line">                result += normalKeys[Bytes[<span class="number">2</span>]]</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">int</span>(Bytes[<span class="number">0</span>],<span class="number">16</span>) &amp; <span class="number">0b10</span> <span class="keyword">or</span> <span class="built_in">int</span>(Bytes[<span class="number">0</span>],<span class="number">16</span>) &amp; <span class="number">0b100000</span>: <span class="comment"># shift key is pressed.</span></span><br><span class="line">            <span class="keyword">if</span> Bytes[<span class="number">2</span>] != <span class="string">&quot;00&quot;</span> <span class="keyword">and</span> normalKeys.get(Bytes[<span class="number">2</span>]):</span><br><span class="line">                result += shiftKeys[Bytes[<span class="number">2</span>]]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;[-] Unknow Key : %s&quot;</span> % (Bytes[<span class="number">0</span>]))</span><br><span class="line">    print(<span class="string">&quot;[+] Found : %s&quot;</span> % (result))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># clean the temp data</span></span><br><span class="line">    os.system(<span class="string">&quot;rm ./%s&quot;</span> % (DataFileName))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>运行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">└─$ python3 UsbKeyboardDataHacker.py key.pcap                                                                                        1 ⨯</span><br><span class="line">[-] Unknow Key : 01</span><br><span class="line">[-] Unknow Key : 01</span><br><span class="line">[+] Found : aababacbbdbdccccdcdcdbbcccbcbbcbbaababaaaaaaaaaaaaaaaaaakey&#123;xinan&#125;</span><br></pre></td></tr></table></figure>
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/wx.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Atkx
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://atkx.gitee.io/2021/04/12/USB流量分析/" title="USB流量分析" target="_blank">https://atkx.gitee.io/2021/04/12/USB流量分析/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CTFhub</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">信息泄露</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/WEB//" class="article-tag-list-link color4">WEB</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    
 
+    
 
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://atkx.gitee.io/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="archive-article-date">
-        <time datetime="2020-10-18T07:44:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-18</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HTTP请求走私</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_blank">浅谈PHP反序列化漏洞</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/WEB//" class="article-tag-list-link color4">WEB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BC%A0%E6%A0%87%E6%B5%81%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">鼠标流量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.1.</span> <span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0"><span class="toc-number">1.2.</span> <span class="toc-text">实战练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E6%B5%81%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">键盘流量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-1"><span class="toc-number">2.1.</span> <span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0-1"><span class="toc-number">2.2.</span> <span class="toc-text">实战练习</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/" class="archive-article-date">
-        <time datetime="2020-10-04T07:50:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/" target="_blank">RSA算法详解与练习</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RSA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/CRYPTO//" class="article-tag-list-link color2">CRYPTO</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+
+
+
+
 
 
           </div>
@@ -413,8 +520,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
