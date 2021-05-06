@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/atkx_16x16.png">
+  <link rel="icon" href="/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="摘要：PHP学习笔记（一）">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>PHP的基本概念和变量 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.top","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PHP的基本概念和变量">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-20 19:56" pubdate>
+        2020年5月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PHP的基本概念和变量</h1>
+            
+            <div class="markdown-body">
+              <p>摘要：PHP学习笔记（一）</p>
+ <a id="more"></a>
+
+<h2 id="PHP-是什么？"><a href="#PHP-是什么？" class="headerlink" title="PHP 是什么？"></a>PHP 是什么？</h2><blockquote>
+<p> PHP（全称：PHP：Hypertext Preprocessor，即”PHP：超文本预处理器”）是一种通用开源脚本语言。</p>
+<p> PHP 脚本在服务器上执行。</p>
+<p> PHP 可免费下载使用。</p>
+</blockquote>
+<p>PHP是创建动态网页的最流行的服务器端脚本语言，并且是开源免费的。</p>
+<blockquote>
+<p>PHP代表超文本预处理器。PHP是一种非常流行且广泛使用的开源服务器端脚本语言，用于编写动态生成的Web页面。PHP最初由 Rasmus Lerdorf 于1994年创建。它最初被称为个人主页。<br>PHP脚本在服务器上执行，结果以纯HTML格式发送到Web浏览器。PHP可以与众多流行数据库集成，包括MySQL，PostgreSQL，Oracle，Microsoft SQL Server，Sybase等。</p>
+</blockquote>
+<p><strong>运行</strong></p>
+<p>下面我们来运行第一个程序！</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;Hello World!&quot;</span>; <br><span class="hljs-meta">?&gt;</span> <br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Hello World!<br></code></pre></td></tr></table></figure>
+<h2 id="PHP变量"><a href="#PHP变量" class="headerlink" title="PHP变量"></a>PHP变量</h2><p>PHP变量是什么？</p>
+<p>1、在PHP中变量是用于储存信息的容器，类似于数学中的集合。<br>2、赋值方法与数学中的代数相类似。<br>3、变量是用于存储信息的”容器”。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$x</span>=<span class="hljs-number">5</span>;<br><span class="hljs-variable">$y</span>=<span class="hljs-number">6</span>;<br><span class="hljs-variable">$z</span>=<span class="hljs-variable">$x</span>+<span class="hljs-variable">$y</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$z</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">11</span><br></code></pre></td></tr></table></figure>
+<p>PHP 变量与代数类似，可以给 PHP 变量赋予某个值（x=5）或者表达式（z=x+y）。</p>
+<p>变量可以是很短的名称（如 x 和 y）或者更具描述性的名称（如 name、age、id）。</p>
+<h2 id="PHP变量的创建（声明）"><a href="#PHP变量的创建（声明）" class="headerlink" title="PHP变量的创建（声明）"></a>PHP变量的创建（声明）</h2><blockquote>
+<p>$变量名=数据(值)<br>=在数学里面是等于的意思,在我们的程序语言里面，它不是等于号，它是’赋值操作符’</p>
+</blockquote>
+<p>PHP 没有声明变量的命令。</p>
+<p>变量在第一次赋值给它的时候被创建：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&quot;Hello world!&quot;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-number">5</span>;<br><span class="hljs-variable">$c</span>=<span class="hljs-number">10.5</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>在上面的语句执行中，<br>变量 a将保存值 Hello world!，且变量b将保存值 5,同理变量c保存值10.5。</p>
+<p><strong>注意：当您赋一个<font color=#FF0000 size=3>文本值</font>给变量时，请在文本值两侧加上引号。</strong></p>
+<h2 id="PHP变量的销毁"><a href="#PHP变量的销毁" class="headerlink" title="PHP变量的销毁"></a>PHP变量的销毁</h2><blockquote>
+<p>运用unset()函数消除变量<br>格式： unset($变量名称)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span>=<span class="hljs-number">1</span>; .<br><span class="hljs-keyword">unset</span> (<span class="hljs-variable">$a</span>) :<span class="hljs-comment">//销毁a变量</span><br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>;<span class="hljs-comment">//提示出错，因为变量a已经被销毁了</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="PHP-变量的命名规则"><a href="#PHP-变量的命名规则" class="headerlink" title="PHP 变量的命名规则"></a>PHP 变量的命名规则</h2><blockquote>
+<p>PHP 变量规则：</p>
+<p>变量以 $ 符号开始，后面跟着变量的名称</p>
+<p>变量名必须以字母或者下划线字符开始</p>
+<p>变量名只能包含字母数字字符以及下划线（A-z、0-9 和 _ ）</p>
+<p>变量名不能包含空格</p>
+<p>变量名是严格区分大小写的（$name和$NAME是两个不同的变量）</p>
+</blockquote>
+<p>注：PHP中有一些标示符是系统定义的，也称为关键字，是PHP语言的组成部分，因此不能使用它们中的任何一个作为常量函数名或类名。但是和其他语言不同的是可以在PHP中作为变量名称使用不过这样容易混淆，所以最好还是不要用PP的关键字作为变量名称。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200520193400288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="PHP可变变量"><a href="#PHP可变变量" class="headerlink" title="PHP可变变量"></a>PHP可变变量</h2><p>一个变量的名字可以动态的设置和使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$abc</span>=<span class="hljs-string">&#x27;test&#x27;</span>;<span class="hljs-comment">//定义了一个变量abc里面存了值test</span><br><span class="hljs-variable">$abc</span>=<span class="hljs-string">&#x27;aaa&#x27;</span> ;<span class="hljs-comment">//$test=&#x27;aaa&#x27;;</span><br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$test</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">aaa<br></code></pre></td></tr></table></figure>
+<h2 id="PHP变量的引用赋值"><a href="#PHP变量的引用赋值" class="headerlink" title="PHP变量的引用赋值"></a>PHP变量的引用赋值</h2><p>引用赋值可以简单的理解为给变量起了个别名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span>=<span class="hljs-number">1000</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-variable">$a</span>;<span class="hljs-comment">//相当于把$a的值，复制一份再赋值给$b这个变量</span><br><span class="hljs-variable">$b</span>=&amp;<span class="hljs-variable">$a</span>;<span class="hljs-comment">//相当于给$a起了一个别名，操作其中任何一个，都会影响到另外一个变量的值!</span><br><span class="hljs-variable">$b</span>=<span class="hljs-number">20</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+<h2 id="PHP变量类型"><a href="#PHP变量类型" class="headerlink" title="PHP变量类型"></a>PHP变量类型</h2><blockquote>
+<p>使用var_ dump(变量名)可以输出变量的类型</p>
+</blockquote>
+<p>1.变量类型简介</p>
+<blockquote>
+<p>在PHP程序中，数据类型可以分成3种：标量数据类型、复合数据类型（即将多个简单数据类型组合在一起，存储在一个变量名中）和特殊数据类型。<br>1．标量数据类型标量数据类型包括以下几种。<br>（1）boolean：布尔型<br>布尔变量是PHP变量中最简单的。它保存一个True或者False值。其中True或者False是PHP的内部关键字。设定一个布尔型的变量，只需将True或者False赋值给该变量<br>（2）string：字符串<br>字符串是连续的字符序列，字符串中的每个字符只占用一个字节。在PHP中，定义字符串有3种方式：单引号方式，双引号方式，定界符方式。<br>（3）integer：整数<br>整数数据类型只能包含整数。这些数据类型可以是正数或负数。在32位的操作系统中，有效的范围是2 147 483 648～+2147 483<br>647。<br>（4）double：浮点数<br>浮点数据类型可以用来存储数字，也可以保存小数。它提供的精度不整数大得多。在32位的操作系统中，有效的范围是1.7E-308～1.7E+308。</p>
+<p>2．复合数据类型复合数据类型包括以下两种。<br>（1）array：数组可以是二维、三维或者多维，数组中的各元素可以是string、integer或double，也可以是array。<br>（2）object：对象类型</p>
+<p>3．特殊数据类型特殊数据类型包括以下两种。<br>（1）resource：资源 资源是PHP内的几个函数所需要的特殊数据类型，由编程人员来分配。<br>（2）null：空值 空值是最简单的数据类型。表示没有为该变量设置任何值，另外，空值（NULL）不区分大小写。</p>
+</blockquote>
+<ol>
+<li>bool(布尔型)</li>
+</ol>
+<p>  这个是最简单的类型布尔型表达了true或false,即真或假。 以下值被认为是false.其他的值都是被认为是true<br>   ①布尔值false<br> ②0<br>  ③浮点型0.0<br>④空白字符事和字符串<br>   ⑤没有成员的数组<br>   ⑥NULL</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$a</span>= <span class="hljs-literal">true</span>,<br>var_ dump(<span class="hljs-variable">$a</span>) ;<span class="hljs-comment">//往变量里面存true或者talse,那么这个变量就是布尔型了</span><br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>int (整型)<br>往变量里面存储整数，那么这个变量就是整型变量了</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$a</span>=<span class="hljs-number">1</span>;<br>var_ _dusp(<span class="hljs-variable">$a</span>)<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>float (浮点型，也称double)<br>往变量里面存小数，那么这个变量就是浮点型变量了</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$a</span>=<span class="hljs-number">1.1</span>;<br>var_ _dusp(<span class="hljs-variable">$a</span>)<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>string (字符串)<br>字符串就是一系列的字符组成串在一起，字符串可以使用单引号、双引号、定界符三种方法来定义!</li>
+</ol>
+<p>①单引号</p>
+<blockquote>
+<p>指定一个简单的字符串最简单的方法是使用一对单引号括起来注意在单引号’括起来的字符串中不能再包含单引号，如果实在要用单引号那么就需要用反斜杠()转义，问题，如果宇符串中确实需要一个真正的反斜杠怎么办?<br>单引号字符串中出现的安量不会被变量的值替代,即PHP不会解析单引号中的变量，因此在定义简单字符串的时候，使用单引号会效率更高，因此没有特别的要求，应使用单引号定义字符串!</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$b</span>=<span class="hljs-number">1</span>;<br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;test$abc\&#x27;defgh&#x27;</span>;<br>var_ dump(<span class="hljs-variable">$a</span>) ;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span> ;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">string</span>(<span class="hljs-number">14</span>) <span class="hljs-string">&quot;test<span class="hljs-subst">$abc</span>&#x27;defgh&quot;</span><br>test<span class="hljs-variable">$abc</span><span class="hljs-string">&#x27;defgh</span><br></code></pre></td></tr></table></figure>
+<p>在定义一些简单的字符串的时候使用单引号这种方法效率比较高</p>
+<p>②双引号<br>双引号括起来，其中的变量名会被变量值所代替。即PHP会解析双引号之间的变量。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$b</span>=<span class="hljs-number">100</span>;<br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27; teSbst......&#x27;</span>;<br><span class="hljs-variable">$a</span>=<span class="hljs-string">&quot;te<span class="hljs-subst">&#123;$b&#125;</span>t......&quot;</span>;<br>var_dump(<span class="hljs-variable">$a</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">string</span>(<span class="hljs-number">12</span>) <span class="hljs-string">&quot;te100t......&quot;</span><br>te100t......<br></code></pre></td></tr></table></figure>
+<p> ③定界符<br> &lt;&lt;&lt;之后提供一个标示符开始，然后是字符串的内容最后是同样的</p>
+<blockquote>
+<p>标示符表示结束<br>注意结束标示符之后必须接，不可以用其他的任何字符<br>标示符的命名规则：字母数字下划线。 并且不能以数字开始</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span>=&lt;&lt;&lt;aaa<br>abcdefghijklmnopqrstuvwxyz<br>aaa ;<br>var_dump(<span class="hljs-variable">$a</span>);<br><span class="hljs-meta">?&gt;</span><br><br></code></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">string</span>(<span class="hljs-number">26</span>) <span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="PHP-是一门弱类型语言"><a href="#PHP-是一门弱类型语言" class="headerlink" title="PHP 是一门弱类型语言"></a>PHP 是一门弱类型语言</h2><ol>
+<li><p>不必向 PHP 声明该变量的数据类型。</p>
+</li>
+<li><p>PHP 会根据变量的值，自动把变量转换为正确的数据类型。</p>
+</li>
+<li><p>在强类型的编程语言中，我们必须在使用变量前先声明（定义）变量的类型和名称。</p>
+</li>
+</ol>
+<h2 id="phpstudy2020-Sublime-Text-3创建PHP编译环境"><a href="#phpstudy2020-Sublime-Text-3创建PHP编译环境" class="headerlink" title="phpstudy2020+Sublime Text 3创建PHP编译环境"></a>phpstudy2020+Sublime Text 3创建PHP编译环境</h2><p>在phpstudy文件目录下，找到这个文件夹，复制路径</p>
+<p><img src="https://img-blog.csdnimg.cn/20201014210142241.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>右击此电脑，点击属性-&gt;高级系统设置-&gt;环境变量</p>
+<p>在系统变量里面找到Path，点击编辑，填入上面文件夹的路径，然后点击确定</p>
+<p><img src="https://img-blog.csdnimg.cn/20201014210356900.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>检测上面配置是否成功，重新打开一个cmd命令窗体，输入命令<code>php -h</code>查看是否会提示php的命令使用方法，有提示则表示上面步骤已成功<br><img src="https://img-blog.csdnimg.cn/20201014212428202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>打开Sublime Text 3，点击tools，Build System，New Build System<br><img src="https://img-blog.csdnimg.cn/2020101421103991.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201014211112480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>默认的内容是：<code>&#123; &quot;shell_cmd&quot;: &quot;make&quot;&#125;</code>修改为：<code>&#123; &quot;cmd&quot;: [&quot;php&quot;, &quot;$file&quot;], &quot;file_regex&quot;: &quot;php$&quot;, &quot;selector&quot;: &quot;source.php&quot; &#125;</code><br><img src="https://img-blog.csdnimg.cn/20201014211625688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>保存在默认的目录下即可，注意修改文件名为 <code>php.sublime-build</code> 。<br><img src="https://img-blog.csdnimg.cn/20201014211554919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>重启sublime text3，在运行php时一定记得要切换，就可以用Ctrl+B来编译.php文件了；。<br><img src="https://img-blog.csdnimg.cn/2020101421480068.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">编程开发</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/PHP/">PHP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/22/PHP%20%E8%BF%90%E7%AE%97%E7%AC%A6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PHP 运算符</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">CTF-MISC总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
+
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
+
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('02/07/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
+
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
+    }
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+}
+setInterval("createtime()", 250);
+</script>
+
+<!-- 添加网站运行时间》-->
+  </div>
+  
+
+  
+
+    <div class="footer-center">
+         <!--添加备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+      </div>
+  
+</footer>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

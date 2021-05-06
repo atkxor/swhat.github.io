@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/atkx_16x16.png">
+  <link rel="icon" href="/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="摘要：PHP学习笔记（四）">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>PHP 文件与目录操作 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.top","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PHP 文件与目录操作">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-20 20:53" pubdate>
+        2020年9月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PHP 文件与目录操作</h1>
+            
+            <div class="markdown-body">
+              <p>摘要：PHP学习笔记（四）</p>
+ <a id="more"></a>
+
+<h2 id="一、判断普通文件和目录"><a href="#一、判断普通文件和目录" class="headerlink" title="一、判断普通文件和目录"></a>一、判断普通文件和目录</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">1.</span>is_file()<br>判断给定文件名是否为一个正常的文件<br>语法：is_file(file)   <span class="hljs-comment">//规定要检查的文件。</span><br>如果文件是常规的文件，该函数返回 <span class="hljs-literal">TRUE</span>。<br><br><span class="hljs-number">2.</span>is_dir()<br>判断给定文件名是否是一个目录<br>语法: is_dir(file)<br>如果文件名存在并且为目录，则返回 <span class="hljs-literal">true</span>。如果 file 是一个相对路径，则按照当前工作目录检查其相对路径。<br></code></pre></td></tr></table></figure>
+<h2 id="二、文件的属性"><a href="#二、文件的属性" class="headerlink" title="二、文件的属性"></a>二、文件的属性</h2><p>1.<code>file_exists()</code><br>检查文件或目录是否存在</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：file_exists(path)   <span class="hljs-comment">//path为规定要检查的路径。</span><br></code></pre></td></tr></table></figure>
+<p>如果指定的文件或目录存在则返回 true，否则返回 false。</p>
+<p>2.<code>filesize()</code><br>取得普通文件大小</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: filesize(filename)  <span class="hljs-comment">//filename为规定要检查的文件。</span><br></code></pre></td></tr></table></figure>
+<p>若成功，则返回文件大小的字节数。若失败，则返回 false 并生成一条 E_WARNING 级的错误。</p>
+<p>3.<code>is_readable()</code><br>判断给定文件名是否可读</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: is_readable(file)<br></code></pre></td></tr></table></figure>
+<p>如果由 file 指定的文件或目录存在并且可读，则返回 TRUE。</p>
+<p>4.<code>is_writable()</code><br>判断给定的文件名是否可写</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: is_writable(file)<br></code></pre></td></tr></table></figure>
+<p>如果文件存在并且可写则返回 true。file 参数可以是一个允许进行是否可写检查的目录名。</p>
+<p>5.<code>filectime()</code><br>获取指定文件的上次访问时间。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: fileatime(filename)<br></code></pre></td></tr></table></figure>
+<p>该函数返回文件上次被访问的时间。如果出错则返回 false。时间以 Unix 时间戳的方式返回。</p>
+<p>6.<code>filemtime()</code><br>获取文件的修改时间</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: filemtime(filename)<br></code></pre></td></tr></table></figure>
+<p>返回文件中的数据块上次被写入的时间，也就是说，文件的内容上次被修改的时间。</p>
+<p>7.<code>fileatime()</code><br>获取指定文件的上次 inode 修改时间。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法: fileatime(filename)<br></code></pre></td></tr></table></figure>
+<p>返回文件上次 inode 被修改的时间。如果出错则返回 false。时间以 Unix 时间戳的方式返回。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php">fileatime、filemtime与filectime区别<br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$file</span> = <span class="hljs-string">&quot;1.txt&quot;</span>;<br>outputFileTestInfo( <span class="hljs-variable">$file</span> );<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">outputFileTestInfo</span>(<span class="hljs-params"> <span class="hljs-variable">$f</span> </span>)</span>&#123;<br>   <span class="hljs-keyword">if</span> ( ! file_exists( <span class="hljs-variable">$f</span> ) )&#123;<br>       <span class="hljs-keyword">print</span> <span class="hljs-string">&quot;<span class="hljs-subst">$f</span> does not exist&lt;BR&gt;&quot;</span>;<br>      <span class="hljs-keyword">return</span>;<br>   &#125;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">&quot;<span class="hljs-subst">$f</span> was accessed on &quot;</span>.date( <span class="hljs-string">&quot;D d M Y g:i A&quot;</span>, fileatime( <span class="hljs-variable">$f</span> ) ).<span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">&quot;<span class="hljs-subst">$f</span> was modified on &quot;</span>.date( <span class="hljs-string">&quot;D d M Y g:i A&quot;</span>, filemtime( <span class="hljs-variable">$f</span> ) ).<span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>	<span class="hljs-keyword">print</span> <span class="hljs-string">&quot;<span class="hljs-subst">$f</span> was changed on &quot;</span>.date( <span class="hljs-string">&quot;D d M Y g:i A&quot;</span>, filectime( <span class="hljs-variable">$f</span> ) ).<span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">输出：</span><br><span class="hljs-comment">1.txt was accessed on Sun 13 Sep 2020 7:16 PM</span><br><span class="hljs-comment">1.txt was modified on Sun 13 Sep 2020 5:23 PM</span><br><span class="hljs-comment">1.txt was changed on Sun 13 Sep 2020 7:16 PM</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<p>8.<code>stat()</code><br>获取文件大部分属性值</p>
+<h2 id="三、目录的基本操作"><a href="#三、目录的基本操作" class="headerlink" title="三、目录的基本操作"></a>三、目录的基本操作</h2><p>1.<code>basename()</code><br>返回路径中的文件名部分</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法:basename(path)或basename(path,文件拓展名)  <br></code></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$path</span> = <span class="hljs-string">&quot;demo/test.php&quot;</span>;<br><span class="hljs-comment">//Show filename with file extension</span><br><span class="hljs-keyword">echo</span> basename(<span class="hljs-variable">$path</span>) .<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;  <span class="hljs-comment">//输出test.php</span><br>/Show filename without file extension<br><span class="hljs-keyword">echo</span> basename(<span class="hljs-variable">$path</span>,<span class="hljs-string">&quot;.php&quot;</span>);   <span class="hljs-comment">//输出 test</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>2.<code>dirname()</code><br>返回路径中的目录部分</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法： dirname(path)<br></code></pre></td></tr></table></figure>
+<p>案例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> dirname(<span class="hljs-string">&quot;c:/testweb/home.php&quot;</span>);  <span class="hljs-comment">//输出c:/testweb</span><br><span class="hljs-keyword">echo</span> dirname(<span class="hljs-string">&quot;/testweb/home.php&quot;</span>);   <span class="hljs-comment">//输出testweb</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>3.<code>pathinfo()</code><br>以数组的形式返回文件路径的信息。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法： pathinfo(path,options)<br></code></pre></td></tr></table></figure>
+<p>用法：<br>pathinfo() 返回一个关联数组包含有 path 的信息。包括以下的数组元素：[dirname]（ 目录路径）、[basename] (文件名)、[extension]: (文件后缀名)、[filename] (不包含后缀的文件名)。<br>其中options为规定要返回的数组元素。默认是 all。<br>若出现<code>PATHINFO_DIRNAME</code> ， 则只返回 dirname<br>若出现<code>PATHINFO_BASENAME</code> ， 则只返回 basename<br>若出现<code>PATHINFO_EXTENSION</code> ，则只返回 extension</p>
+<p>例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>print_r(pathinfo(<span class="hljs-string">&quot;index.html&quot;</span>));<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">Array ( [dirname] =&gt; . [basename] =&gt; index.html [extension] =&gt; html [filename] =&gt; index )<br></code></pre></td></tr></table></figure>
+<p>4.<code>opendir()</code><br>打开目录句柄</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：opendir(path);<br><span class="hljs-comment">//path为规定要打开的目录路径。。</span><br></code></pre></td></tr></table></figure>
+<p>5.<code>readdir()</code><br>从目录句柄中读取条目,返回目录中下一个文件的文件名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">readdir(dir_handle);<br><span class="hljs-comment">//dir_handle指定之前由 opendir() 打开的目录句柄资源。如果该参数未指定，则使用最后一个由 opendir() 打开的链接。</span><br></code></pre></td></tr></table></figure>
+<p>6.<code>rewinddir()</code><br>倒回目录句柄</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：rewinddir(dir_handle);<br><span class="hljs-comment">//rewinddir() 函数重置由 opendir() 创建的目录句柄。</span><br></code></pre></td></tr></table></figure>
+<p>7.<code>closedir()</code><br>关闭目录句柄</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：closedir(dir_handle);<br></code></pre></td></tr></table></figure>
+<p>8.<code>mkdir()</code><br>新建目录，如果成功该函数返回 true，如果失败则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：mkdir(path,mode,recursive)<br></code></pre></td></tr></table></figure>
+<p>9.<code>rmdir()</code><br>删除指定的空目录，如果成功该函数返回 true，如果失败则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：rmdir(dir)<br></code></pre></td></tr></table></figure>
+<p>10.<code>scandir()</code><br>返回指定目录中的文件和目录的数组。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php">语法：scandir(<span class="hljs-built_in">directory</span>,sorting_order);<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">directory为要扫描的目录。</span><br><span class="hljs-comment">sorting_order为排列顺序。默认是 0，表示按字母升序排列。</span><br><span class="hljs-comment">如果设置为 sorting_order_descending 或者 1，则表示按字母降序排列。</span><br><span class="hljs-comment">如果设置为 sorting_order_none，则返回未排列的结果。</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="四、文件的基本操作"><a href="#四、文件的基本操作" class="headerlink" title="四、文件的基本操作"></a>四、文件的基本操作</h2><p>1.<code>fopen():</code> 打开文件或者 URL<br>  fopen()函数的参数是目标文件的路径和文件的读写模式；同时fopen函数也会     在打开文件时候发现没有文件会自动创建一个文件，但是模式必须是读写或写入的模式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$file</span>=fopen(<span class="hljs-string">&quot;D:/test/file.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>);<span class="hljs-comment">//使用绝对路径打开一个文件，选择只读模式，并返回资源$file</span><br><span class="hljs-variable">$file</span>=fopen(<span class="hljs-string">&quot;http://www.test.com&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>);<span class="hljs-comment">//打开远程文件，使用http协议只能以读的方式打开</span><br></code></pre></td></tr></table></figure>
+
+<p>2<code>.fread()</code>:读取文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">fread(<span class="hljs-variable">$file</span>,filesize(<span class="hljs-string">&quot;file.txt&quot;</span>));<br></code></pre></td></tr></table></figure>
+<p>fread()函数的参数是需要读取的文件和文件读取的最大字节数</p>
+<p>3.<code>fgets():</code>从文件指针中读取一行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">fgets(<span class="hljs-variable">$file</span>);<br></code></pre></td></tr></table></figure>
+<p>读取文件中的单行文字，没读取一次就会将文件指针指向下一行的首部</p>
+<p><code> fgetc()</code>:读取单个字符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">fgetc(<span class="hljs-variable">$file</span>);<br></code></pre></td></tr></table></figure>
+<p>fgetc()函数将会逐个字符的读取内容输出；</p>
+<p><code>4.feof()</code>:检查文件指针是否到了文件结束的位置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">feof(<span class="hljs-variable">$file</span>);<br></code></pre></td></tr></table></figure>
+<p>feof()函数的主要功能是检查文件中的指针是否到达文件末尾，可以借此来解决未知大小的文件读写防止越界的问题</p>
+<p><code>5.fwrite()</code>:写入文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">fwrite(file,<span class="hljs-keyword">string</span>,length)<br></code></pre></td></tr></table></figure>
+<p>fwrite() 返回写入的字符数，出现错误时则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$file</span> = fopen(<span class="hljs-string">&quot;test.txt&quot;</span>,<span class="hljs-string">&quot;w&quot;</span>);<br><span class="hljs-keyword">echo</span> fwrite(<span class="hljs-variable">$file</span>,<span class="hljs-string">&quot;Hello World&quot;</span>);<br>fclose(<span class="hljs-variable">$file</span>);<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">//输出</span><br><span class="hljs-number">11</span><br></code></pre></td></tr></table></figure>
+<p>6.<code>rewind()</code><br>倒回文件指针的位置</p>
+<p>7.<code>flock()</code><br>轻便的咨询文件锁定</p>
+<p>8.<code>ftruncate()</code><br>将文件截断到给定的长度</p>
+<p>9.<code>fclose()</code>：关闭一个已打开的文件指针</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">fclose(file)<br></code></pre></td></tr></table></figure>
+<p>file 参数是一个文件指针,fclose() 函数关闭该指针指向的文件。如果成功则返回 true，否则返回 false。</p>
+<p>10.<code>file()</code> :把整个文件读入一个数组中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">file(path)<br></code></pre></td></tr></table></figure>
+<p>file() 将文件作为一个数组返回。数组中的每个单元都是文件中相应的一行，包括换行符在内。如果失败，则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>print_r(file(<span class="hljs-string">&quot;test.txt&quot;</span>));<br><span class="hljs-meta">?&gt;</span> <br><span class="hljs-comment">//输出</span><br><span class="hljs-keyword">Array</span> ( [<span class="hljs-number">0</span>] =&gt; Hello World [<span class="hljs-number">1</span>] =&gt; abc [<span class="hljs-number">2</span>] =&gt; fe [<span class="hljs-number">3</span>] =&gt; vdf )<br></code></pre></td></tr></table></figure>
+<p>11.<code>copy()</code>：拷贝文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">copy(source,destination)<br><span class="hljs-comment">//source 为要复制的文件，destination	为复制文件的目的地。</span><br></code></pre></td></tr></table></figure>
+<p>将文件从 source 拷贝到 destination。如果成功则返回 TRUE，否则返回 FALSE。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> copy(<span class="hljs-string">&quot;a.txt&quot;</span>,<span class="hljs-string">&quot;b.txt&quot;</span>);<br><span class="hljs-meta">?&gt;</span> <br></code></pre></td></tr></table></figure>
+<p>12.<code>unlink()</code>：删除文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">unlink(filename)<br></code></pre></td></tr></table></figure>
+<p>删除文件若成功，则返回 true，失败则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$file</span> = <span class="hljs-string">&quot;test.txt&quot;</span>;<br><span class="hljs-keyword">if</span> (!unlink(<span class="hljs-variable">$file</span>))<br>  &#123;<br>  <span class="hljs-keyword">echo</span> (<span class="hljs-string">&quot;Error deleting <span class="hljs-subst">$file</span>&quot;</span>);<br>  &#125;<br><span class="hljs-keyword">else</span><br>  &#123;<br>  <span class="hljs-keyword">echo</span> (<span class="hljs-string">&quot;Deleted <span class="hljs-subst">$file</span>&quot;</span>);<br>  &#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>13.<code>file_get_contents()</code>：将整个文件读入一个字符串</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">file_get_contents(path)<br></code></pre></td></tr></table></figure>
+<p>14.<code>file_put_contents()</code>：将字符串写入文件中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">file_put_contents(file,data)<br></code></pre></td></tr></table></figure>
+<p>file_put_contents() 函数把一个字符串写入文件中。与依次调用 fopen()，fwrite() 以及 fclose() 功能一样。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> file_put_contents(<span class="hljs-string">&quot;test.txt&quot;</span>,<span class="hljs-string">&quot;Hello World!&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>15.<code>rename()</code>：重命名一个文件或目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">rename(oldname,newname)<br><span class="hljs-comment">//oldname 要重命名的文件或目录。newname 文件或目录的新名称。</span><br></code></pre></td></tr></table></figure>
+<p>16.<code>readfile()</code>;读入一个文件并写入到输出缓冲</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">readfile(filename)<br></code></pre></td></tr></table></figure>
+<p>该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> readfile(<span class="hljs-string">&quot;test.txt&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">//输出</span><br>Hello World!<span class="hljs-number">12</span><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">编程开发</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/PHP/">PHP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RSA算法详解与练习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/03/PHP%20cookie%E4%B8%8Esession/">
+                        <span class="hidden-mobile">PHP cookie与session</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
+
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
+
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('02/07/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
+
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
+    }
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+}
+setInterval("createtime()", 250);
+</script>
+
+<!-- 添加网站运行时间》-->
+  </div>
+  
+
+  
+
+    <div class="footer-center">
+         <!--添加备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+      </div>
+  
+</footer>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
