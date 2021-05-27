@@ -320,7 +320,7 @@
 <table>
 <thead>
 <tr>
-<th></th>
+<th>项</th>
 <th>描述</th>
 </tr>
 </thead>
@@ -420,8 +420,71 @@
 <p><img src="https://img-blog.csdnimg.cn/20201102125444628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="12-数字验证正则绕过"><a href="#12-数字验证正则绕过" class="headerlink" title="12. 数字验证正则绕过"></a>12. 数字验证正则绕过</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/21.php">http://123.206.87.240:9009/21.php</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>error_reporting(<span class="hljs-number">0</span>);<br>$flag = &#x27;flag&#123;test&#125;&#x27;;<br>if (&quot;POST&quot; == $_SERVER[&#x27;REQUEST_METHOD&#x27;]) &#123;<br>	$password = $_POST[&#x27;password&#x27;];<br>	if (0 &gt;= preg_match(&#x27;/^[[:graph:]]&#123;12,&#125;$/&#x27;, $password)) //preg_match — 执行一个正则表达式匹配 &#123;<br>		echo &#x27;flag&#x27;;<br>		<span class="hljs-built_in">exit</span>;<br>	&#125;<br>	<span class="hljs-keyword">while</span> (TRUE) &#123;<br>		$reg = &#x27;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&#x27;;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-number">6</span> &gt; preg_match_all($reg, $password, $arr))<br>		<span class="hljs-keyword">break</span>;<br>		$c = <span class="hljs-number">0</span>;<br>		$ps = array(&#x27;punct&#x27;, &#x27;digit&#x27;, &#x27;upper&#x27;, &#x27;lower&#x27;);<br>		<span class="hljs-comment">//[[:punct:]] 任何标点符号 [[:digit:]] 任何数字 [[:upper:]] 任何大写字母 [[:lower:]] 任何小写字母</span><br>		foreach ($ps as $pt) &#123;<br>			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">&quot;/[[:$pt:]]+/&quot;</span>, $password))<br>			$c += <span class="hljs-number">1</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> ($c &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">break</span>;<br>		<span class="hljs-comment">//&gt;=3，必须包含四种类型三种与三种以上</span><br>		<span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;42&quot;</span> == $password) <br>              echo $flag; <br>        <span class="hljs-keyword">else</span> <br>              echo &#x27;Wrong password&#x27;;<br>		<span class="hljs-built_in">exit</span>;<br>	&#125;<br>&#125;<br>?&gt;<br></code></pre></td></tr></table></figure>
-<p>代码中涉及到的一些正则函数<br>| 正则匹配函数   | 描述                                                         | 区别                       |<br>| ————– | ———————————————————— | ————————– |<br>| preg_match     | 执行一个正则表达式匹配，匹配到则返回1，匹配不到则返回0       | 第一次匹配成功后就停止匹配 |<br>| preg_match_all | 执行一个全局正则表达式匹配，返回成功模式匹配的次数，并将匹配结果存储到一个数组中 | 匹配到字符串结束为止       |</p>
-<p>下面还有几个正则匹配的字符：<br>| 正则匹配字符  | 描述 |ASCII|<br>|–|–|–|<br>| [:graph:] |除空格，TAB外的所有字符 |[\x21-\x7E]<br>|[a-zA-Z0-9]|大小写字母和数字 |[a-zA-Z0-9]<br>|[:alpha:]|大小写字母|    [a-zA-Z]|<br>| [:punct:] | 任何标点符号|[!”#$%&amp;’()*+,-./:;&lt;=&gt;?@[]^_`{} ~]|<br>| [:digit:] |任何数字 |[0-9]<br>| [:upper:] |任何大写字母 |[A-Z]<br>| [:lower:] |任何小写字母 |[a-z]</p>
+<p>代码中涉及到的一些正则函数</p>
+<table>
+<thead>
+<tr>
+<th>正则匹配函数</th>
+<th>描述</th>
+<th>区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>preg_match</td>
+<td>执行一个正则表达式匹配，匹配到则返回1，匹配不到则返回0</td>
+<td>第一次匹配成功后就停止匹配</td>
+</tr>
+<tr>
+<td>preg_match_all</td>
+<td>执行一个全局正则表达式匹配，返回成功模式匹配的次数，并将匹配结果存储到一个数组中</td>
+<td>匹配到字符串结束为止</td>
+</tr>
+</tbody></table>
+<p>下面还有几个正则匹配的字符：</p>
+<table>
+<thead>
+<tr>
+<th>正则匹配字符</th>
+<th>描述</th>
+<th>ASCII</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[:graph:]</td>
+<td>除空格，TAB外的所有字符</td>
+<td>[\x21-\x7E]</td>
+</tr>
+<tr>
+<td>[a-zA-Z0-9]</td>
+<td>大小写字母和数字</td>
+<td>[a-zA-Z0-9]</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>大小写字母</td>
+<td>[a-zA-Z]</td>
+</tr>
+<tr>
+<td>[:punct:]</td>
+<td>任何标点符号</td>
+<td>[!”#$%&amp;’()*+,-./:;&lt;=&gt;?@[]^_`{} ~]</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>任何数字</td>
+<td>[0-9]</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>任何大写字母</td>
+<td>[A-Z]</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>任何小写字母</td>
+<td>[a-z]</td>
+</tr>
+</tbody></table>
 <p>代码审计</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">请求方法必须为POST<br><span class="hljs-number">1</span>、正则匹配，[:graph:]为任意字符，要求password长度超过<span class="hljs-number">12</span><br><span class="hljs-number">2</span>、password中必须包含标点符号，数字，大写字母，小写字母，并且检测次数要超过<span class="hljs-number">6</span>次<br><span class="hljs-number">3</span>、标点符号，数字，大写字母，小写字母，包含<span class="hljs-number">3</span>种以上绕过<br><span class="hljs-number">4</span>、弱类型比较，42abc,强制转换为数字<br></code></pre></td></tr></table></figure>
 <p>构造Payload，居然提示<code>Wrong password</code></p>

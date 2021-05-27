@@ -259,7 +259,159 @@
 <h2 id="内建拦截器"><a href="#内建拦截器" class="headerlink" title="内建拦截器"></a>内建拦截器</h2><p>拦截器都继承AbstractInterceptor</p>
 <p>Struts2 框架中内置了许多拦截器，这些拦截器以 name-class 对的形式配置在 struts-default.xml 文件中，其中，name 是拦截器的名称，也就是引用的名字；class 指定了该拦截器所对应的实现。</p>
 <p>只要自定义的包继承了 Struts2 的 struts-default 包，就可以使用包中定义的内建拦截器，否则需要自行定义拦截器。</p>
-<p>内建拦截器介绍:<br>| 名称                | 说明                                                         |<br>| ——————- | ———————————————————— |<br>| alias               | 在不同请求之间将请求参数在不同名称间转换，请求内容不变       |<br>| autowiring          | 用于实现 Action 的自动装配                                   |<br>| chain               | 让前一个 Action 的属性可以被后一个 Action 访问，现在和 chain 类型的 result() 结合使用 |<br>| conversionError     | 将错误从 ActionContext 中添加到 Action 的属性字段中          |<br>| cookies             | 使用配置的 Name 和 Value 指定 Cookies                        |<br>| cookieProvider      | 该类是一个 Cookie 工具，方便开发者向客户端写 Cookie          |<br>| clearSession        | 用于清除一个 HttpSession 实例                                |<br>| createSession       | 自动创建 HttpSession，用于为需要使用                         |<br>| HttpSession         | 的拦截器服务                                                 |<br>| debugging           | 提供不同的调试用的页面展现内部的数据状况                     |<br>| execAndWait         | 在后台执行 Action，同时将用户带到一个中间的等待页面          |<br>| exception           | 将异常定位到一个画面                                         |<br>| fileUpload          | 提供文件上传功能                                             |<br>| il8n                | 记录用户选择的 locale                                        |<br>| logger              | 输出 Action 的名称                                           |<br>| model-driven        | 如果一个类实现了 Model Driven，将 get Model 得到的结果放在 Value Slack 中 |<br>| scoped-model-driven | 如果一个 Action 实现了                                       |<br>| params              | 将请求中的参数设置到 Action 中                               |<br>| actionMappingParams | 用于负责在 Action 配置中传递参数                             |<br>| prepare             | 如果 Action 实现了 Preparable，则该拦截器调用 Action 类的 prepare 方法 |<br>| staticParams        | 将 struts.xml 文件中 标签的参数内容设置到对应的 Action 中    |<br>| scope               | 将 Action 状态存入 session 和 application 范围               |<br>| servletConfig       | 提供访问 HttpServletRequest 和 HttpServletResponse 方法，以 Map 方式访问 |<br>| timer               | 输岀 Action 执行的时间                                       |<br>| token               | 通过 Token 避免双击                                          |<br>| tokenSession        | 和 Token Interceptor 一样，不过双击时把请求的数据存储在 Session 中 |<br>| validation          | 使用 action-validation.xml 文件中定义的内容校验提交的数据    |<br>| workflow            | 调用 Action 的 validate 方法，一旦有错谋返回，则重新定位到 INPUT 画面 |<br>| store               | 存储或者访问实现 ValidalionAware 接口的 Action 类出现的消息、错误和字段错误等 |<br>| checkbox            | 添加了 checkbox 自动处理代码，将没有选中的 checkbox 的内容设定为 false，而 html 在默认情况下不提交没有选中的 checkbox |<br>| datetime            | 日期拦截器                                                   |<br>| profiling           | 通过参数激活 profile                                         |<br>| roles               | 确定用户是否具有 JAAS 指定的 Role，否则不予执行              |<br>| annotationWorkflow  | 利用注解代替 XML 配置                                        |<br>| multiselect         | 检测是否有像 标签一样被选中的多个值，然后添加一个空参数      |<br>| deprecation         | 当日志级别设置为调试模式（debug）并且没有特殊参数时，在 devMode |</p>
+<p>内建拦截器介绍:</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alias</td>
+<td>在不同请求之间将请求参数在不同名称间转换，请求内容不变</td>
+</tr>
+<tr>
+<td>autowiring</td>
+<td>用于实现 Action 的自动装配</td>
+</tr>
+<tr>
+<td>chain</td>
+<td>让前一个 Action 的属性可以被后一个 Action 访问，现在和 chain 类型的 result() 结合使用</td>
+</tr>
+<tr>
+<td>conversionError</td>
+<td>将错误从 ActionContext 中添加到 Action 的属性字段中</td>
+</tr>
+<tr>
+<td>cookies</td>
+<td>使用配置的 Name 和 Value 指定 Cookies</td>
+</tr>
+<tr>
+<td>cookieProvider</td>
+<td>该类是一个 Cookie 工具，方便开发者向客户端写 Cookie</td>
+</tr>
+<tr>
+<td>clearSession</td>
+<td>用于清除一个 HttpSession 实例</td>
+</tr>
+<tr>
+<td>createSession</td>
+<td>自动创建 HttpSession，用于为需要使用</td>
+</tr>
+<tr>
+<td>HttpSession</td>
+<td>的拦截器服务</td>
+</tr>
+<tr>
+<td>debugging</td>
+<td>提供不同的调试用的页面展现内部的数据状况</td>
+</tr>
+<tr>
+<td>execAndWait</td>
+<td>在后台执行 Action，同时将用户带到一个中间的等待页面</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>将异常定位到一个画面</td>
+</tr>
+<tr>
+<td>fileUpload</td>
+<td>提供文件上传功能</td>
+</tr>
+<tr>
+<td>il8n</td>
+<td>记录用户选择的 locale</td>
+</tr>
+<tr>
+<td>logger</td>
+<td>输出 Action 的名称</td>
+</tr>
+<tr>
+<td>model-driven</td>
+<td>如果一个类实现了 Model Driven，将 get Model 得到的结果放在 Value Slack 中</td>
+</tr>
+<tr>
+<td>scoped-model-driven</td>
+<td>如果一个 Action 实现了</td>
+</tr>
+<tr>
+<td>params</td>
+<td>将请求中的参数设置到 Action 中</td>
+</tr>
+<tr>
+<td>actionMappingParams</td>
+<td>用于负责在 Action 配置中传递参数</td>
+</tr>
+<tr>
+<td>prepare</td>
+<td>如果 Action 实现了 Preparable，则该拦截器调用 Action 类的 prepare 方法</td>
+</tr>
+<tr>
+<td>staticParams</td>
+<td>将 struts.xml 文件中 标签的参数内容设置到对应的 Action 中</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>将 Action 状态存入 session 和 application 范围</td>
+</tr>
+<tr>
+<td>servletConfig</td>
+<td>提供访问 HttpServletRequest 和 HttpServletResponse 方法，以 Map 方式访问</td>
+</tr>
+<tr>
+<td>timer</td>
+<td>输岀 Action 执行的时间</td>
+</tr>
+<tr>
+<td>token</td>
+<td>通过 Token 避免双击</td>
+</tr>
+<tr>
+<td>tokenSession</td>
+<td>和 Token Interceptor 一样，不过双击时把请求的数据存储在 Session 中</td>
+</tr>
+<tr>
+<td>validation</td>
+<td>使用 action-validation.xml 文件中定义的内容校验提交的数据</td>
+</tr>
+<tr>
+<td>workflow</td>
+<td>调用 Action 的 validate 方法，一旦有错谋返回，则重新定位到 INPUT 画面</td>
+</tr>
+<tr>
+<td>store</td>
+<td>存储或者访问实现 ValidalionAware 接口的 Action 类出现的消息、错误和字段错误等</td>
+</tr>
+<tr>
+<td>checkbox</td>
+<td>添加了 checkbox 自动处理代码，将没有选中的 checkbox 的内容设定为 false，而 html 在默认情况下不提交没有选中的 checkbox</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>日期拦截器</td>
+</tr>
+<tr>
+<td>profiling</td>
+<td>通过参数激活 profile</td>
+</tr>
+<tr>
+<td>roles</td>
+<td>确定用户是否具有 JAAS 指定的 Role，否则不予执行</td>
+</tr>
+<tr>
+<td>annotationWorkflow</td>
+<td>利用注解代替 XML 配置</td>
+</tr>
+<tr>
+<td>multiselect</td>
+<td>检测是否有像 标签一样被选中的多个值，然后添加一个空参数</td>
+</tr>
+<tr>
+<td>deprecation</td>
+<td>当日志级别设置为调试模式（debug）并且没有特殊参数时，在 devMode</td>
+</tr>
+</tbody></table>
 <p>在 struts-core-2.3.24.jar 包中的根目录下找到 struts-default.xml 文件，打开后找到 元素下的内建拦截器和拦截器栈，其部分代码如下所示：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;struts-default&quot;</span> <span class="hljs-attr">abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">interceptors</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--系统内建拦截器部分，上一部分介绍的内容--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;alias&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.opensymphony.xwork2.interceptor.AliasInterceptor&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;autowiring&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.opensymphony.xwork2.spring.interceptor.ActionAutowiringInterceptor&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;chain&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.opensymphony.xwork2.interceptor.ChainingInterceptor&quot;</span>/&gt;</span><br>        ...<br>        <span class="hljs-comment">&lt;!-- 定义Basic stack拦截器栈 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-stack</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;basicStack&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--引用系统定义的exception拦截器--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;exception&quot;</span>/&gt;</span><br>            ...<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">interceptor-stack</span>&gt;</span><br>        ...<br>        <span class="hljs-comment">&lt;!-- 定义Sample model -driven stack --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-stack</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;modelDrivenStack&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--引用系统定义的modelDriven拦截器--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;modelDriven&quot;</span>/&gt;</span><br>            <span class="hljs-comment">&lt;!--引用系统定义的basicStack拦截器栈--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;basicStack&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">interceptor-stack</span>&gt;</span><br>        ...<br>        <span class="hljs-comment">&lt;!--定义defaultStack拦截器栈--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-stack</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;defaultStack&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;exception&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;alias&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;il8n&quot;</span>/&gt;</span><br>            ...<br>            <span class="hljs-tag">&lt;<span class="hljs-name">interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;validation&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;excludeMethods&quot;</span>&gt;</span>input,back,cancel,browse<span class="hljs-tag">&lt;/<span class="hljs-name">param</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">interceptor-ref</span>&gt;</span><br>            ...<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">interceptor-stack</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">interceptors</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--将defaulrStack拦截器栈配置为系统默认拦截器栈--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">default-interceptor-ref</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;defaultStack&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!--默认action类是ActionSupport--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">default-class-ref</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.opensymphony.xwork2.ActionSupport&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">package</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>在上述内建拦截器的配置代码中，defaultStack 拦截器组合了多个拦截器，这些拦截器可以满足大部分 Web 应用程序的需求。使用时，只要在 struts.xml 定义包的过程中继承 struts-default 包，那么 defaultStack 拦截器栈就是默认拦截器的引用。</p>
@@ -345,6 +497,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/05/21/CISCN2021%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CISCN2021赛后复现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

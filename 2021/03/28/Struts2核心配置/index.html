@@ -341,7 +341,43 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 动态方法调用是否开启，默认是关闭的 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">constant</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;struts.enable.DynamicMethodInvocation&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">constant</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>不推荐使用动态方法调用，因为会存在安全隐患。</p>
 <h2 id="访问Servlet-API的方法"><a href="#访问Servlet-API的方法" class="headerlink" title="访问Servlet API的方法"></a>访问Servlet API的方法</h2><h3 id="通过ActionContext类访问"><a href="#通过ActionContext类访问" class="headerlink" title="通过ActionContext类访问"></a>通过ActionContext类访问</h3><p>truts2提供了ActionContext类，struts2可以通过该类来实现与Servlet API的访问。</p>
-<p>ActionContext类提供了如下几种方法：<br>| 方法说明                             | 功能描述                                                     |<br>| ———————————— | ———————————————————— |<br>| Object get(Object key)               | 类似于调用HttpServletRequest的getAttribute(String name)方法  |<br>| Map getApplication()                 | 返回一个Map对象，该对象模拟了该应用的ServletContext实例      |<br>| static ActionContext getContext()    | 这是个静态方法 获取系统的ActionContext实例                   |<br>| Map getParameters()                  | 获取所有的请求参数，类似于调用HttpServletRequest对象的getParameterMap()方法 |<br>| Map getSession（）                   | 返回一个Map对象，该对象模拟了HttpSession 实例                |<br>| void setApplication(Map application) | 传入一个Map实例，将Map实例的key-value转换成application的属性名-值。 |<br>| void setSession(Map session)         | 传入一个Map实例，将Map实例的key-value转换成application的属性名-值。 |</p>
+<p>ActionContext类提供了如下几种方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法说明</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Object get(Object key)</td>
+<td>类似于调用HttpServletRequest的getAttribute(String name)方法</td>
+</tr>
+<tr>
+<td>Map getApplication()</td>
+<td>返回一个Map对象，该对象模拟了该应用的ServletContext实例</td>
+</tr>
+<tr>
+<td>static ActionContext getContext()</td>
+<td>这是个静态方法 获取系统的ActionContext实例</td>
+</tr>
+<tr>
+<td>Map getParameters()</td>
+<td>获取所有的请求参数，类似于调用HttpServletRequest对象的getParameterMap()方法</td>
+</tr>
+<tr>
+<td>Map getSession（）</td>
+<td>返回一个Map对象，该对象模拟了HttpSession 实例</td>
+</tr>
+<tr>
+<td>void setApplication(Map application)</td>
+<td>传入一个Map实例，将Map实例的key-value转换成application的属性名-值。</td>
+</tr>
+<tr>
+<td>void setSession(Map session)</td>
+<td>传入一个Map实例，将Map实例的key-value转换成application的属性名-值。</td>
+</tr>
+</tbody></table>
 <p>实例1：通过ActionContext类实现登陆</p>
 <p>LoginAction.java</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.itcast.action;<br><span class="hljs-keyword">import</span> com.opensymphony.xwork2.ActionContext;<br><span class="hljs-keyword">import</span> com.opensymphony.xwork2.ActionSupport;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ActionSupport</span></span>&#123;	<br>	<span class="hljs-keyword">private</span> String username;<br>	<span class="hljs-keyword">private</span> String password;<br>	<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getUsername</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> username;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUsername</span><span class="hljs-params">(String username)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.username = username;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getPassword</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> password;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPassword</span><span class="hljs-params">(String password)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.password = password;<br>	&#125;<br>    <br>	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>		ActionContext context=ActionContext.getContext();<br>		<span class="hljs-keyword">if</span>(<span class="hljs-string">&quot;admin&quot;</span>.equals(username)&amp;&amp;<span class="hljs-string">&quot;123456&quot;</span>.equals(password))&#123;<br>			context.put(<span class="hljs-string">&quot;username&quot;</span>, username);<br>			context.put(<span class="hljs-string">&quot;password&quot;</span>, password);<br>			context.put(<span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-string">&quot;用户登录成功！&quot;</span>);<br>			<span class="hljs-keyword">return</span> SUCCESS;<br>		&#125;<span class="hljs-keyword">else</span>&#123;<br>			context.put(<span class="hljs-string">&quot;error&quot;</span>, <span class="hljs-string">&quot;用户登录失败！&quot;</span>);<br>			<span class="hljs-keyword">return</span> ERROR;<br>		&#125;<br><br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
@@ -431,7 +467,23 @@
 <p>struts.xml文件中<code>&lt;result&gt;</code>元素配置代码如下所示：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;loginAction&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cn.itcast.action.LoginAction&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;success&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;redirect&quot;</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;loaction&quot;</span>&gt;</span>/success.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">param</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">result</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>上述配置，使用了<code>&lt;result&gt;</code>元素的name、type属性和param子元素。</p>
-<p><code>&lt;param&gt;</code>子元素的name属性有两个值,分别如下:<br>| 属性     | 描述                                                         |<br>| ——– | ———————————————————— |<br>| location | 指定该逻辑视图所对应的实际视图资源。                         |<br>| parse    | 指定在逻辑视图资源名称中是否可以使用OGNL表达式。默认值为true,表示可以使用，如果设为false,则表示不支持。 |</p>
+<p><code>&lt;param&gt;</code>子元素的name属性有两个值,分别如下:</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>location</td>
+<td>指定该逻辑视图所对应的实际视图资源。</td>
+</tr>
+<tr>
+<td>parse</td>
+<td>指定在逻辑视图资源名称中是否可以使用OGNL表达式。默认值为true,表示可以使用，如果设为false,则表示不支持。</td>
+</tr>
+</tbody></table>
 <p>上面的配置可以简化为：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;loginAction&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cn.itcast.action.LoginAction&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">result</span>&gt;</span>/success.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">result</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <h3 id="预定义的结果类型"><a href="#预定义的结果类型" class="headerlink" title="预定义的结果类型"></a>预定义的结果类型</h3><table>

@@ -327,7 +327,47 @@
 </ul>
 <h3 id="请求报文实例"><a href="#请求报文实例" class="headerlink" title="请求报文实例"></a>请求报文实例</h3><p>抓包本地搭建的登陆页面，得到请求头：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST /<span class="hljs-built_in">test</span>/login.html HTTP/1.1        <span class="hljs-comment">#请求方法为POST，请求URL为/test/login.html，HTTP协议版本为HTTP/1.1</span><br>Host: 127.0.0.1			<span class="hljs-comment">#客户机通过这个头告诉服务器，想访问的主机名</span><br>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0  <span class="hljs-comment">#指定用户代理服务器的类型。</span><br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2   <span class="hljs-comment">#指出客户浏览器支持的语言是英语（english）</span><br>Accept-Encoding: gzip, deflate        <span class="hljs-comment">#指出发送此请求的浏览器支持哪些压缩编码方式。</span><br>Content-Type: application/x-www-form-urlencoded      <span class="hljs-comment">#表示后面的文档属于什么MIME类型</span><br>Content-Length: 26			 <span class="hljs-comment">#表示内容长度</span><br>Origin: http://127.0.0.1     <span class="hljs-comment">#Origin主要是用来说明最初请求是从哪里发起的；</span><br>Connection: close	         <span class="hljs-comment">#是在告知服务器本浏览器不想使用永久连接方式（HTTP/1.0使用非永久连接，HTTP/1.1默认使用永久连接）。</span><br>Referer: http://127.0.0.1/<span class="hljs-built_in">test</span>/index.html   <span class="hljs-comment">#客户机通过这个头告诉服务器，它是从哪个资源来访问服务器的</span><br>Cookie: _ga=GA1.1.1592130974.1616653076; bdshare_firstime=1616653211943       <span class="hljs-comment">#客户机通过这个头可以向服务器带数据</span><br>Upgrade-Insecure-Requests: 1        <span class="hljs-comment">#表示能读懂服务器发过来的上面这条信息</span><br><br>username=<span class="hljs-built_in">test</span>&amp;password=123     <span class="hljs-comment">#请求数据</span><br></code></pre></td></tr></table></figure>
-<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p>方法字段指出客户请求服务器执行的一般操作。HTTP/1.1中定义了八种请求方法，其中GET、POST、HEAD、是常用请求方法。<br>| 方法    | 描述                                                         |<br>| ——- | ———————————————————— |<br>| GET     | 获取一个URL指定的资源,即资源实体。                           |<br>| POST    | 传输实体主体,向服务器提交数据。                              |<br>| HEAD    | 获取一个指定资源的信息,类似GET方法，区别在于只返回报文首部，不返回报文主体。 |<br>| PUT     | 向服务器提交资源,用来传输文件。                              |<br>| DELETE  | 请求源服务器删除Request-URI标识的资源,用来删除文件。         |<br>| TRACE   | 网络跟踪                                                     |<br>| CONNECT | 与PROXY之间的连接管理,要求用隧道协议连接代理。               |<br>| OPTIONS | 查询能力,询问支持方法返回服务器支持的方法。                  |</p>
+<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p>方法字段指出客户请求服务器执行的一般操作。HTTP/1.1中定义了八种请求方法，其中GET、POST、HEAD、是常用请求方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>获取一个URL指定的资源,即资源实体。</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>传输实体主体,向服务器提交数据。</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>获取一个指定资源的信息,类似GET方法，区别在于只返回报文首部，不返回报文主体。</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>向服务器提交资源,用来传输文件。</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>请求源服务器删除Request-URI标识的资源,用来删除文件。</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>网络跟踪</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>与PROXY之间的连接管理,要求用隧道协议连接代理。</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>查询能力,询问支持方法返回服务器支持的方法。</td>
+</tr>
+</tbody></table>
 <p><strong>GET和POST之间的区别</strong></p>
 <p>1、GET方法的数据参数是暴露在起始行的URL中的，而POST方法的数据参数是在报文主体中的。<br>2、GET方法相对来说没有POST安全，因为它的数据参数可以直接从URL中获取，但是GET的效率更高。<br>3、GET方法的数据参数大小有一定的限制（1024）（原因也是因为它的数据参数是放在URL中的），而POST对数据大小是没有限制的。<br>其实他们的本质区别是GET是从服务器上请求数据，而POST是向服务器发送数据</p>
 <h3 id="请求报文属性"><a href="#请求报文属性" class="headerlink" title="请求报文属性"></a>请求报文属性</h3><p>请求头部为请求报文添加了一些附加信息，由“名/值”对组成，每行一对，名和值之间使用冒号分隔</p>
@@ -500,9 +540,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+                      <a href="/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">USB流量分析</span>
+                        <span class="hidden-mobile">HTTP请求走私漏洞</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
