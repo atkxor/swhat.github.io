@@ -7,14 +7,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/atkx_16x16.png">
-  <link rel="icon" href="/atkx_16x16.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="摘要：CISCN2021赛后复现">
+  <meta name="description" content="">
   <meta name="author" content="Atkx">
   <meta name="keywords" content="">
   
@@ -241,8 +241,7 @@
             <h1 style="display: none">CISCN2021赛后复现</h1>
             
             <div class="markdown-body">
-              <p>摘要：CISCN2021赛后复现</p>
- <a id="more"></a>
+               <a id="more"></a>
 
 <h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="esay-sql"><a href="#esay-sql" class="headerlink" title="esay_sql"></a>esay_sql</h2><p>输入单引号报错</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">uname=admin&amp;passwd=<span class="hljs-number">123456</span><span class="hljs-string">&#x27;&amp;Submit=%E7%99%BB%E5%BD%95</span><br><span class="hljs-string"></span><br><span class="hljs-string">#You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#x27;</span><span class="hljs-string">&#x27;123456&#x27;</span><span class="hljs-string">&#x27;) LIMIT 0,1&#x27;</span> at line <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
@@ -425,7 +424,7 @@ var now = new Date();
 
 function createtime() {
     //此处修改你的建站时间或者网站上线时间
-    var grt = new Date('02/07/2020 8:00:00');
+    var grt = new Date('03/01/2020 8:00:00');
     now.setTime(now.getTime() + 250);
     days = (now - grt) / 1000 / 60 / 60 / 24;
 

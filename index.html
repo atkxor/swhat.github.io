@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/atkx_16x16.png">
-  <link rel="icon" href="/atkx_16x16.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -263,7 +263,16 @@
           
             
           
-           ISCC2021
+           
+
+
+
+练武李华的红包
+题目描述：大年初一，李华给爸爸拜年，从事计算机行业的父亲发给李华一张图片和一张银行卡。父亲告诉李华密码就藏在图片中，但是李华打开图片后却百思不得其解。你能帮助李华拿到密码吗？
+
+下载附件，直接binwalk分离得到hongbao.txt
+124,43,13,13,12,21,43
+没啥思路，看起来图片不完全，修改图片高度，图片下面有一个鼓，联想到敲击码对照敲击码表转换得到
         </a>
       </p>
 
@@ -315,7 +324,10 @@
           
             
           
-          摘要：条件竞争漏洞学习
+           
+
+0x00-条件竞争条件竞争漏洞是一种服务器端的漏洞，由于服务器端在处理不同用户的请求时是并发进行的。开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果，简而言之就是并没有考虑线程同步。因此，如果并发处理不当或相关操作逻辑顺序设计的不合理时，将会导致此类问题的发生。
+0x01-基础知识先来了解一下关于条件竞争的基础知
         </a>
       </p>
 
@@ -367,7 +379,10 @@
           
             
           
-          摘要：CISCN2021赛后复现
+           
+
+Webesay_sql输入单引号报错
+123uname=admin&amp;passwd=123456&#x27;&amp;Submit=%E7%99%BB%E5%BD%95#You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for th
         </a>
       </p>
 
@@ -776,7 +791,7 @@ var now = new Date();
 
 function createtime() {
     //此处修改你的建站时间或者网站上线时间
-    var grt = new Date('02/07/2020 8:00:00');
+    var grt = new Date('03/01/2020 8:00:00');
     now.setTime(now.getTime() + 250);
     days = (now - grt) / 1000 / 60 / 60 / 24;
 

