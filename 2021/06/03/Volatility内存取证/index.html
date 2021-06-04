@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>Volatility内存取证 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.top","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Volatility内存取证">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-03 21:02" pubdate>
+        2021年6月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      82
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Volatility内存取证</h1>
+            
+            <div class="markdown-body">
+              <h2 id="安装Volatility"><a href="#安装Volatility" class="headerlink" title="安装Volatility"></a>安装Volatility</h2><p>新版kali不自带Volatility，需要自己安装源码编译</p>
+<p>1.下载源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">https:<span class="hljs-comment">//pan.baidu.com/s/1r-9VC3aG-sP6wWziYNvXxA  </span><br><br>提取码：<span class="hljs-number">4</span>d4w<br></code></pre></td></tr></table></figure>
+<p>2.安装依赖</p>
+<ul>
+<li>crypto库安装</li>
+</ul>
+<p>安装pycryptodome</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">pip2 install pycryptodome -i https:<span class="hljs-comment">//pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="hljs-comment">#如果不指定国内源，可能会出现超时错误HTTPSConnectionPool</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>distorm3库安装</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">项目地址<br>https:<span class="hljs-comment">//github.com/vext01/distorm3</span><br></code></pre></td></tr></table></figure>
+<p>解压到kali里面之后用命令 python setup.py install 编译</p>
+<p>输入pip2 list查看是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Package      Version<br>------------ -------<br>cffi         1.14.0<br>distorm3     2<br>pip          20.3.4<br>pycryptodome 3.10.1<br>setuptools   18.5<br>volatility   2.6<br>wheel        0.29.0<br></code></pre></td></tr></table></figure>
+<p>3.安装Volatility<br>将前面下载的项目，解压之后在Volatility中打开终端进行编译</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">python setup.py install <br></code></pre></td></tr></table></figure>
+<p>最后输入vol.py -h测试一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/volatility2.6]<br>└─<span class="hljs-comment"># vol.py -h                                                            </span><br>Volatility Foundation Volatility Framework 2.6<br>Usage: Volatility - A memory forensics analysis platform.<br><br>Options:<br>  -h, --<span class="hljs-built_in">help</span>            list all available options and their default values.<br>                        Default values may be <span class="hljs-built_in">set</span> <span class="hljs-keyword">in</span> the configuration file<br>                        (/etc/volatilityrc)<br>  --conf-file=/root/.volatilityrc<br>                        User based configuration file<br>  -d, --debug           Debug volatility<br>  --plugins=PLUGINS     Additional plugin directories to use (colon separated)<br>  --info                Print information about all registered objects<br>  --cache-directory=/root/.cache/volatility<br>                        Directory <span class="hljs-built_in">where</span> cache files are stored<br>  --cache               Use caching<br>  --tz=TZ               Sets the (Olson) timezone <span class="hljs-keyword">for</span> displaying timestamps<br>                        using pytz (<span class="hljs-keyword">if</span> installed) or tzset<br>  -f FILENAME, --filename=FILENAME<br>                        Filename to use when opening an image<br>  --profile=WinXPSP2x86<br>                        Name of the profile to load (use --info to see a list<br>                        of supported profiles)<br>  -l LOCATION, --location=LOCATION<br>                        A URN location from <span class="hljs-built_in">which</span> to load an address space<br>  -w, --write           Enable write support<br>  --dtb=DTB             DTB Address<br>  --<span class="hljs-built_in">shift</span>=SHIFT         Mac KASLR <span class="hljs-built_in">shift</span> address<br>  --output=text         Output <span class="hljs-keyword">in</span> this format (support is module specific, see<br>                        the Module Output Options below)<br>  --output-file=OUTPUT_FILE<br>                        Write output <span class="hljs-keyword">in</span> this file<br>  -v, --verbose         Verbose information<br>  -g KDBG, --kdbg=KDBG  Specify a KDBG virtual address (Note: <span class="hljs-keyword">for</span> 64-bit<br>                        Windows 8 and above this is the address of<br>                        KdCopyDataBlock)<br>  --force               Force utilization of suspect profile<br>  --cookie=COOKIE       Specify the address of nt!ObHeaderCookie (valid <span class="hljs-keyword">for</span><br>                        Windows 10 only)<br>  -k KPCR, --kpcr=KPCR  Specify a specific KPCR address<br><br>        Supported Plugin Commands:<br><br>                amcache         Print AmCache information<br>                apihooks        Detect API hooks <span class="hljs-keyword">in</span> process and kernel memory<br>                atoms           Print session and window station atom tables<br>                atomscan        Pool scanner <span class="hljs-keyword">for</span> atom tables<br>                auditpol        Prints out the Audit Policies from HKLM\SECURITY\Policy\PolAdtEv<br>                bigpools        Dump the big page pools using BigPagePoolScanner<br>                bioskbd         Reads the keyboard buffer from Real Mode memory<br>                cachedump       Dumps cached domain hashes from memory<br>                callbacks       Print system-wide notification routines<br>                clipboard       Extract the contents of the windows clipboard<br>                cmdline         Display process command-line arguments<br>                cmdscan         Extract <span class="hljs-built_in">command</span> <span class="hljs-built_in">history</span> by scanning <span class="hljs-keyword">for</span> _COMMAND_HISTORY<br>                connections     Print list of open connections [Windows XP and 2003 Only]<br>                connscan        Pool scanner <span class="hljs-keyword">for</span> tcp connections<br>                consoles        Extract <span class="hljs-built_in">command</span> <span class="hljs-built_in">history</span> by scanning <span class="hljs-keyword">for</span> _CONSOLE_INFORMATION<br>                crashinfo       Dump crash-dump information<br>                deskscan        Poolscaner <span class="hljs-keyword">for</span> tagDESKTOP (desktops)<br>                devicetree      Show device tree<br>                dlldump         Dump DLLs from a process address space<br>                dlllist         Print list of loaded dlls <span class="hljs-keyword">for</span> each process<br>                driverirp       Driver IRP hook detection<br>                drivermodule    Associate driver objects to kernel modules<br>                driverscan      Pool scanner <span class="hljs-keyword">for</span> driver objects<br>                dumpcerts       Dump RSA private and public SSL keys<br>                dumpfiles       Extract memory mapped and cached files<br>                dumpregistry    Dumps registry files out to disk <br>                editbox         Displays information about Edit controls. (Listbox experimental.)<br>                envars          Display process environment variables<br>                eventhooks      Print details on windows event hooks<br>                evtlogs         Extract Windows Event Logs (XP/2003 only)<br>                filescan        Pool scanner <span class="hljs-keyword">for</span> file objects<br>                gahti           Dump the USER handle <span class="hljs-built_in">type</span> information<br>                gditimers       Print installed GDI timers and callbacks<br>                gdt             Display Global Descriptor Table<br>                getservicesids  Get the names of services <span class="hljs-keyword">in</span> the Registry and <span class="hljs-built_in">return</span> Calculated SID<br>                getsids         Print the SIDs owning each process<br>                handles         Print list of open handles <span class="hljs-keyword">for</span> each process<br>                hashdump        Dumps passwords hashes (LM/NTLM) from memory<br>                hibinfo         Dump hibernation file information<br>                hivedump        Prints out a hive<br>                hivelist        Print list of registry hives.<br>                hivescan        Pool scanner <span class="hljs-keyword">for</span> registry hives<br>                hpakextract     Extract physical memory from an HPAK file<br>                hpakinfo        Info on an HPAK file<br>                idt             Display Interrupt Descriptor Table<br>                iehistory       Reconstruct Internet Explorer cache / <span class="hljs-built_in">history</span><br>                imagecopy       Copies a physical address space out as a raw DD image<br>                imageinfo       Identify information <span class="hljs-keyword">for</span> the image <br>                impscan         Scan <span class="hljs-keyword">for</span> calls to imported <span class="hljs-built_in">functions</span><br>                joblinks        Print process job link information<br>                kdbgscan        Search <span class="hljs-keyword">for</span> and dump potential KDBG values<br>                kpcrscan        Search <span class="hljs-keyword">for</span> and dump potential KPCR values<br>                ldrmodules      Detect unlinked DLLs<br>                lsadump         Dump (decrypted) LSA secrets from the registry<br>                machoinfo       Dump Mach-O file format information<br>                malfind         Find hidden and injected code<br>                mbrparser       Scans <span class="hljs-keyword">for</span> and parses potential Master Boot Records (MBRs) <br>                memdump         Dump the addressable memory <span class="hljs-keyword">for</span> a process<br>                memmap          Print the memory map<br>                messagehooks    List desktop and thread window message hooks<br>                mftparser       Scans <span class="hljs-keyword">for</span> and parses potential MFT entries <br>                moddump         Dump a kernel driver to an executable file sample<br>                modscan         Pool scanner <span class="hljs-keyword">for</span> kernel modules<br>                modules         Print list of loaded modules<br>                multiscan       Scan <span class="hljs-keyword">for</span> various objects at once<br>                mutantscan      Pool scanner <span class="hljs-keyword">for</span> mutex objects<br>                notepad         List currently displayed notepad text<br>                objtypescan     Scan <span class="hljs-keyword">for</span> Windows object <span class="hljs-built_in">type</span> objects<br>                patcher         Patches memory based on page scans<br>                poolpeek        Configurable pool scanner plugin<br>                printkey        Print a registry key, and its subkeys and values<br>                privs           Display process privileges<br>                procdump        Dump a process to an executable file sample<br>                pslist          Print all running processes by following the EPROCESS lists <br>                psscan          Pool scanner <span class="hljs-keyword">for</span> process objects<br>                pstree          Print process list as a tree<br>                psxview         Find hidden processes with various process listings<br>                qemuinfo        Dump Qemu information<br>                raw2dmp         Converts a physical memory sample to a windbg crash dump<br>                screenshot      Save a pseudo-screenshot based on GDI windows<br>                servicediff     List Windows services (ala Plugx)<br>                sessions        List details on _MM_SESSION_SPACE (user logon sessions)<br>                shellbags       Prints ShellBags info<br>                shimcache       Parses the Application Compatibility Shim Cache registry key<br>                shutdowntime    Print ShutdownTime of machine from registry<br>                sockets         Print list of open sockets<br>                sockscan        Pool scanner <span class="hljs-keyword">for</span> tcp socket objects<br>                ssdt            Display SSDT entries<br>                strings         Match physical offsets to virtual addresses (may take a <span class="hljs-keyword">while</span>, VERY verbose)<br>                svcscan         Scan <span class="hljs-keyword">for</span> Windows services<br>                symlinkscan     Pool scanner <span class="hljs-keyword">for</span> symlink objects<br>                thrdscan        Pool scanner <span class="hljs-keyword">for</span> thread objects<br>                threads         Investigate _ETHREAD and _KTHREADs<br>                timeliner       Creates a timeline from various artifacts <span class="hljs-keyword">in</span> memory <br>                timers          Print kernel timers and associated module DPCs<br>                truecryptmaster Recover TrueCrypt 7.1a Master Keys<br>                truecryptpassphrase     TrueCrypt Cached Passphrase Finder<br>                truecryptsummary        TrueCrypt Summary<br>                unloadedmodules Print list of unloaded modules<br>                userassist      Print userassist registry keys and information<br>                userhandles     Dump the USER handle tables<br>                vaddump         Dumps out the vad sections to a file<br>                vadinfo         Dump the VAD info<br>                vadtree         Walk the VAD tree and display <span class="hljs-keyword">in</span> tree format<br>                vadwalk         Walk the VAD tree<br>                vboxinfo        Dump virtualbox information<br>                verinfo         Prints out the version information from PE images<br>                vmwareinfo      Dump VMware VMSS/VMSN information<br>                volshell        Shell <span class="hljs-keyword">in</span> the memory image<br>                windows         Print Desktop Windows (verbose details)<br>                wintree         Print Z-Order Desktop Windows Tree<br>                wndscan         Pool scanner <span class="hljs-keyword">for</span> window stations<br>                yarascan        Scan process or kernel memory with Yara signatures<br><br></code></pre></td></tr></table></figure>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="0x00-查看镜像系统"><a href="#0x00-查看镜像系统" class="headerlink" title="0x00 - 查看镜像系统"></a>0x00 - 查看镜像系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; imageinfo  <span class="hljs-comment">#常见的内存镜像文件有raw、vmem、dmp、img等</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x01-查看用户名密码信息"><a href="#0x01-查看用户名密码信息" class="headerlink" title="0x01 - 查看用户名密码信息"></a>0x01 - 查看用户名密码信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] hashdump<br></code></pre></td></tr></table></figure>
+<h3 id="0x02-查看进程信息"><a href="#0x02-查看进程信息" class="headerlink" title="0x02 - 查看进程信息"></a>0x02 - 查看进程信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] pslist<br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] pstree <span class="hljs-comment">#可以识别子进程和父进程，且可以显示出被隐藏的病毒</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x03-扫描所有的文件列表"><a href="#0x03-扫描所有的文件列表" class="headerlink" title="0x03 - 扫描所有的文件列表"></a>0x03 - 扫描所有的文件列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] filescan<br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] filescan | grep flag  <br></code></pre></td></tr></table></figure>
+<h3 id="0x04-查看cmd上的操作"><a href="#0x04-查看cmd上的操作" class="headerlink" title="0x04 - 查看cmd上的操作"></a>0x04 - 查看cmd上的操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] cmdscan<br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] cmdline <span class="hljs-comment">#列出命令行下运行的程序</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x05-查看具体恶意进程"><a href="#0x05-查看具体恶意进程" class="headerlink" title="0x05 - 查看具体恶意进程"></a>0x05 - 查看具体恶意进程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] pstree  | egrep <span class="hljs-string">&#x27;(a.exe|b.exe)&#x27;</span>   <span class="hljs-comment">#以树的形式来列出正在进行的进程</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x06-检查恶意链接"><a href="#0x06-检查恶意链接" class="headerlink" title="0x06 -  检查恶意链接"></a>0x06 -  检查恶意链接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">检查链接插件：vol.py -f &lt;镜像文件&gt; --profile=[profile文件] connections<br>检查端口插件：vol.py -f &lt;镜像文件&gt; --profile=[profile文件] sockets<br></code></pre></td></tr></table></figure>
+<h3 id="0x07-检测DLL"><a href="#0x07-检测DLL" class="headerlink" title="0x07 - 检测DLL"></a>0x07 - 检测DLL</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] dlllist -p[pid]<br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] ldrmodules  -p[pid] -v <span class="hljs-comment">#显示包括隐藏dll的具体信息</span><br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] malfind -p[pid] <span class="hljs-comment">#找出注入的可执行代码或者DLL </span><br></code></pre></td></tr></table></figure>
+<h3 id="0x08-根据PID导出程序"><a href="#0x08-根据PID导出程序" class="headerlink" title="0x08 - 根据PID导出程序"></a>0x08 - 根据PID导出程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] prodump -p [PID] -D [目录]<br></code></pre></td></tr></table></figure>
+
+<h3 id="0x09-检查驱动程序"><a href="#0x09-检查驱动程序" class="headerlink" title="0x09 - 检查驱动程序"></a>0x09 - 检查驱动程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] modules<br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] moddump -D [目录] --base [base地址]  <span class="hljs-comment">#提取驱动程序</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x10-查看开启的windows服务"><a href="#0x10-查看开启的windows服务" class="headerlink" title="0x10 - 查看开启的windows服务"></a>0x10 - 查看开启的windows服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] svcscan<br></code></pre></td></tr></table></figure>
+<h3 id="0x10-查看注册表项"><a href="#0x10-查看注册表项" class="headerlink" title="0x10 - 查看注册表项"></a>0x10 - 查看注册表项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] printkey<br></code></pre></td></tr></table></figure>
+<h3 id="0x11-列出SAM表中的用户"><a href="#0x11-列出SAM表中的用户" class="headerlink" title="0x11 - 列出SAM表中的用户"></a>0x11 - 列出SAM表中的用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] printkey -K <span class="hljs-string">&quot;SAM\Domains\Account\Users\Names&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x12-获取最后登录系统的用户"><a href="#0x12-获取最后登录系统的用户" class="headerlink" title="0x12 - 获取最后登录系统的用户"></a>0x12 - 获取最后登录系统的用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] printkey -K <span class="hljs-string">&quot;SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x13-查看注册表信息"><a href="#0x13-查看注册表信息" class="headerlink" title="0x13 - 查看注册表信息"></a>0x13 - 查看注册表信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] hivelist<br><br>vol.py -f &lt;镜像文件&gt; --profile=[profile文件] hivedump -o 0x93fc41e8(注册表的 virtual 地址)  <span class="hljs-comment">#导出注册表</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x14-获取浏览器浏览历史"><a href="#0x14-获取浏览器浏览历史" class="headerlink" title="0x14 - 获取浏览器浏览历史"></a>0x14 - 获取浏览器浏览历史</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] iehistory<br></code></pre></td></tr></table></figure>
+<h3 id="0x15-查看时间线"><a href="#0x15-查看时间线" class="headerlink" title="0x15- 查看时间线"></a>0x15- 查看时间线</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vol.py -f &lt;镜像文件&gt; --profile=[profile文件] timeliner<br></code></pre></td></tr></table></figure>
+<h2 id="CTF中的内存取证题"><a href="#CTF中的内存取证题" class="headerlink" title="CTF中的内存取证题"></a>CTF中的内存取证题</h2><h3 id="湖湘杯2020-passwd"><a href="#湖湘杯2020-passwd" class="headerlink" title="[湖湘杯2020] passwd"></a>[湖湘杯2020] passwd</h3><p>查看内存镜像的基本信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/volatility2.6]<br>└─<span class="hljs-comment"># vol.py -f WIN-BU6IJ7FI9RU-20190927-152050.raw imageinfo</span><br>Volatility Foundation Volatility Framework 2.6<br>INFO    : volatility.debug    : Determining profile based on KDBG search...<br>          Suggested Profile(s) : Win7SP1x86_23418, Win7SP0x86, Win7SP1x86<br>                     AS Layer1 : IA32PagedMemoryPae (Kernel AS)                                                                         <br>                     AS Layer2 : FileAddressSpace (/home/kali/volatility2.6/WIN-BU6IJ7FI9RU-20190927-152050.raw)                        <br>                      PAE <span class="hljs-built_in">type</span> : PAE                                                                                                    <br>                           DTB : 0x185000L                                                                                              <br>                          KDBG : 0x83f61c28L                                                                                            <br>          Number of Processors : 2                                                                                                      <br>     Image Type (Service Pack) : 1<br>                KPCR <span class="hljs-keyword">for</span> CPU 0 : 0x83f62c00L<br>                KPCR <span class="hljs-keyword">for</span> CPU 1 : 0x807ca000L<br>             KUSER_SHARED_DATA : 0xffdf0000L<br>           Image date and time : 2019-09-27 15:20:52 UTC+0000<br>     Image <span class="hljs-built_in">local</span> date and time : 2019-09-27 23:20:52 +0800                                                                                                                                       <br></code></pre></td></tr></table></figure>
+<p>根据Suggested Profile(s)值，猜测是Win7SP1x86_23418的镜像</p>
+<p>查看password的hash值</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">┌──(root💀kali)-[/home/kali/volatility2<span class="hljs-number">.6</span>]<br>└─<span class="hljs-comment"># vol.py -f WIN-BU6IJ7FI9RU-20190927-152050.raw --profile=Win7SP1x86_23418 hashdump</span><br>Volatility Foundation Volatility Framework <span class="hljs-number">2.6</span><br>Administrator:<span class="hljs-number">500</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">31</span>d6cfe0d16ae931b73c59d7e0c089c0:::<br>Guest:<span class="hljs-number">501</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">31</span>d6cfe0d16ae931b73c59d7e0c089c0:::<br>CTF:<span class="hljs-number">1000</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">0</span>a640404b5c386ab12092587fe19cd02:::<br></code></pre></td></tr></table></figure>
+<p>对CTF用户的值，在线网站破解hash<br><img src="https://img-blog.csdnimg.cn/20210601130636808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="NEWSCTF2021-very-ez-dump"><a href="#NEWSCTF2021-very-ez-dump" class="headerlink" title="[NEWSCTF2021] very-ez-dump"></a>[NEWSCTF2021] very-ez-dump</h3><p>查看镜像信息，判断是Win7SP1x64镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw imageinfo                                                    <br>Volatility Foundation Volatility Framework 2.6<br>INFO    : volatility.debug    : Determining profile based on KDBG search...<br>          Suggested Profile(s) : Win7SP1x64, Win7SP0x64, Win2008R2SP0x64, Win2008R2SP1x64_23418, Win2008R2SP1x64, Win7SP1x64_23418<br>                     AS Layer1 : WindowsAMD64PagedMemory (Kernel AS)<br>                     AS Layer2 : FileAddressSpace (/home/kali/volatility2.6/mem.raw)<br>                      PAE <span class="hljs-built_in">type</span> : No PAE<br>                           DTB : 0x187000L<br>                          KDBG : 0xf8000403e0a0L<br>          Number of Processors : 2<br>     Image Type (Service Pack) : 1<br>                KPCR <span class="hljs-keyword">for</span> CPU 0 : 0xfffff8000403fd00L<br>                KPCR <span class="hljs-keyword">for</span> CPU 1 : 0xfffff880009ef000L<br>             KUSER_SHARED_DATA : 0xfffff78000000000L<br>           Image date and time : 2021-05-20 13:08:33 UTC+0000<br>     Image <span class="hljs-built_in">local</span> date and time : 2021-05-20 21:08:33 +0800<br></code></pre></td></tr></table></figure>
+
+<p>列出进程，没看到什么有价值的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw  --profile=Win7SP1x64 pslist                                 <br>Volatility Foundation Volatility Framework 2.6<br>Offset(V)          Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                          <br>------------------ -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------<br>0xfffffa8000cb2040 System                    4      0     91      519 ------      0 2021-05-20 11:21:48 UTC+0000                                 <br>0xfffffa80016bbb30 smss.exe                256      4      2       30 ------      0 2021-05-20 11:21:48 UTC+0000                                 <br>0xfffffa80023c7b30 csrss.exe               348    328      9      437      0      0 2021-05-20 11:21:49 UTC+0000                                 <br>0xfffffa80025c3060 wininit.exe             400    328      3       81      0      0 2021-05-20 11:21:49 UTC+0000                                 <br>0xfffffa8001b6f060 csrss.exe               412    392     10      252      1      0 2021-05-20 11:21:49 UTC+0000                                 <br>0xfffffa800262e7c0 winlogon.exe            464    392      5      121      1      0 2021-05-20 11:21:50 UTC+0000                                 <br>0xfffffa800260ab30 services.exe            484    400      9      206      0      0 2021-05-20 11:21:50 UTC+0000                                 <br>0xfffffa8002674a90 lsass.exe               516    400     10      573      0      0 2021-05-20 11:21:50 UTC+0000                                 <br>0xfffffa800267f060 lsm.exe                 524    400     10      142      0      0 2021-05-20 11:21:50 UTC+0000                                 <br>0xfffffa8002607b30 svchost.exe             640    484     11      359      0      0 2021-05-20 11:21:50 UTC+0000                                 <br>0xfffffa80026af6a0 svchost.exe             720    484      9      292      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa8002735b30 svchost.exe             792    484     22      498      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa800275a060 svchost.exe             844    484     11      258      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa8002776960 svchost.exe             892    484     34      969      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa80027b5b30 svchost.exe            1000    484     17      698      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa80027dab30 svchost.exe             368    484     15      371      0      0 2021-05-20 11:21:51 UTC+0000                                 <br>0xfffffa8002858b30 spoolsv.exe            1040    484     12      272      0      0 2021-05-20 11:21:52 UTC+0000                                 <br>0xfffffa800286bb30 svchost.exe            1072    484     18      331      0      0 2021-05-20 11:21:52 UTC+0000                                 <br>0xfffffa8002938b30 VGAuthService.         1228    484      3       87      0      0 2021-05-20 11:21:52 UTC+0000                                 <br>0xfffffa800297ab30 taskhost.exe           1344    484      9      175      1      0 2021-05-20 11:21:53 UTC+0000                                 <br>0xfffffa8002650b30 vmtoolsd.exe           1404    484     11      278      0      0 2021-05-20 11:21:53 UTC+0000                                 <br>0xfffffa80029a9b30 dwm.exe                1648    844      5      149      1      0 2021-05-20 11:21:54 UTC+0000                                 <br>0xfffffa8002a47b30 explorer.exe           1700   1596     44     1219      1      0 2021-05-20 11:21:54 UTC+0000                                 <br>0xfffffa8002b0eb30 WmiPrvSE.exe           1920    640      9      217      0      0 2021-05-20 11:21:55 UTC+0000                                 <br>0xfffffa8002af06c0 dllhost.exe            1996    484     13      197      0      0 2021-05-20 11:21:55 UTC+0000                                 <br>0xfffffa8002b93520 vm3dservice.ex          864   1700      2       41      1      0 2021-05-20 11:21:55 UTC+0000                                 <br>0xfffffa8002b3e060 vmtoolsd.exe           1296   1700      9      193      1      0 2021-05-20 11:21:55 UTC+0000                                 <br>0xfffffa8000d60060 msdtc.exe               520    484     12      146      0      0 2021-05-20 11:21:58 UTC+0000                                 <br>0xfffffa8002c42440 SearchIndexer.         2208    484     13      600      0      0 2021-05-20 11:22:01 UTC+0000                                 <br>0xfffffa8002d23880 wmpnetwk.exe           2360    484      9      214      0      0 2021-05-20 11:22:02 UTC+0000                                 <br>0xfffffa8002da6b30 svchost.exe            2520    484     15      258      0      0 2021-05-20 11:22:02 UTC+0000                                 <br>0xfffffa800142d400 sppsvc.exe             2500    484      4      150      0      0 2021-05-20 11:23:54 UTC+0000                                 <br>0xfffffa8002d90060 svchost.exe            2408    484     13      343      0      0 2021-05-20 11:23:54 UTC+0000                                 <br>0xfffffa800104ab30 audiodg.exe            2236    792      7      141      0      0 2021-05-20 11:33:37 UTC+0000                                 <br>0xfffffa80010c7060 cmd.exe                2624   1700      1       21      1      0 2021-05-20 13:04:35 UTC+0000                                 <br>0xfffffa8000d81550 conhost.exe            1588    412      2       62      1      0 2021-05-20 13:04:35 UTC+0000                                 <br>0xfffffa8001044710 SearchProtocol         2580   2208      8      285      0      0 2021-05-20 13:08:04 UTC+0000                                 <br>0xfffffa80010db9b0 SearchFilterHo          316   2208      5       96      0      0 2021-05-20 13:08:04 UTC+0000                                 <br>0xfffffa8001a29680 dllhost.exe            1888    640      6       87      1      0 2021-05-20 13:08:32 UTC+0000                                 <br>0xfffffa8002c78060 dllhost.exe            1252    640      6       83      0      0 2021-05-20 13:08:32 UTC+0000                                 <br>0xfffffa800142f060 DumpIt.exe             2864   1700      1       25      1      1 2021-05-20 13:08:32 UTC+0000                                 <br>0xfffffa80010e2060 conhost.exe            2824    412      2       61      1      0 2021-05-20 13:08:32 UTC+0000                                 <br>0xfffffa80010e6860 dllhost.exe            2696    640      6       69      1      0 2021-05-20 13:08:34 UTC+0000          <br></code></pre></td></tr></table></figure>
+<p>看下password的hash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw  --profile=Win7SP1x64 hashdump<br>Volatility Foundation Volatility Framework 2.6<br>Administrator:500:aad3b435b51404eeaad3b435b51404ee:1507e24d634a54c0b14750a7da2bdfdb:::<br>Guest:501:aad3b435b51404eeaad3b435b51404ee:c22b315c040ae6e0efee3518d830362b:::<br>mumuzi:1000:aad3b435b51404eeaad3b435b51404ee:0606ac59df4a10d3a9e1f97b3612546f:::                                                                                                                                                                      <br></code></pre></td></tr></table></figure>
+<p>mumuzi用户的密码破解不出来，继续往下看</p>
+<p>查看cmd下执行的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw  --profile=Win7SP1x64 cmdscan<br>Volatility Foundation Volatility Framework 2.6<br>**************************************************<br>CommandProcess: conhost.exe Pid: 1588<br>CommandHistory: 0x117120 Application: cmd.exe Flags: Allocated, Reset<br>CommandCount: 13 LastAdded: 12 LastDisplayed: 12<br>FirstCommand: 0 CommandCountMax: 50<br>ProcessHandle: 0x60<br>Cmd <span class="hljs-comment">#0 @ 0x109cf0: dir</span><br>Cmd <span class="hljs-comment">#1 @ 0x108290: ipconfig</span><br>Cmd <span class="hljs-comment">#2 @ 0xf8bd0: ipconfig 192.168.26.2</span><br>Cmd <span class="hljs-comment">#3 @ 0x116aa0: ping newsctf.top</span><br>Cmd <span class="hljs-comment">#4 @ 0x1082d0: network</span><br>Cmd <span class="hljs-comment">#5 @ 0x1082f0: net user</span><br>Cmd <span class="hljs-comment">#6 @ 0xf8c50: net user Guest 123456789</span><br>Cmd <span class="hljs-comment">#7 @ 0xf8c90: net user mumuzi (ljmmz)ovo</span><br>Cmd <span class="hljs-comment">#8 @ 0x108350: clear</span><br>Cmd <span class="hljs-comment">#9 @ 0x116a40: if_you_see_it,</span><br>Cmd <span class="hljs-comment">#10 @ 0xf8cd0: you_will_find_the_flag</span><br>Cmd <span class="hljs-comment">#11 @ 0x116ad0: where_is_the_flag?</span><br>Cmd <span class="hljs-comment">#12 @ 0x1178d0: net user Administrator flag_not_here</span><br>Cmd <span class="hljs-comment">#29 @ 0x90158: </span><br>Cmd <span class="hljs-comment">#30 @ 0x10f920: </span><br>**************************************************<br>CommandProcess: conhost.exe Pid: 2824<br>CommandHistory: 0x357140 Application: DumpIt.exe Flags: Allocated<br>CommandCount: 0 LastAdded: -1 LastDisplayed: -1<br>FirstCommand: 0 CommandCountMax: 50<br>ProcessHandle: 0x60<br>Cmd <span class="hljs-comment">#29 @ 0x2d0158: 5</span><br>Cmd <span class="hljs-comment">#30 @ 0x34f940: 4</span><br></code></pre></td></tr></table></figure>
+<p>这条指令net user mumuzi (ljmmz)ovo  ，添加了一个用户mumuzi，密码是(ljmmz)ovo，继续往下看</p>
+<p>查看文件，用grep命令查找含flag的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw  --profile=Win7SP1x64 filescan  | grep flag     <br>Volatility Foundation Volatility Framework 2.6<br>0x000000003e4b2070      2      0 -W-rwd \Device\HarddiskVolume1\galf\fl^ag.zipesktop\fl^ag.zipp\vmware-mumuzi\VMwareDnD\9451fe4f\flag.zip<br>0x000000003fa56dd0      2      0 RW-rw- \Device\HarddiskVolume1\Users\mumuzi\AppData\Roaming\Microsoft\Windows\Recent\flag.lnk<br></code></pre></td></tr></table></figure>
+<p>看到一个flag.zip，dump下来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f mem.raw  --profile=Win7SP1x64 dumpfiles -Q 0x000000003e4b2070 -D news               <span class="hljs-comment">#-Q是偏移量，-D是存储的文件夹                                                            </span><br>Volatility Foundation Volatility Framework 2.6<br>DataSectionObject 0x3e4b2070   None   \Device\HarddiskVolume1\galf\fl^ag.zipesktop\fl^ag.zipp\vmware-mumuzi\VMwareDnD\9451fe4f\flag.zip<br></code></pre></td></tr></table></figure>
+<p>带密码的压缩包，密码就是上面的(ljmmz)ovo，解压得到flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flag&#123;ez_di_imp_1t_y0u_like?&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="福莱格殿下"><a href="#福莱格殿下" class="headerlink" title="福莱格殿下"></a>福莱格殿下</h3><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43891422/article/details/107852416">https://blog.csdn.net/weixin_43891422/article/details/107852416</a></p>
+<p>1.查看内存镜像信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw imageinfo<br>Volatility Foundation Volatility Framework 2.6<br>INFO    : volatility.debug    : Determining profile based on KDBG search...<br>          Suggested Profile(s) : WinXPSP2x86, WinXPSP3x86 (Instantiated with WinXPSP2x86)<br>                     AS Layer1 : IA32PagedMemoryPae (Kernel AS)<br>                     AS Layer2 : FileAddressSpace (/home/kali/volatility2.6/zy.raw)<br>                      PAE <span class="hljs-built_in">type</span> : PAE<br>                           DTB : 0xaff000L<br>                          KDBG : 0x80546ae0L<br>          Number of Processors : 1<br>     Image Type (Service Pack) : 3<br>                KPCR <span class="hljs-keyword">for</span> CPU 0 : 0xffdff000L<br>             KUSER_SHARED_DATA : 0xffdf0000L<br>           Image date and time : 2020-07-25 16:50:35 UTC+0000<br>     Image <span class="hljs-built_in">local</span> date and time : 2020-07-26 00:50:35 +0800<br></code></pre></td></tr></table></figure>
+<p>镜像系统为WinXPSP2x86</p>
+<p>2.获取进程信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86  pslist<br>Volatility Foundation Volatility Framework 2.6<br>Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                          <br>---------- -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------<br>0x821b9830 System                    4      0     58      254 ------      0                                                              <br>0x81c04ba0 smss.exe                536      4      3       19 ------      0 2020-07-25 15:35:26 UTC+0000                                 <br>0x81f59da0 csrss.exe               604    536     11      365      0      0 2020-07-25 15:35:29 UTC+0000                                 <br>0x82007d10 winlogon.exe            632    536     18      451      0      0 2020-07-25 15:35:31 UTC+0000                                 <br>0x82085560 services.exe            716    632     16      269      0      0 2020-07-25 15:35:31 UTC+0000                                 <br>0x81c944a8 lsass.exe               728    632     22      355      0      0 2020-07-25 15:35:31 UTC+0000                                 <br>0x81f767f0 vmacthlp.exe            904    716      1       25      0      0 2020-07-25 15:35:32 UTC+0000                                 <br>0x82054988 svchost.exe             916    716     15      189      0      0 2020-07-25 15:35:32 UTC+0000                                 <br>0x81c1e2a0 svchost.exe             964    716     11      254      0      0 2020-07-25 15:35:33 UTC+0000                                 <br>0x81d57360 svchost.exe            1104    716     55     1147      0      0 2020-07-25 15:35:33 UTC+0000                                 <br>0x81bc5458 svchost.exe            1152    716      4       77      0      0 2020-07-25 15:35:33 UTC+0000                                 <br>0x81bcf650 svchost.exe            1192    716     14      198      0      0 2020-07-25 15:35:35 UTC+0000                                 <br>0x81d61650 explorer.exe           1596   1540     16      536      0      0 2020-07-25 15:35:39 UTC+0000                                 <br>0x82006da0 spoolsv.exe            1700    716     10      114      0      0 2020-07-25 15:35:40 UTC+0000                                 <br>0x81ffda48 rundll32.exe           1808   1596      4       78      0      0 2020-07-25 15:35:40 UTC+0000                                 <br>0x8200a7e0 vmtoolsd.exe           1816   1596      7      246      0      0 2020-07-25 15:35:40 UTC+0000                                 <br>0x81d87c10 ctfmon.exe             1824   1596      1       71      0      0 2020-07-25 15:35:40 UTC+0000                                 <br>0x81feabb8 svchost.exe            1784    716      4       84      0      0 2020-07-25 15:35:56 UTC+0000                                 <br>0x81c96790 VGAuthService.e        1996    716      2       60      0      0 2020-07-25 15:35:56 UTC+0000                                 <br>0x81bf0c10 vmtoolsd.exe            176    716      7      267      0      0 2020-07-25 15:35:56 UTC+0000                                 <br>0x81fe0578 wmiprvse.exe           1040    916     13      237      0      0 2020-07-25 15:36:04 UTC+0000                                 <br>0x81c395a8 wscntfy.exe            1188   1104      1       39      0      0 2020-07-25 15:36:04 UTC+0000                                 <br>0x81bb3498 alg.exe                1552    716      5      102      0      0 2020-07-25 15:36:04 UTC+0000                                 <br>0x81d89da0 notepad.exe            1352   1596      2       92      0      0 2020-07-25 15:38:22 UTC+0000                                 <br>0x8206fda0 conime.exe             1832   1320      1       38      0      0 2020-07-25 15:49:44 UTC+0000                                 <br>0x81d89a08 DumpIt.exe              800   1596      1       25      0      0 2020-07-25 16:50:34 UTC+0000   <br></code></pre></td></tr></table></figure>
+<p>可疑程序smss.exe</p>
+<p>3.提取进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86  memdump -p 536 -D ./  <br>Volatility Foundation Volatility Framework 2.6<br>************************************************************************<br>Writing smss.exe [   536] to 536.dmp<br></code></pre></td></tr></table></figure>
+<p>4.查看dump信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ strings -e l 536.dmp | grep flag<br>flag.jpg<br>flag.png<br>flag.jpg<br>flag.jpg<br>flag.jpg<br>flag.jpg<br>flag.png<br>flag.png<br>flag.png<br>flag.jpg<br>flag.jpg<br>flag.png<br>flag.lnk<br>flag.jpg<br>\flag.jpg*C:\Documents and Settings\Administrator\<br>flag.png<br>flag.jpg<br>flag.lnk<br>notiflag.exe<br>\Documents and Settings\Administrator\Recent\flag.lnk<br>flag.png<br>flag.jpg<br>flag.png<br>flag.png<br>flag.jpg<br>flag.lnk<br>flag.jpg<br>flag.lnk<br>flag.jpg<br>flag.png<br>\flag.jpg<br>\flag.jpg<br>\flag.png<br>\flag.jpg<br>\flag.png<br>\flag.jpg<br>\flag.png<br>\flag.jpg<br>\flag.png<br>\flag.jpg<br>\flag.png<br>flag.png<br> 1\flag.jpg<br>\flag.jpg<br>flag.jpg<br>\flag.jpg<br>flag.png<br>flag.lnk<br>flag.png<br>\flag.jpg.jpg<br>\flag.png<br> 1\flag.jpg<br>\Device\HarddiskVolume1\Documents and Settings\Administrator\Recent\flag.lnk<br>\flag.jpg<br>\flag.jpg<br>flag.jpg<br>\flag.jpg<br>\flag.jpg<br>\Device\HarddiskVolume1\Documents and Settings\Administrator\Recent\flag.lnk<br>\flag.png<br> 1\flag.png<br>\flag.jpg<br>\flag.png<br>flag.png<br>flag.jpg<br>usbflags<br>usbflags<br>usbflags<br>usbflags\vvvvpppprrrr<br>usbflags<br></code></pre></td></tr></table></figure>
+<p>可疑文件flag.jpg和flag.png</p>
+<p>5.获取浏览器浏览历史</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86 iehistory<br>Volatility Foundation Volatility Framework 2.6<br></code></pre></td></tr></table></figure>
+<p>在大师傅博客里面能看到hint.txt，但我这里啥也没有，继续往下看吧</p>
+<p>6.扫描并提取文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86 filescan | grep hint<br>Volatility Foundation Volatility Framework 2.6<br>0x0000000002456028      1      0 RW-r-- \Device\HarddiskVolume1\Documents and Settings\Administrator\My Documents\hint.txt<br></code></pre></td></tr></table></figure>
+<p>7.使用dumpfiles提取文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86 dumpfiles -Q 0x0000000002456028 -D ./<br>Volatility Foundation Volatility Framework 2.6<br>DataSectionObject 0x02456028   None   \Device\HarddiskVolume1\Documents and Settings\Administrator\My Documents\hint.txt<br></code></pre></td></tr></table></figure>
+<p>得到file.None.0x821231b8.dat<br><img src="https://img-blog.csdnimg.cn/20210603204442392.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>修改后缀为txt，hint提示文件名为fl4g</p>
+<p>8.扫描查找fl4g文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86 filescan | grep fl4g                 <br>Volatility Foundation Volatility Framework 2.6<br>0x0000000002052028      1      0 R--rw- \Device\HarddiskVolume1\Documents and Settings\Administrator\桌面\fl4g.zip<br></code></pre></td></tr></table></figure>
+<p>9.把fl4g文件dump下来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/volatility2.6]<br>└─$ vol.py -f zy.raw --profile=WinXPSP2x86 dumpfiles -Q 0x0000000002052028 -D ./<br>Volatility Foundation Volatility Framework 2.6<br>DataSectionObject 0x02052028   None   \Device\HarddiskVolume1\Documents and Settings\Administrator\桌面\fl4g.zip<br></code></pre></td></tr></table></figure>
+<p>修改后缀为zip，解压出来flag.png和flag.jpg</p>
+<p>10.LSB双图隐写<br>先用StegSlove打开flag.png，然后点击Analyse-&gt;Image Combiner打开flag.jpg，进行异或会得到二维码<br><img src="https://img-blog.csdnimg.cn/20210603205142989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>11.扫码解flag</p>
+<p>二维码信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://fanyi.baidu.com/translate?aldtype=16047&amp;query=%E6%B0%9F%E5%BE%95%E6%A0%BC%E4%B9%83%E9%8C%B5%E6%89%A9%E5%8F%B7%E6%AC%B8%E5%BF%85%E8%A5%BF%E5%BC%9F%E4%BA%BF%E8%89%BE%E8%99%8E%E9%94%AF%E9%8C%B5%E6%89%A9%E5%8F%B7&amp;keyfrom=baidu&amp;smartresult=dict&amp;lang=auto2zh<span class="hljs-comment">#zh/en/%E6%B0%9F%E5%BE%95%E6%A0%BC%E4%B9%83%E9%8C%B5%E6%89%A9%E5%8F%B7%E6%AC%B8%E5%BF%85%E8%A5%BF%E5%BC%9F%E4%BA%BF%E8%89%BE%E8%99%8E%E9%94%AF%E9%8C%B5%E6%89%A9%E5%8F%B7</span><br></code></pre></td></tr></table></figure>
+<p>根据读音最终flag为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flag&#123;abcdefg&#125;<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/MISC/">MISC</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">流量分析</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/27/ISCC2021-Web-WP/">
+                        <span class="hidden-mobile">ISCC2021 Web WP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
+
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
+
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
+
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
+    }
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+}
+setInterval("createtime()", 250);
+</script>
+
+<!-- 添加网站运行时间》-->
+  </div>
+  
+
+  
+
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,584 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>PHP 数据库操作 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.top","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PHP 数据库操作">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-15 13:36" pubdate>
+        2020年12月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PHP 数据库操作</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>菜鸟驿站PHP学习笔记</p>
+</blockquote>
+<h2 id="PHP连接MySQL"><a href="#PHP连接MySQL" class="headerlink" title="PHP连接MySQL"></a>PHP连接MySQL</h2><p>PHP连接数据库主要用到mysqli_connect()函数</p>
+<p>函数语法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mysqli_connect(host,username,password,dbname,port,socket);<br></code></pre></td></tr></table></figure>
+<p>参数说明：<br>| 参数     | 描述                                        |<br>| ——– | ——————————————- |<br>| host     | 可选。规定主机名或 IP 地址。                |<br>| username | 可选。规定 MySQL 用户名。                   |<br>| password | 可选。规定 MySQL 密码。                     |<br>| dbname   | 可选。规定默认使用的数据库。                |<br>| port     | 可选。规定尝试连接到 MySQL 服务器的端口号。 |<br>| socket   | 可选。规定 socket 或要使用的已命名 pipe。   |</p>
+<p>首先通过 phpinfo() 查看是否安装成功<br><img src="https://img-blog.csdnimg.cn/20210414170628923.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>下面MySQLi面向对象和面向过程的思想连接数据库</p>
+<h3 id="创建连接"><a href="#创建连接" class="headerlink" title="创建连接"></a>创建连接</h3><p>实例1：<strong>MySQLi - 面向对象</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;password&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = <span class="hljs-keyword">new</span> mysqli(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>);<br> <br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$conn</span>-&gt;connect_error) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span> . <span class="hljs-variable">$conn</span>-&gt;connect_error);<br>&#125; <br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;连接成功&quot;</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：在以上面向对象的实例中 <code>$connect_erro</code>r 是在 PHP 5.2.9 和 5.3.0 中添加的。如果你需要兼容更早版本 请使用以下代码替换:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (mysqli_connect_error()) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;数据库连接失败: &quot;</span> . mysqli_connect_error());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>实例2：<strong>MySQLi - 面向过程</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;password&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>);<br> <br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Connection failed: &quot;</span> . mysqli_connect_error());<br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;连接成功&quot;</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：默认端口号为3306，如果端口号修改，可以为数据库参数添加空字符串，如: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>,<span class="hljs-string">&quot;&quot;</span>,port);<br></code></pre></td></tr></table></figure>
+<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>连接在脚本执行完后会自动关闭。你也可以使用以下代码来关闭连接：</p>
+<p>实例 (MySQLi - 面向对象)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$conn</span>-&gt;close();<br></code></pre></td></tr></table></figure>
+
+<p>实例 (MySQLi - 面向过程)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mysqli_close(<span class="hljs-variable">$conn</span>);<br></code></pre></td></tr></table></figure>
+<p><strong>数据库连接编码问题</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//php5</span><br>mysql_query(<span class="hljs-string">&quot;set character set &#x27;utf8&#x27;&quot;</span>);<span class="hljs-comment">//读库 </span><br>mysql_query(<span class="hljs-string">&quot;set names &#x27;utf8&#x27;&quot;</span>);<span class="hljs-comment">//写库</span><br><br><span class="hljs-comment">//php7</span><br>mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-string">&quot;set character set &#x27;utf8&#x27;&quot;</span>);<span class="hljs-comment">//读库 </span><br>mysqli_query(<span class="hljs-variable">$conn</span>,<span class="hljs-string">&quot;set names &#x27;utf8&#x27;&quot;</span>);<span class="hljs-comment">//写库</span><br></code></pre></td></tr></table></figure>
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>创建 MySQL数据库语句：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">CREATE DATABASE database_name;<br></code></pre></td></tr></table></figure>
+<p>创建一个数据库demo</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 创建数据库</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>);<br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error());<br>&#125;<br> <br><span class="hljs-comment">// 创建数据库</span><br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;CREATE DATABASE demo&quot;</span>;<br><span class="hljs-keyword">if</span> (mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;数据库创建成功&quot;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;Error creating database: &quot;</span> . mysqli_error(<span class="hljs-variable">$conn</span>);<br>&#125;<br> <br>mysqli_close(<span class="hljs-variable">$conn</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>数据库创建成功<br><img src="https://img-blog.csdnimg.cn/20210414182704415.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h2><p>创建 MySQL 数据表语句：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">CREATE DATABASE table_name;<br></code></pre></td></tr></table></figure>
+<p>创建数据表MyDemo</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 创建数据表MyDemo</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error());<br>&#125;<br> <br><span class="hljs-comment">// 使用 sql 创建数据表</span><br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;CREATE TABLE MyDemo (</span><br><span class="hljs-string">id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, </span><br><span class="hljs-string">name VARCHAR(30) NOT NULL,</span><br><span class="hljs-string">sex VARCHAR(30) NOT NULL,</span><br><span class="hljs-string">age INT(3)</span><br><span class="hljs-string">)&quot;</span>;<br> <br><span class="hljs-keyword">if</span> (mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;数据表MyDemo创建成功&quot;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;创建数据表错误: &quot;</span> . mysqli_error(<span class="hljs-variable">$conn</span>);<br>&#125;<br> <br>mysqli_close(<span class="hljs-variable">$conn</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>创建成功<br><img src="https://img-blog.csdnimg.cn/20210414184817372.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><p>INSERT INTO 语句通常用于向 MySQL 表添加新的记录：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">INSERT INTO table_name (column1, column2, column3,...)<br>VALUES (value1, value2, value3,...)<br></code></pre></td></tr></table></figure>
+<p>往表里插入一条数据</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">INSERT INTO mydemo (id, name, sex ,age)<br>VALUES (<span class="hljs-number">1001</span>, <span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-string">&#x27;男&#x27;</span>,<span class="hljs-number">18</span>)<br></code></pre></td></tr></table></figure>
+<p>代码实现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 插入数据</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Connection failed: &quot;</span> . mysqli_connect_error());<br>&#125;<br>mysqli_query(<span class="hljs-variable">$conn</span>,<span class="hljs-string">&quot;set names utf8&quot;</span>);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;INSERT INTO mydemo (id, name, sex ,age)</span><br><span class="hljs-string">VALUES (1001, &#x27;张三&#x27;, &#x27;男&#x27;,18)&quot;</span>;<br> <br><span class="hljs-keyword">if</span> (mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;新记录插入成功&quot;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;Error: &quot;</span> . <span class="hljs-variable">$sql</span> . <span class="hljs-string">&quot;&lt;br&gt;&quot;</span> . mysqli_error(<span class="hljs-variable">$conn</span>);<br>&#125;<br> <br>mysqli_close(<span class="hljs-variable">$conn</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>插入数据成功<br><img src="https://img-blog.csdnimg.cn/20210415125056358.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>插入多条数据</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;INSERT INTO mydemo (id, name, sex ,age)</span><br><span class="hljs-string">VALUES (1002, &#x27;李四&#x27;, &#x27;女&#x27;,19);&quot;</span>;<br><span class="hljs-variable">$sql</span> .= <span class="hljs-string">&quot;INSERT INTO mydemo (id, name, sex ,age)</span><br><span class="hljs-string">VALUES (1003, &#x27;王五&#x27;, &#x27;男&#x27;,20);&quot;</span>;<br><span class="hljs-variable">$sql</span> .= <span class="hljs-string">&quot;INSERT INTO mydemo (id, name, sex ,age)</span><br><span class="hljs-string">VALUES (1004, &#x27;刘六&#x27;, &#x27;男&#x27;,21);&quot;</span>;<br><br><span class="hljs-comment">#注意此处改为mysqli_multi_query函数，执行多个针对数据库的查询 </span><br><span class="hljs-keyword">if</span> (mysqli_multi_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;新记录插入成功&quot;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;Error: &quot;</span> . <span class="hljs-variable">$sql</span> . <span class="hljs-string">&quot;&lt;br&gt;&quot;</span> . mysqli_error(<span class="hljs-variable">$conn</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>表中新增3条数据<br><img src="https://img-blog.csdnimg.cn/20210415130249849.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h2><p>SELECT 语句用于从数据表中读取数据:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">SELECT column_name(s) <span class="hljs-keyword">FROM</span> table_name<br></code></pre></td></tr></table></figure>
+<p>我们可以使用 * 号来读取所有数据表中的字段：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">SELECT * <span class="hljs-keyword">FROM</span> table_name<br></code></pre></td></tr></table></figure>
+<p>在test数据库中student表的内容：<br><img src="https://img-blog.csdnimg.cn/202104141743230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>从student表中读取数据:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 读取mydemo表数据</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// Check connection</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error());<br>&#125;<br><span class="hljs-comment">//设置返回数据的字符集</span><br>mysqli_query(<span class="hljs-variable">$conn</span>,<span class="hljs-string">&quot;set character set &#x27;utf8&#x27;&quot;</span>);<br><br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;SELECT * FROM mydemo&quot;</span>;<br><span class="hljs-variable">$result</span> = mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>);<br><br><span class="hljs-keyword">if</span> (mysqli_num_rows(<span class="hljs-variable">$result</span>) &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 输出数据</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-variable">$row</span> = mysqli_fetch_assoc(<span class="hljs-variable">$result</span>)) &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;ID: &quot;</span> . <span class="hljs-variable">$row</span>[<span class="hljs-string">&quot;id&quot;</span>]. <span class="hljs-string">&quot; - 姓名: &quot;</span> . <span class="hljs-variable">$row</span>[<span class="hljs-string">&quot;name&quot;</span>]. <span class="hljs-string">&quot; - 性别: &quot;</span>. <span class="hljs-variable">$row</span>[<span class="hljs-string">&quot;sex&quot;</span>].<span class="hljs-string">&quot;-年龄: &quot;</span> . <span class="hljs-variable">$row</span>[<span class="hljs-string">&quot;age&quot;</span>]. <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>    &#125;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;0 结果&quot;</span>;<br>&#125;<br> <br>mysqli_close(<span class="hljs-variable">$conn</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>读到了表中的数据<br><img src="https://img-blog.csdnimg.cn/20210415130519716.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>读出来的数据不够美观，参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43627723/article/details/102503726">大佬</a>的博客美化一下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 读取mydemo表数据</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$conn</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// Check connection</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$conn</span>) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error());<br>&#125;<br><span class="hljs-comment">//设置返回数据的字符集</span><br>mysqli_query(<span class="hljs-variable">$conn</span>,<span class="hljs-string">&quot;set names utf8&quot;</span>);<br><br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;SELECT * FROM mydemo&quot;</span>;<br><span class="hljs-variable">$result</span> = mysqli_query(<span class="hljs-variable">$conn</span>, <span class="hljs-variable">$sql</span>);<br><br><br> <br>mysqli_close(<span class="hljs-variable">$conn</span>);<br><span class="hljs-meta">?&gt;</span><br>&lt;!DOCYTPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset = <span class="hljs-string">&quot;utf-8&quot;</span>&gt;<br>		&lt;title&gt;&lt;/title&gt;<br>		&lt;style type=<span class="hljs-string">&quot;text/css&quot;</span>&gt;<br>			th,td&#123;<br>				padding:<span class="hljs-number">5</span>px;color:<span class="hljs-comment">#444;</span><br>				font-size:<span class="hljs-number">14</span>px;border:<span class="hljs-number">1</span>px soild <span class="hljs-comment">#ccc;</span><br>			&#125;<br>		&lt;/style&gt;<br>	&lt;/head&gt;<br>	&lt;body&gt;<br>		&lt;table width=<span class="hljs-string">&quot;800&quot;</span> border=<span class="hljs-string">&quot;1&quot;</span> style=<span class="hljs-string">&quot;border-collapse:collapse;&quot;</span> align=<span class="hljs-string">&quot;center&quot;</span>&gt;<br>			&lt;tr&gt;<br>				&lt;th&gt;ID&lt;/th&gt;<br>				&lt;th&gt;姓名&lt;/th&gt;<br>				&lt;th&gt;性别&lt;/th&gt;<br>				&lt;th&gt;年龄&lt;/th&gt;<br>			&lt;/tr&gt;<br>			<span class="hljs-meta">&lt;?php</span><br>				<span class="hljs-keyword">while</span>(<span class="hljs-variable">$row</span>=mysqli_fetch_row(<span class="hljs-variable">$result</span>))&#123;<br>			<span class="hljs-meta">?&gt;</span><br>			&lt;tr&gt;<br>				&lt;td align=<span class="hljs-string">&quot;center&quot;</span>&gt;<span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-variable">$row</span>[<span class="hljs-number">0</span>]<span class="hljs-meta">?&gt;</span>&lt;/td&gt;<br>				&lt;td align=<span class="hljs-string">&quot;center&quot;</span>&gt;<span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-variable">$row</span>[<span class="hljs-number">1</span>]<span class="hljs-meta">?&gt;</span>&lt;/td&gt;<br>				&lt;td align=<span class="hljs-string">&quot;center&quot;</span>&gt;<span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-variable">$row</span>[<span class="hljs-number">2</span>]<span class="hljs-meta">?&gt;</span>&lt;/td&gt;<br>				&lt;td align=<span class="hljs-string">&quot;center&quot;</span>&gt;<span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-variable">$row</span>[<span class="hljs-number">3</span>]<span class="hljs-meta">?&gt;</span>&lt;/td&gt;<br>			&lt;/tr&gt;<br>			<span class="hljs-meta">&lt;?php</span> &#125; <span class="hljs-meta">?&gt;</span><br>		&lt;/table&gt;<br>	&lt;/body&gt;<br>&lt;/html&gt;<br><br></code></pre></td></tr></table></figure>
+<p>得到<br><img src="https://img-blog.csdnimg.cn/20210415130641730.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><p>UPDATE 语句用于中修改数据库表中的数据<br>语法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">UPDATE table_name<br>SET column1=value, column2=value2,...<br>WHERE some_column=some_value<br></code></pre></td></tr></table></figure>
+<p>通过实例修改数据表中的数据</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 更新mydemo表数据</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$con</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (mysqli_connect_errno())<br>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error();<br>&#125;<br><br>mysqli_query(<span class="hljs-variable">$con</span>,<span class="hljs-string">&quot;UPDATE mydemo SET Age=20</span><br><span class="hljs-string">WHERE ID=1004&quot;</span>);<br><br>mysqli_close(<span class="hljs-variable">$con</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>mydemo数据表中id=1004的记录age变为20<br><img src="https://img-blog.csdnimg.cn/20210415132140762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><p>DELETE FROM 语句用于从数据库表中删除记录。</p>
+<p>语法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">DELETE <span class="hljs-keyword">FROM</span> table_name<br>WHERE some_column = some_value<br></code></pre></td></tr></table></figure>
+<p>删除一条记录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">#PHP MySQL 更新mydemo表数据</span><br>header(<span class="hljs-string">&quot;content-type:text/html;charset=utf-8&quot;</span>);<br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;username&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;pasword&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;demo&quot;</span>;<br> <br><span class="hljs-comment">// 创建连接</span><br><span class="hljs-variable">$con</span> = mysqli_connect(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-comment">// 检测连接</span><br><span class="hljs-keyword">if</span> (mysqli_connect_errno())<br>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;连接失败: &quot;</span> . mysqli_connect_error();<br>&#125;<br><br>mysqli_query(<span class="hljs-variable">$con</span>,<span class="hljs-string">&quot;DELETE FROM mydemo WHERE ID=1004&quot;</span>);<br><br>mysqli_close(<span class="hljs-variable">$con</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>mydmo表中id=4的记录消失<br><img src="https://img-blog.csdnimg.cn/20210415133058835.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">编程开发</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/PHP/">PHP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MYSQL/">MYSQL</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">线下AWD攻防赛总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/">
+                        <span class="hidden-mobile">CTFHub-Web-文件上传练习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
+
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
+
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
+
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
+    }
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+}
+setInterval("createtime()", 250);
+</script>
+
+<!-- 添加网站运行时间》-->
+  </div>
+  
+
+  
+
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
