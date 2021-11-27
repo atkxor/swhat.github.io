@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>Docker-搭建题目环境 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.top","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Docker-搭建题目环境">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-29 22:26" pubdate>
+        2021年6月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      42
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Docker-搭建题目环境</h1>
+            
+            <div class="markdown-body">
+              <h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>1、curl -fsSL <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian/gpg">https://download.docker.com/linux/debian/gpg</a> | sudo apt-key add -</p>
+<p>2、echo ‘deb <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian">https://download.docker.com/linux/debian</a> stretch stable’&gt; /etc/apt/sources.list.d/docker.list</p>
+<p>3、apt-get install apt-transport-https  ca-certificates  curl  gnupg2  software-properties-common</p>
+<p>4、apt-get update</p>
+<p>5、sudo apt install docker.io</p>
+<p>6、检查docker安装情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker</span><br><br>Usage:  docker [OPTIONS] COMMAND<br><br>A self-sufficient runtime <span class="hljs-keyword">for</span> containers<br><br>Options:<br>      --config string      Location of client config files (default <span class="hljs-string">&quot;/root/.docker&quot;</span>)<br>  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context <span class="hljs-built_in">set</span> with<br>                           <span class="hljs-string">&quot;docker context use&quot;</span>)<br>  -D, --debug              Enable debug mode<br>  -H, --host list          Daemon socket(s) to connect to<br>  -l, --log-level string   Set the logging level (<span class="hljs-string">&quot;debug&quot;</span>|<span class="hljs-string">&quot;info&quot;</span>|<span class="hljs-string">&quot;warn&quot;</span>|<span class="hljs-string">&quot;error&quot;</span>|<span class="hljs-string">&quot;fatal&quot;</span>) (default <span class="hljs-string">&quot;info&quot;</span>)<br>      --tls                Use TLS; implied by --tlsverify<br>      --tlscacert string   Trust certs signed only by this CA (default <span class="hljs-string">&quot;/root/.docker/ca.pem&quot;</span>)<br>      --tlscert string     Path to TLS certificate file (default <span class="hljs-string">&quot;/root/.docker/cert.pem&quot;</span>)<br>      --tlskey string      Path to TLS key file (default <span class="hljs-string">&quot;/root/.docker/key.pem&quot;</span>)<br>      --tlsverify          Use TLS and verify the remote<br>  -v, --version            Print version information and quit<br><br>Management Commands:<br>  builder     Manage builds<br>  config      Manage Docker configs<br>  container   Manage containers<br>  context     Manage contexts<br>  image       Manage images<br>  manifest    Manage Docker image manifests and manifest lists<br>  network     Manage networks<br>  node        Manage Swarm nodes<br>  plugin      Manage plugins<br>  secret      Manage Docker secrets<br>  service     Manage services<br>  stack       Manage Docker stacks<br>  swarm       Manage Swarm<br>  system      Manage Docker<br>  trust       Manage trust on Docker images<br>  volume      Manage volumes<br><br>Commands:<br>  attach      Attach <span class="hljs-built_in">local</span> standard input, output, and error streams to a running container<br>  build       Build an image from a Dockerfile<br>  commit      Create a new image from a container<span class="hljs-string">&#x27;s changes</span><br><span class="hljs-string">  cp          Copy files/folders between a container and the local filesystem</span><br><span class="hljs-string">  create      Create a new container</span><br><span class="hljs-string">  diff        Inspect changes to files or directories on a container&#x27;</span>s filesystem<br>  events      Get real time events from the server<br>  <span class="hljs-built_in">exec</span>        Run a <span class="hljs-built_in">command</span> <span class="hljs-keyword">in</span> a running container<br>  <span class="hljs-built_in">export</span>      Export a container<span class="hljs-string">&#x27;s filesystem as a tar archive</span><br><span class="hljs-string">  history     Show the history of an image</span><br><span class="hljs-string">  images      List images</span><br><span class="hljs-string">  import      Import the contents from a tarball to create a filesystem image</span><br><span class="hljs-string">  info        Display system-wide information</span><br><span class="hljs-string">  inspect     Return low-level information on Docker objects</span><br><span class="hljs-string">  kill        Kill one or more running containers</span><br><span class="hljs-string">  load        Load an image from a tar archive or STDIN</span><br><span class="hljs-string">  login       Log in to a Docker registry</span><br><span class="hljs-string">  logout      Log out from a Docker registry</span><br><span class="hljs-string">  logs        Fetch the logs of a container</span><br><span class="hljs-string">  pause       Pause all processes within one or more containers</span><br><span class="hljs-string">  port        List port mappings or a specific mapping for the container</span><br><span class="hljs-string">  ps          List containers</span><br><span class="hljs-string">  pull        Pull an image or a repository from a registry</span><br><span class="hljs-string">  push        Push an image or a repository to a registry</span><br><span class="hljs-string">  rename      Rename a container</span><br><span class="hljs-string">  restart     Restart one or more containers</span><br><span class="hljs-string">  rm          Remove one or more containers</span><br><span class="hljs-string">  rmi         Remove one or more images</span><br><span class="hljs-string">  run         Run a command in a new container</span><br><span class="hljs-string">  save        Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="hljs-string">  search      Search the Docker Hub for images</span><br><span class="hljs-string">  start       Start one or more stopped containers</span><br><span class="hljs-string">  stats       Display a live stream of container(s) resource usage statistics</span><br><span class="hljs-string">  stop        Stop one or more running containers</span><br><span class="hljs-string">  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE</span><br><span class="hljs-string">  top         Display the running processes of a container</span><br><span class="hljs-string">  unpause     Unpause all processes within one or more containers</span><br><span class="hljs-string">  update      Update configuration of one or more containers</span><br><span class="hljs-string">  version     Show the Docker version information</span><br><span class="hljs-string">  wait        Block until one or more containers stop, then print their exit codes</span><br><span class="hljs-string"></span><br><span class="hljs-string">Run &#x27;</span>docker COMMAND --<span class="hljs-built_in">help</span><span class="hljs-string">&#x27; for more information on a command.</span><br><span class="hljs-string"></span><br><span class="hljs-string">To get more help with docker, check out our guides at https://docs.docker.com/go/guides/</span><br></code></pre></td></tr></table></figure>
+
+
+<p>显示docker信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/桌面]<br>└─<span class="hljs-comment"># docker -v               </span><br>Docker version 20.10.5+dfsg1, build 55c4c88<br>                                                                                                                                                    <br>┌──(root💀kali)-[/home/kali/桌面]<br>└─<span class="hljs-comment"># docker ps -a</span><br>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES<br></code></pre></td></tr></table></figure>
+
+
+<p>启动docker服务器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">service docker start<br></code></pre></td></tr></table></figure>
+
+
+<p>安装compose</p>
+<p>Docker-Compose项目是Docker官方的开源项目，负责实现对Docker容器集群的快速编排。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php">apt install docker-compose<br>  <br>pip install docker-compose<br>pip3 install docker-compose<br></code></pre></td></tr></table></figure>
+
+
+<p>Docker安装测试（hello-world）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs php">└─<span class="hljs-comment"># docker run hello-world</span><br>Unable to find image <span class="hljs-string">&#x27;hello-world:latest&#x27;</span> locally<br>latest: Pulling <span class="hljs-keyword">from</span> library/hello-world<br>b8dfde127a29: Pull complete <br>Digest: sha256:<span class="hljs-number">0</span>fe98d7debd9049c50b597ef1f85b7c1e8cc81f59c8d623fcb2250e8bec85b38<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> hello-world:latest<br><br>Hello <span class="hljs-keyword">from</span> Docker!                                                                                                                                                             <br>This message shows that your installation appears to be working correctly.                                                                                                     <br><br>To generate this message, Docker took the following steps:<br> <span class="hljs-number">1.</span> The Docker client contacted the Docker daemon.<br> <span class="hljs-number">2.</span> The Docker daemon pulled the <span class="hljs-string">&quot;hello-world&quot;</span> image <span class="hljs-keyword">from</span> the Docker Hub.<br>    (amd64)<br> <span class="hljs-number">3.</span> The Docker daemon created a <span class="hljs-keyword">new</span> container <span class="hljs-keyword">from</span> that image which runs the<br>    executable that produces the output you are currently reading.<br> <span class="hljs-number">4.</span> The Docker daemon streamed that output to the Docker client, which sent it<br>    to your terminal.<br><br>To <span class="hljs-keyword">try</span> something more ambitious, you can run an Ubuntu container with:<br> $ docker run -it ubuntu bash<br><br>Share images, automate workflows, <span class="hljs-keyword">and</span> more with a free Docker ID:<br> https:<span class="hljs-comment">//hub.docker.com/</span><br><br><span class="hljs-keyword">For</span> more examples <span class="hljs-keyword">and</span> ideas, visit:<br> https:<span class="hljs-comment">//docs.docker.com/get-started/</span><br></code></pre></td></tr></table></figure>
+<h1 id="设置docker镜像加速"><a href="#设置docker镜像加速" class="headerlink" title="设置docker镜像加速"></a>设置docker镜像加速</h1><p>这个是需要设置的</p>
+<ul>
+<li>进入阿里云容器镜像服务:<a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a></li>
+<li>根据底下配置方法进行配置</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php">vim /etc/docker/daemon.json<br><br><span class="hljs-comment"># 添加如下内容，具体地址自己申请咯</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://****.mirror.aliyuncs.com&quot;</span>]<br>&#125;<br><br><span class="hljs-comment"># 重启服务</span><br>systemctl daemon-reload<br>systemctl restart docker<br></code></pre></td></tr></table></figure>
+<h1 id="搭建vulhub漏洞靶机环境"><a href="#搭建vulhub漏洞靶机环境" class="headerlink" title="搭建vulhub漏洞靶机环境"></a>搭建vulhub漏洞靶机环境</h1><p>1、从官网克隆vulhub</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/vulhub/vulhub.git<br></code></pre></td></tr></table></figure>
+
+
+<p> 3、完成之后cd vulhub 目录下 ls 查看目录，出现如下图，即安装完成。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/vulhub]<br>└─$ ls<br>activemq    contributors.md        elasticsearch  gitlist      java     libssh          nginx       phpunit          samba       thinkphp   zabbix<br>apereo-cas  contributors.zh-cn.md  electron       glassfish    jboss    LICENSE         node        postgres         scrapy      tikiwiki<br>appweb      couchdb                fastjson       goahead      jenkins  liferay-portal  ntopng      python           shiro       tomcat<br>aria2       discuz                 ffmpeg         gogs         jetty    log4j           ofbiz       rails            skywalking  unomi<br>base        django                 flask          h2database   jira     magento         opensmtpd   README.md        solr        uwsgi<br>bash        dns                    flink          hadoop       jmeter   mini_httpd      openssh     README.zh-cn.md  spark       weblogic<br>celery      docker                 ghostscript    httpd        joomla   mojarra         openssl     redis            spring      webmin<br>cgi         drupal                 git            imagemagick  jupyter  mongo-express   php         rsync            struts2     wordpress<br>coldfusion  dubbo                  gitea          influxdb     kibana   mysql           phpmailer   ruby             supervisor  xstream<br>confluence  ecshop                 gitlab         jackson      laravel  nexus           phpmyadmin  saltstack        tests       xxl-job<br></code></pre></td></tr></table></figure>
+
+
+<p>下面随便进入一个目录，选择struts2，启动s2-001测试环境</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs php">┌──(root💀kali)-[/home/kali/vulhub/struts2/s2<span class="hljs-number">-001</span>]<br>└─<span class="hljs-comment"># docker-compose build           </span><br>Building struts2<br>Sending build context to Docker daemon  <span class="hljs-number">3.697</span>MB<br>Step <span class="hljs-number">1</span>/<span class="hljs-number">5</span> : <span class="hljs-keyword">FROM</span> vulhub/tomcat:<span class="hljs-number">8.5</span><br> ---&gt; <span class="hljs-number">66</span>ba03f6c1d8<br>Step <span class="hljs-number">2</span>/<span class="hljs-number">5</span> : LABEL maintainer=<span class="hljs-string">&quot;phithon &lt;root@leavesongs.com&gt;&quot;</span><br> ---&gt; Using cache<br> ---&gt; <span class="hljs-number">51</span>ccd85e21c0<br>Step <span class="hljs-number">3</span>/<span class="hljs-number">5</span> : RUN set -ex     &amp;&amp; rm -rf /usr/local/tomcat/webapps<span class="hljs-comment">/*     &amp;&amp; chmod a+x /usr/local/tomcat/bin/*.sh</span><br><span class="hljs-comment"> ---&gt; Using cache</span><br><span class="hljs-comment"> ---&gt; 0a903d3b8d2e</span><br><span class="hljs-comment">Step 4/5 : COPY S2-001.war /usr/local/tomcat/webapps/ROOT.war</span><br><span class="hljs-comment"> ---&gt; Using cache</span><br><span class="hljs-comment"> ---&gt; 46e97211b80a</span><br><span class="hljs-comment">Step 5/5 : EXPOSE 8080</span><br><span class="hljs-comment"> ---&gt; Using cache</span><br><span class="hljs-comment"> ---&gt; 4d93a32927c7</span><br><span class="hljs-comment">Successfully built 4d93a32927c7</span><br><span class="hljs-comment">Successfully tagged s2-001_struts2:latest</span><br><span class="hljs-comment">                                                                                                                                                                              </span><br><span class="hljs-comment">┌──(root💀kali)-[/home/kali/vulhub/struts2/s2-001]</span><br><span class="hljs-comment">└─# docker-compose up -d           </span><br><span class="hljs-comment">Creating network &quot;s2-001_default&quot; with the default driver</span><br><span class="hljs-comment">Creating s2-001_struts2_1 ... done</span><br></code></pre></td></tr></table></figure>
+<p>查看docker进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/vulhub/struts2/s2-001]<br>└─<span class="hljs-comment"># docker ps -a</span><br>CONTAINER ID   IMAGE            COMMAND             CREATED              STATUS                      PORTS                    NAMES<br>d5fb2a7ca4c2   s2-001_struts2   <span class="hljs-string">&quot;catalina.sh run&quot;</span>   About a minute ago   Up About a minute           0.0.0.0:8080-&gt;8080/tcp   s2-001_struts2_1<br>f4417e29b119   hello-world      <span class="hljs-string">&quot;/hello&quot;</span>            11 minutes ago       Exited (0) 11 minutes ago                            focused_kapitsa<br></code></pre></td></tr></table></figure>
+
+
+<p>访问IP:8080,搭建成功</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/12572139/1629010820153-8ee94897-91a4-4032-9311-e1505960118b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>关闭docker 环境 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/vulhub/struts2/s2-001]<br>└─<span class="hljs-comment"># docker-compose down -v </span><br>Stopping s2-001_struts2_1 ... <span class="hljs-keyword">done</span><br>Removing s2-001_struts2_1 ... <span class="hljs-keyword">done</span><br>Removing network s2-001_default<br></code></pre></td></tr></table></figure>
+<h1 id="CTF题目搭建"><a href="#CTF题目搭建" class="headerlink" title="CTF题目搭建"></a>CTF题目搭建</h1><p>[</p>
+<p>](<a target="_blank" rel="noopener" href="https://blog.csdn.net/q20010619/article/details/108587879">https://blog.csdn.net/q20010619/article/details/108587879</a>)</p>
+<p><strong>docker常用命令</strong></p>
+<p>1.拉取镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker pull [image]<br></code></pre></td></tr></table></figure>
+
+
+<p>2.查看docker当前镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker image ls 或 docker images<br></code></pre></td></tr></table></figure>
+
+
+
+
+<p>3.新建一个docker容器，并映射端口号。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run -d -p [host port]:[docker port] [image]<br></code></pre></td></tr></table></figure>
+
+
+<p>4.查看运行中的docker容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker ps -a<br></code></pre></td></tr></table></figure>
+
+
+<p>5.进入一个docker容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">exec</span> -it [container id] bash<br></code></pre></td></tr></table></figure>
+
+
+<p>6.拷贝本地文件到docker。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker cp [本地路径] [container id]:[container 路径]<br></code></pre></td></tr></table></figure>
+<p>7.启动/停止一个docker容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker stop [container id]<br>$ docker start [container id]<br></code></pre></td></tr></table></figure>
+
+
+<p>8.删除一个docker容器。</p>
+<p>（注意：需要先把容器停止才可以删除。）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker rm [container id]<br></code></pre></td></tr></table></figure>
+
+
+<p>9.删除一个docker镜像</p>
+<p>（注意：在镜像对应的容器后才可以删除镜像ID。）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker rmi [image id]<br><br><br>遇到的问题<br>Error response from daemon: conflict: unable to delete 66ba03f6c1d8 (cannot be forced) - image has dependent child images<br><br>解决方法：https://blog.csdn.net/sunmingyang1987/article/details/104493245<br>└─<span class="hljs-comment"># docker rmi vulhub/tomcat:8.5</span><br>Untagged: vulhub/tomcat:8.5<br>Untagged: vulhub/tomcat@sha256:9b0989a0ac483d2ce309427123b44d21fddcad48159960064b5c6695270ef2ac<br></code></pre></td></tr></table></figure>
+<p>将容器转换为镜像（固化）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$docker</span> commit 容器ID 用户名/仓库1<br><span class="hljs-comment">#用户名/仓库可以随便写，无需上纲上线，我写的是lhy/test</span><br></code></pre></td></tr></table></figure>
+<p>将镜像转换为文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$docker</span> save -o /path/文件名 镜像名<br></code></pre></td></tr></table></figure>
+
+
+<p><strong>使用docker搭建一道简单的ctf题目</strong></p>
+<p>1.搜索lamp环境的docker镜像。</p>
+<p>docker search lamp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker search lamp      </span><br>NAME                                    DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED<br>mattrayner/lamp                         A simple LAMP docker image running the prere…   285                  [OK]<br>linode/lamp                             LAMP on Ubuntu 14.04.1 LTS Container            181                  <br>tutum/lamp                              Out-of-the-box LAMP image (PHP+MySQL)           148                  <br>fauria/lamp                             Modern, developer friendly LAMP stack. Inclu…   110                  [OK]<br>greyltc/lamp                            a super secure, up-to-date and lightweight L…   103                  [OK]                0                    <br></code></pre></td></tr></table></figure>
+<p>2.拉取“tutum/lamp”镜像。</p>
+<p>docker pull tutum/lamp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker pull tutum/lamp  </span><br>Using default tag: latest<br>latest: Pulling from tutum/lamp<br>Image docker.io/tutum/lamp:latest uses outdated schema1 manifest format. Please upgrade to a schema2 image <span class="hljs-keyword">for</span> better future compatibility. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/<br>8387d9ff0016: Pull complete <br>3b52deaaf0ed: Pull complete <br>4bd501fad6de: Pull complete <br>a3ed95caeb02: Pull complete <br>790f0e8363b9: Pull complete <br>11f87572ad81: Pull complete <br>341e06373981: Pull complete <br>709079cecfb8: Pull complete <br>55bf9bbb788a: Pull complete <br>b41f3cfd3d47: Pull complete <br>70789ae370c5: Pull complete <br>43f2fd9a6779: Pull complete <br>6a0b3a1558bd: Pull complete <br>934438c9af31: Pull complete <br>1cfba20318ab: Pull complete <br>de7f3e54c21c: Pull complete <br>596da16c3b16: Pull complete <br>e94007c4319f: Pull complete <br>3c013e645156: Pull complete <br>Digest: sha256:d332e7e97606ac6407b0ba9ae9e9383c89d7e04c6f4853332e98f7d326408329<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> tutum/lamp:latest<br>docker.io/tutum/lamp:latest<br></code></pre></td></tr></table></figure>
+<p>3.拉取完成以后，查看本地docker镜像。</p>
+<p>docker images</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root💀kali)-[/home/kali/桌面]<br>└─<span class="hljs-comment"># docker images</span><br>REPOSITORY       TAG               IMAGE ID       CREATED         SIZE<br>python           3.7-slim-buster   1241d4388782   3 months ago    113MB<br>hello-world      latest            d1165f221234   8 months ago    13.3kB<br>mariadb          10.4.12           b6184b68d1fd   19 months ago   357MB<br>tutum/lamp       latest            3d49e175ec00   5 years ago     427MB<br></code></pre></td></tr></table></figure>
+<p>4.新建一个docker容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker run --name=lamp -d -p 8080:80 -p 3306:3306 -v /var/www/app/lamp/:/var/www/html tutum/lamp</span><br>941e5ff0bd2f8c704ff54a952709e7ead035235cf89a287d7894524596507451<br><br>-d //容器后台运行。<br>-p //指定映射端口。<br></code></pre></td></tr></table></figure>
+<p>5.查看系统中运行的docker容器。</p>
+<p>docker ps -a</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker ps -a                                                                                    </span><br>CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                    PORTS                                          NAMES<br>941e5ff0bd2f   tutum/lamp    <span class="hljs-string">&quot;/run.sh&quot;</span>   23 seconds ago   Up 22 seconds             0.0.0.0:3306-&gt;3306/tcp, 0.0.0.0:8080-&gt;80/tcp   lamp<br>f4417e29b119   hello-world   <span class="hljs-string">&quot;/hello&quot;</span>    3 months ago     Exited (0) 3 months ago                                                  focused_kapitsa<br></code></pre></td></tr></table></figure>
+<p>6.开启apache服务,使用浏览器访问一下主页，查看映射是否正常。</p>
+<p>开启apache服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">service apache2 start<br></code></pre></td></tr></table></figure>
+<p>然后浏览器访问localhost:8080即可</p>
+<p>7.进入docker container。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker exec -it 941e5ff0bd2f bash                                                                                                                                   1 ⨯</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># </span><br><br>-i //让容器的标准输入保持打开。<br>-t //让docker分配一个伪终端并绑定到容器的标准输出上。<br>941e5ff0bd2f 容器id<br></code></pre></td></tr></table></figure>
+
+
+<p>安装vim</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker exec -it 941e5ff0bd2f bash                                                                                                                                   1 ⨯</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># apt-get clean</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># apt-get update</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># apt-get install vim</span><br></code></pre></td></tr></table></figure>
+<p>设置flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@941e5ff0bd2f:/<span class="hljs-comment"># echo &quot;flag&#123;test_flag&#125;&quot; &gt; /flag</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># cat /flag</span><br>flag&#123;test_flag&#125;<br>root@941e5ff0bd2<br></code></pre></td></tr></table></figure>
+<p>设置题目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@941e5ff0bd2f:/<span class="hljs-comment"># vi /var/www/html/rce.php</span><br>root@941e5ff0bd2f:/<span class="hljs-comment"># cat /var/www/html/rce.php</span><br>&lt;?php<br>error_reporting(0);<br><span class="hljs-keyword">if</span>(isset(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>        <span class="hljs-built_in">eval</span>(<span class="hljs-variable">$c</span>);<br>    <br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    highlight_file(__FILE__);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试一下phpinfo</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/12572139/1637592355122-f98b9eed-2a40-47d3-8923-e62d412263f4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>flag：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://192.168.182.130:8080/rce.php?c=system(<span class="hljs-string">&#x27;cat /flag&#x27;</span>);<br>flag&#123;test_flag&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+<p>8.如果ctf题目源码过多，可以拷贝到container的主目录中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker cp ctfFile 941e5ff0bd2f:var/www/html<br></code></pre></td></tr></table></figure>
+<p>10.导出容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">export</span> 941e5ff0bd2f &gt; ctf.tar<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/WEB/">WEB</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Dcoker/">Dcoker</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/05/Docker-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker-练习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93/">
+                        <span class="hidden-mobile">文件上传之二次渲染</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
+
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
+
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
+
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
+    }
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+}
+setInterval("createtime()", 250);
+</script>
+
+<!-- 添加网站运行时间》-->
+  </div>
+  
+
+  
+
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
