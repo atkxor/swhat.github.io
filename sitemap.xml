@@ -368,6 +368,13 @@
   </url>
   
   <url>
+    <loc>https://swhat.github.io/tags/Dcoker/</loc>
+    <lastmod>2022-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://swhat.github.io/tags/PHP/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
@@ -382,6 +389,13 @@
   </url>
   
   <url>
+    <loc>https://swhat.github.io/tags/SSTI/</loc>
+    <lastmod>2022-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://swhat.github.io/tags/Struts2/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
@@ -389,7 +403,7 @@
   </url>
   
   <url>
-    <loc>https://swhat.github.io/tags/SQL%E6%B3%A8%E5%85%A5/</loc>
+    <loc>https://swhat.github.io/tags/XXE/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -397,6 +411,13 @@
   
   <url>
     <loc>https://swhat.github.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</loc>
+    <lastmod>2022-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://swhat.github.io/tags/SQL%E6%B3%A8%E5%85%A5/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -445,13 +466,6 @@
   </url>
   
   <url>
-    <loc>https://swhat.github.io/tags/%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2022-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://swhat.github.io/tags/AWD/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
@@ -459,28 +473,14 @@
   </url>
   
   <url>
+    <loc>https://swhat.github.io/tags/%E6%BC%8F%E6%B4%9E/</loc>
+    <lastmod>2022-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://swhat.github.io/tags/MISC/</loc>
-    <lastmod>2022-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://swhat.github.io/tags/Dcoker/</loc>
-    <lastmod>2022-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://swhat.github.io/tags/SSTI/</loc>
-    <lastmod>2022-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://swhat.github.io/tags/XXE/</loc>
     <lastmod>2022-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
