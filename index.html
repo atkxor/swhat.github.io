@@ -1,243 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>At的小站</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta property="og:type" content="website">
 <meta property="og:title" content="At的小站">
 <meta property="og:url" content="https://swhat.github.io/index.html">
 <meta property="og:site_name" content="At的小站">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Atkx">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternative" href="/atom.xml" title="At的小站" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/img/atkx_16x16.png">
-  
-  
-      
-<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+<meta name="twitter:card" content="summary"><title>At的小站</title><link ref="canonical" href="https://swhat.github.io/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-    
-    
-  
-  
-      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  
-  <!-- 加载特效 -->
-    <script src="/js/pace.js"></script>
-    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
-  <script>
-      var yiliaConfig = {
-          rootUrl: '/',
-          fancybox: true,
-          animate: true,
-          isHome: true,
-          isPost: false,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false
-      }
-  </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
-<body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            
-            <img lazy-src="/img/atkx.png" class="js-avatar">
-            
-        </a>
-
-        <hgroup>
-          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
-        </hgroup>
-
-        
-        
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/Home">博客首页</a></li>
-                        
-                            <li><a href="/works">作品展示</a></li>
-                        
-                            <li><a href="/about">留言打卡</a></li>
-                        
-                            <li><a href="/FrontEndGuide">前端导航</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fl github" target="_blank" href="https://github.com/swhat" title="github">github</a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/AWD/" style="font-size: 10px;">AWD</a> <a href="/tags/CTFhub/" style="font-size: 16px;">CTFhub</a> <a href="/tags/CTFshow/" style="font-size: 10px;">CTFshow</a> <a href="/tags/Dcoker/" style="font-size: 14px;">Dcoker</a> <a href="/tags/MISC/" style="font-size: 10px;">MISC</a> <a href="/tags/MYSQL/" style="font-size: 10px;">MYSQL</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/RSA/" style="font-size: 10px;">RSA</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/SSTI/" style="font-size: 10px;">SSTI</a> <a href="/tags/Struts2/" style="font-size: 14px;">Struts2</a> <a href="/tags/Write-up/" style="font-size: 20px;">Write up</a> <a href="/tags/XXE/" style="font-size: 10px;">XXE</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 12px;">信息泄露</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">协议基础</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 10px;">命令执行</a> <a href="/tags/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" style="font-size: 10px;">搭建博客</a> <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 12px;">文件上传</a> <a href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" style="font-size: 12px;">流量分析</a> <a href="/tags/%E6%BC%8F%E6%B4%9E/" style="font-size: 10px;">漏洞</a> <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" style="font-size: 10px;">漏洞复现</a>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://swhat.github.io/">name</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">CTF小白</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                
-                    <img lazy-src="/img/atkx.png" class="js-avatar">
-                
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="Me"></a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/Home">博客首页</a></li>
-                
-                    <li><a href="/works">作品展示</a></li>
-                
-                    <li><a href="/about">留言打卡</a></li>
-                
-                    <li><a href="/FrontEndGuide">前端导航</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                <div class="social">
-                    
-                        <a class="github" target="_blank" href="https://github.com/swhat" title="github">github</a>
-                    
-                </div>
-            </nav>
-        </header>                
-    </div>
-</nav>
-      <div class="body-wrap">
-  
-    <article id="post-ISCTF2021" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/10/24/ISCTF2021/" class="article-date">
-      <time datetime="2021-10-24T04:26:42.000Z" itemprop="datePublished">2021-10-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/24/ISCTF2021/">ISCTF2021</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Misc签到"><a href="#Misc签到" class="headerlink" title="Misc签到"></a>Misc签到</h2><p>出题人：啊罗小黑战记停更了</p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/24/ISCTF2021/">ISCTF2021</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-24</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">9.5k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Misc签到"><a href="#Misc签到" class="headerlink" title="Misc签到"></a>Misc签到</h2><p>出题人：啊罗小黑战记停更了</p>
 <p>学校：焦作大学</p>
 <p>帅哥美女，你们考虑过把这串字符串解密一下吗？或许可以考虑下口算md5哦，又或者是base32/64……只要你猜对了，伦家就让你嘿嘿嘿… by：啊罗小黑战记停更了（QQ：1813785342）&lt;–这是出题人快去找他嘿嘿嘿</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">SVNDVEZ7aHVhbl95aW5nX2xhaV9kYW9fQ1RGX2RlX3NoaV9qaWV9<br><br>Base64解码<br>ISCTF&#123;huan_ying_lai_dao_CTF_de_shi_jie&#125;<br></code></pre></td></tr></table></figure>
@@ -508,69 +300,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bash">def createdataset():<br>        group = array([<br>                        [0, 0],[0, 0.5],[0, 1],<br>                        [1.0, 1.1], [1.0, 1.5],[1.0, 2.0],<br>                        [2.0,2.0],[2.0,2.5],[2.0,3.0],<br>                        [3.0,3.0],[3.0,3.5],[3.0,4.0],<br>                        [4.0,4.0],[4.0,4.5],[4.0,5.0],<br>                        [5.0,5.0],[5.0,5.5],[5.0,6.0],<br>                        [6.0,6.0],[6.0,6.5],[6.0,7.0],<br>                        [7.0,7.0],[7.0,7.5],[7.0,8.0],<br>                        [8.0,8.0],[8.0,8.5],[8.0,9.0],<br>                        [9.0,9.0],[9.0,9.5],[9.0,10.0],<br>                        [10.0,10.0],[10.0,10.5],[10.0,11.0],<br>                        [11.0,11.0],[11.0,11.5],[11.0,12.0],<br>                        [12.0,12.0],[12.0,12.5],[12.0,13.0],<br>                        [13.0,13.0],[13.0,13.5],[13.0,14.0],<br>                        [14.0,14.0],[14.0,14.5],[14.0,15.0],<br>                        [15.0,15.0],[15.0,15.5],[15.0,16.0],<br>                        [16.0,16.0],[16.0,16.5],[16.0,17.0],<br>                        [17.0,17.0],[17.0,17.5],[17.0,18.0],<br>                        [18.0,18.0],[18.0,18.5],[18.0,19.0],<br>                        [19.0,19.0],[19.0,19.5],[19.0,20.0],<br>                        [20.0,20.0],[20.0,20.5],[20.0,21.0],<br>                        [21.0,21.0],[21.0,21.5],[21.0,22.0],<br>                        [22.0,22.0]])<br>        labels = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;E&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;F&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;G&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;H&#x27;</span>, <span class="hljs-string">&#x27;h&#x27;</span>, <span class="hljs-string">&#x27;I&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;J&#x27;</span>, <span class="hljs-string">&#x27;j&#x27;</span>, <span class="hljs-string">&#x27;K&#x27;</span>, <span class="hljs-string">&#x27;k&#x27;</span>, <span class="hljs-string">&#x27;L&#x27;</span>, <span class="hljs-string">&#x27;l&#x27;</span>, <span class="hljs-string">&#x27;M&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;N&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27;O&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;P&#x27;</span>, <span class="hljs-string">&#x27;p&#x27;</span>, <span class="hljs-string">&#x27;Q&#x27;</span>, <span class="hljs-string">&#x27;q&#x27;</span>, <span class="hljs-string">&#x27;R&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;S&#x27;</span>, <span class="hljs-string">&#x27;s&#x27;</span>, <span class="hljs-string">&#x27;T&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;V&#x27;</span>, <span class="hljs-string">&#x27;v&#x27;</span>, <span class="hljs-string">&#x27;W&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, <span class="hljs-string">&#x27;X&#x27;</span>, <span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;Y&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>, <span class="hljs-string">&#x27;Z&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>,<span class="hljs-string">&#x27;@&#x27;</span>,<span class="hljs-string">&#x27;!&#x27;</span>,<span class="hljs-string">&#x27;_&#x27;</span>,<span class="hljs-string">&#x27;%&#x27;</span>,<span class="hljs-string">&#x27;~&#x27;</span>,<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>,<span class="hljs-string">&#x27;5&#x27;</span>,<span class="hljs-string">&#x27;6&#x27;</span>,<span class="hljs-string">&#x27;7&#x27;</span>,<span class="hljs-string">&#x27;8&#x27;</span>,<span class="hljs-string">&#x27;9&#x27;</span>,<span class="hljs-string">&#x27;0&#x27;</span>]<br>        <span class="hljs-built_in">return</span> group, labels<br>def KNN_run(inx, data_set, labels, k):<br>        data_set_size = data_set.shape[0] <br>        diff_mat = tile(inx, (data_set_size, 1)) - data_set<br>        sq_diff_mat = diff_mat**2<br>        sq_distances = sq_diff_mat.sum(axis=1)<br>        distances = sq_distances**0.5<br>        orted_dist_indicies = distances.argsort()<br>        class_count = &#123;&#125; <br><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(k):<br>                vote_label = labels[orted_dist_indicies[i]]  <br>                class_count[vote_label] = class_count.get(vote_label, 0) + 1<br>        sorted_class_count = sorted(class_count.items(),<br>key=operator.itemgetter(1), reverse=True)<br>        <span class="hljs-built_in">return</span> sorted_class_count[0][0]<br><br><span class="hljs-comment">#data=[[20,13],[9,5],[47,73],[11,54],[36,34],[90,60],[69,26],[69,59],[8,75],[44,18],[18,90],[68,71],[37,88],[16,21],[58,9],[96,77],[35,54],[23,33],[97,77],[76,47],[67,16],[28,13],[1,93],[45,12],[66,87],[15,74],[28,39],[99,1],[82,17],[99,42],[17,46],[75,21],[42,24],[97,15],[60,27],[60,35],[70,75],[18,89],[65,74],[73,30],[47,13],[93,39],[25,63]]</span><br><span class="hljs-comment">#K=5</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    group, labels = createdataset()<br>    data = [[20,13],[9,5],[47,73],[11,54],[36,34],[90,60],[69,26],[69,59],[8,75],[44,18],[18,90],[68,71],[37,88],[16,21],[58,9],[96,77],[35,54],[23,33],[97,77],[76,47],[67,16],[28,13],[1,93],[45,12],[66,87],[15,74],[28,39],[99,1],[82,17],[99,42],[17,46],[75,21],[42,24],[97,15],[60,27],[60,35],[70,75],[18,89],[65,74],[73,30],[47,13],[93,39],[25,63]]<br>   <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> data:<br>    test_class = KNN_run(i, group, labels, 5)<br>    <span class="hljs-built_in">print</span>(test_class,end=<span class="hljs-string">&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 <p>flag：ISCTF{zk09000090900~00000007900900009000000900000}</p>
 <h1 id="问卷题"><a href="#问卷题" class="headerlink" title="问卷题"></a>问卷题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;Thank_U_4_Participating_ISCTF2021_AnD_C_U_Next_Ye@r&#125;<br></code></pre></td></tr></table></figure>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Write-up/" rel="tag">Write up</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-RCTS-CERT-CTF2021" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/08/13/RCTS-CERT-CTF2021/" class="article-date">
-      <time datetime="2021-08-13T07:44:29.000Z" itemprop="datePublished">2021-08-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/13/RCTS-CERT-CTF2021/">RCTS CERT CTF2021</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <a id="more"></a>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/08/13/RCTS-CERT-CTF2021/">RCTS CERT CTF2021</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-08-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.6k</span></span></div></header><div class="post-body"><div class="post-excerpt"><a id="more"></a>
 
 
 <h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="Some-type-of-juggling"><a href="#Some-type-of-juggling" class="headerlink" title="Some type of juggling"></a>Some type of juggling</h2><p><strong>#web#php</strong><br>Can you solve this challenge?<br>URL:<a target="_blank" rel="noopener" href="http://challenges.defsoc.tk:8080/">http://challenges.defsoc.tk:8080</a><br>Flag format: flag{string}</p>
@@ -667,69 +397,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">Niji ce uni pieebai:<br>Hello Julius,<br>Thank you <span class="hljs-keyword">for</span> your support,<br>You can use this key to receive your reward: flag&#123;5ub5t1tut10n_1s_k3y&#125;<br></code></pre></td></tr></table></figure>
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="Hextraordinary-security"><a href="#Hextraordinary-security" class="headerlink" title="Hextraordinary security"></a>Hextraordinary security</h2><p><strong>#crypto#encoding</strong><br>We just found this garbage file.<br>Can you decode it and retrieve any useful information from it?<br>Flag format: flag{string}<br>​</p>
 <p>hex转str</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">flag&#123;h3x4d3c1m4l_4s_4n_0bfusc4t10n_t00l&#125;<br></code></pre></td></tr></table></figure>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Write-up/" rel="tag">Write up</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2021DASCTF-July-X-CBCTF-4th" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/08/09/2021DASCTF-July-X-CBCTF-4th/" class="article-date">
-      <time datetime="2021-08-09T14:26:42.000Z" itemprop="datePublished">2021-08-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/09/2021DASCTF-July-X-CBCTF-4th/">2021DASCTF July X CBCTF 4th</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><h2 id="Yusa的密码学签到——BlockTrick"><a href="#Yusa的密码学签到——BlockTrick" class="headerlink" title="Yusa的密码学签到——BlockTrick"></a>Yusa的密码学签到——BlockTrick</h2><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs llvm">┌──(kali㉿kali)-[~/桌面]<br>└─$ nc node<span class="hljs-number">4</span>.buuoj.cn <span class="hljs-number">25870</span>                                                                                                                                                      <span class="hljs-number">1</span> ⨯<br>d<span class="hljs-number">1930e58</span>ab<span class="hljs-number">00552</span>f<span class="hljs-number">066</span>efa<span class="hljs-number">012</span>f<span class="hljs-number">80</span><span class="hljs-keyword">c</span><span class="hljs-number">17</span>b<br>d<span class="hljs-number">1930e58</span>ab<span class="hljs-number">00552</span>f<span class="hljs-number">066</span>efa<span class="hljs-number">012</span>f<span class="hljs-number">80</span><span class="hljs-keyword">c</span><span class="hljs-number">17</span>b<br><span class="hljs-number">981</span>baee<span class="hljs-number">22</span>bc<span class="hljs-number">0</span>cfd<span class="hljs-number">2233769</span>fbf<span class="hljs-number">32336</span>ce<br>Try again<br><span class="hljs-number">981</span>baee<span class="hljs-number">22</span>bc<span class="hljs-number">0</span>cfd<span class="hljs-number">2233769</span>fbf<span class="hljs-number">32336</span>ce<br>flag&#123;<span class="hljs-number">30</span>cf<span class="hljs-number">1012</span>-e<span class="hljs-number">303</span><span class="hljs-number">-4</span>caf<span class="hljs-number">-98</span>ba-d<span class="hljs-number">63</span>f<span class="hljs-number">3591e9</span>cd&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">flag&#123;h3x4d3c1m4l_4s_4n_0bfusc4t10n_t00l&#125;<br></code></pre></td></tr></table></figure></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/08/09/2021DASCTF-July-X-CBCTF-4th/">2021DASCTF July X CBCTF 4th</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-08-09</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><h2 id="Yusa的密码学签到——BlockTrick"><a href="#Yusa的密码学签到——BlockTrick" class="headerlink" title="Yusa的密码学签到——BlockTrick"></a>Yusa的密码学签到——BlockTrick</h2><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs llvm">┌──(kali㉿kali)-[~/桌面]<br>└─$ nc node<span class="hljs-number">4</span>.buuoj.cn <span class="hljs-number">25870</span>                                                                                                                                                      <span class="hljs-number">1</span> ⨯<br>d<span class="hljs-number">1930e58</span>ab<span class="hljs-number">00552</span>f<span class="hljs-number">066</span>efa<span class="hljs-number">012</span>f<span class="hljs-number">80</span><span class="hljs-keyword">c</span><span class="hljs-number">17</span>b<br>d<span class="hljs-number">1930e58</span>ab<span class="hljs-number">00552</span>f<span class="hljs-number">066</span>efa<span class="hljs-number">012</span>f<span class="hljs-number">80</span><span class="hljs-keyword">c</span><span class="hljs-number">17</span>b<br><span class="hljs-number">981</span>baee<span class="hljs-number">22</span>bc<span class="hljs-number">0</span>cfd<span class="hljs-number">2233769</span>fbf<span class="hljs-number">32336</span>ce<br>Try again<br><span class="hljs-number">981</span>baee<span class="hljs-number">22</span>bc<span class="hljs-number">0</span>cfd<span class="hljs-number">2233769</span>fbf<span class="hljs-number">32336</span>ce<br>flag&#123;<span class="hljs-number">30</span>cf<span class="hljs-number">1012</span>-e<span class="hljs-number">303</span><span class="hljs-number">-4</span>caf<span class="hljs-number">-98</span>ba-d<span class="hljs-number">63</span>f<span class="hljs-number">3591e9</span>cd&#125;<br></code></pre></td></tr></table></figure>
 
 
 <h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="ezrce"><a href="#ezrce" class="headerlink" title="ezrce"></a>ezrce</h2><h4 id="Yapi-Mock-远程命令执行漏洞"><a href="#Yapi-Mock-远程命令执行漏洞" class="headerlink" title="Yapi Mock 远程命令执行漏洞"></a>Yapi Mock 远程命令执行漏洞</h4><p>添加项目—&gt;添加接口—&gt;选择高级Mock—&gt;勾选脚本—&gt;将开启按钮打开—&gt;然后将PoC写在脚本中保存</p>
@@ -832,69 +500,7 @@
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">OIENKMAJOLEOKMAJOHECLHBCPGFDLNBIPAFFLPBKPIFNLEBBPPFKLFBAPEFBLJBMPHFCLEBBPMFJLEBBPLFOLHBCPCFHLNBIPDFGLHBCPPFKLIBNPHFCLDBGPGFDLBBEPPFKLHBCPPFKLMBJPDFGLCBHPHFCLBBEPIFNLNBIPOFLLMBJPDFGLBBEPEFBLBBEPPFKLGBDPOFLLABFPMFJLABFPCFHLNBIPDFGLMBJPEFBLIBNPHFCLLBOPOFLLBBEPIFNLDBGPAFFKAAFOPEKKDAGOGEDKJAMOAEFKLAOOIENLIBNPEFBLLBOPJFMLFBAPLFOLFBAPNFILEBBPLFOLFBAPAFFLJBMPHFCLJBMPBFELIBNPHFCLIBNPNFILBBEPPFKKPAKOHECKMAJOAEFKKAPOIENKFAAOLEOKHACOPEKKAAFOPEKKAAFOFEAKJAMOHECKLAOODEGKMAJOAEFKPAKONEIKBAEOIENKAAFODEGKAAFOPEKKLAOOOELKJAMOAEFKGADOFEAKEABOLEOKOALOLEOKJAMOAEFKIANOLEOKIANOEEBKFAAOHECKBAEOIENKJAMOKEPKMAJPMFJLCBHPEFBLNBI</span><br></code></pre></td></tr></table></figure>
 <p>解码两次得到flag</p>
 <p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202108/15/122503-379175.png" alt="image-20210815122502554"></p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Write-up/" rel="tag">Write up</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-PHP伪随机数漏洞" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/08/04/PHP%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%8F%E6%B4%9E/" class="article-date">
-      <time datetime="2021-08-04T14:26:42.000Z" itemprop="datePublished">2021-08-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/04/PHP%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%8F%E6%B4%9E/">PHP伪随机数漏洞</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>由于mt_rand()的生成的随机数只跟seed和调用该函数的次数有关。举一个简单的例子来说明一下这个问题，假设使用mt_srand(1111111)进行了一次播种操作，接下来调用mt_rand()函数，第一次生成的数值为a,第二次生成的为b，第三次生成的为c。任何一个人拿到这样的一串代码，所执行的结果都是跟刚刚描述的一样。所以当你的seed数值被他人知道后，就可以预测出你接下来的数值是多少，这就是该函数的一个问题，他并不能起到一个真随机数的作用。</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/08/04/PHP%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%8F%E6%B4%9E/">PHP伪随机数漏洞</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-08-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>由于mt_rand()的生成的随机数只跟seed和调用该函数的次数有关。举一个简单的例子来说明一下这个问题，假设使用mt_srand(1111111)进行了一次播种操作，接下来调用mt_rand()函数，第一次生成的数值为a,第二次生成的为b，第三次生成的为c。任何一个人拿到这样的一串代码，所执行的结果都是跟刚刚描述的一样。所以当你的seed数值被他人知道后，就可以预测出你接下来的数值是多少，这就是该函数的一个问题，他并不能起到一个真随机数的作用。</p>
 <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="函数介绍"><a href="#函数介绍" class="headerlink" title="函数介绍"></a>函数介绍</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml">mt_scrand() //播种 Mersenne Twister 随机数生成器。<br>mt_rand()   //生成随机数<br><br>srand() //给rand()函数播种<br>rand() //不指定参数时，范围0-32767<br><br><br>#mt_rand()和rand()产生的最大随机数都是2^31-1<br></code></pre></td></tr></table></figure>
 <p>简单来说mt_scrand()通过分发seed种子，然后种子有了后，靠mt_rand()生成随机数</p>
 <h3 id="mt-srand"><a href="#mt-srand" class="headerlink" title="mt_srand()"></a>mt_srand()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mt_srand([ <span class="hljs-keyword">int</span> <span class="hljs-variable">$seed</span>] ) : <span class="hljs-keyword">void</span><br></code></pre></td></tr></table></figure>
@@ -994,69 +600,7 @@
 
 <p>getflag<br><img src="https://img-blog.csdnimg.cn/f2c187533a3c4d29890f97949b110d11.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="img"><a target="_blank" rel="noopener" href="https://blog.csdn.net/zss192/article/details/104327432">
 </a><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/192012.html">https://www.freebuf.com/vuls/192012.html</a></p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/WEB/">WEB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker-安装环境" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/07/05/Docker-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83/" class="article-date">
-      <time datetime="2021-07-05T07:26:42.000Z" itemprop="datePublished">2021-07-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/05/Docker-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83/">Docker-练习</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h2 id="安装LAMP"><a href="#安装LAMP" class="headerlink" title="安装LAMP"></a>安装LAMP</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#拉取镜像</span><br>docker pull tutum/lamp<br><span class="hljs-comment">#查看镜像</span><br>docker images<br><span class="hljs-comment">#启动容器并绑定端口</span><br>docker run -d -p 8080:80 -p 3306:3306 -v /var/www/app/:/var/www/html tutum/lamp<br><span class="hljs-comment">#查看运行的容器</span><br>docker ps<br>docker ps -a<br><span class="hljs-comment">#进入正在运行的容器</span><br>docker <span class="hljs-built_in">exec</span> -it <span class="hljs-string">&#x27;id/name&#x27;</span> /bin/bash  <br><span class="hljs-comment">#退出容器</span><br><span class="hljs-built_in">exit</span><br><span class="hljs-comment">#开启、重启、停止容器</span><br>docker start <span class="hljs-string">&#x27;id/name&#x27;</span><br>docker restart <span class="hljs-string">&#x27;id/name&#x27;</span><br>docker stop <span class="hljs-string">&#x27;id/name&#x27;</span><br></code></pre></td></tr></table></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/07/05/Docker-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83/">Docker-练习</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-07-05</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.2k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="安装LAMP"><a href="#安装LAMP" class="headerlink" title="安装LAMP"></a>安装LAMP</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#拉取镜像</span><br>docker pull tutum/lamp<br><span class="hljs-comment">#查看镜像</span><br>docker images<br><span class="hljs-comment">#启动容器并绑定端口</span><br>docker run -d -p 8080:80 -p 3306:3306 -v /var/www/app/:/var/www/html tutum/lamp<br><span class="hljs-comment">#查看运行的容器</span><br>docker ps<br>docker ps -a<br><span class="hljs-comment">#进入正在运行的容器</span><br>docker <span class="hljs-built_in">exec</span> -it <span class="hljs-string">&#x27;id/name&#x27;</span> /bin/bash  <br><span class="hljs-comment">#退出容器</span><br><span class="hljs-built_in">exit</span><br><span class="hljs-comment">#开启、重启、停止容器</span><br>docker start <span class="hljs-string">&#x27;id/name&#x27;</span><br>docker restart <span class="hljs-string">&#x27;id/name&#x27;</span><br>docker stop <span class="hljs-string">&#x27;id/name&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>1.查询镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker search lamp         </span><br>NAME                                    DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED<br>mattrayner/lamp                         A simple LAMP docker image running the prere…   285                  [OK]<br>linode/lamp                             LAMP on Ubuntu 14.04.1 LTS Container            181                  <br>tutum/lamp                              Out-of-the-box LAMP image (PHP+MySQL)           148                  <br></code></pre></td></tr></table></figure>
 
@@ -1143,69 +687,7 @@
 <p>使用-v选项对/etc/mysql、/var/log/mysql、/var/lib/mysql目录进行目录映射</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># docker run --name mysql_1 -p 3306:3306 \</span><br>-v /usr/<span class="hljs-built_in">local</span>/docker/mysql/conf:/etc/mysql \<br>-v /usr/<span class="hljs-built_in">local</span>/docker/mysql/logs:/var/<span class="hljs-built_in">log</span>/mysql \<br>-v /usr/<span class="hljs-built_in">local</span>/docker/mysql/data:/var/lib/mysql \<br>-e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7 <br><br>d27d52283a0f8e419b3e9fb14a074c72ae42374e9127ced3e9aa3be31c84e596<br></code></pre></td></tr></table></figure>
 <p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43625917/article/details/107051203">https://blog.csdn.net/qq_43625917/article/details/107051203</a></p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/WEB/">WEB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/" rel="tag">Dcoker</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-文件上传之二次渲染" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/06/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93/" class="article-date">
-      <time datetime="2021-06-29T14:26:42.000Z" itemprop="datePublished">2021-06-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93/">文件上传之二次渲染</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="二次渲染绕过"><a href="#二次渲染绕过" class="headerlink" title="二次渲染绕过"></a>二次渲染绕过</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">false</span>;<br><span class="hljs-variable">$msg</span> = <span class="hljs-literal">null</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;submit&#x27;</span>]))&#123;<br>    <span class="hljs-comment">// 获得上传文件的基本信息，文件名，类型，大小，临时文件路径</span><br>    <span class="hljs-variable">$filename</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>];<br>    <span class="hljs-variable">$filetype</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;type&#x27;</span>];<br>    <span class="hljs-variable">$tmpname</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>];<br><br>    <span class="hljs-variable">$target_path</span>=UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.basename(<span class="hljs-variable">$filename</span>);<br><br>    <span class="hljs-comment">// 获得上传文件的扩展名</span><br>    <span class="hljs-variable">$fileext</span>= substr(strrchr(<span class="hljs-variable">$filename</span>,<span class="hljs-string">&quot;.&quot;</span>),<span class="hljs-number">1</span>);<br><br>    <span class="hljs-comment">//判断文件后缀与类型，合法才进行上传操作</span><br>    <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;jpg&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/jpeg&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefromjpeg(<span class="hljs-variable">$target_path</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是jpg格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.jpg&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagejpeg(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;png&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/png&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefrompng(<span class="hljs-variable">$target_path</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是png格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                 <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.png&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagepng(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br><br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;               <br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;gif&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/gif&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefromgif(<span class="hljs-variable">$target_path</span>);<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是gif格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.gif&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagegif(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br><br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;只允许上传后缀为.jpg|.png|.gif的图片文件！&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/06/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93/">文件上传之二次渲染</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-29</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.5k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h1 id="二次渲染绕过"><a href="#二次渲染绕过" class="headerlink" title="二次渲染绕过"></a>二次渲染绕过</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">false</span>;<br><span class="hljs-variable">$msg</span> = <span class="hljs-literal">null</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;submit&#x27;</span>]))&#123;<br>    <span class="hljs-comment">// 获得上传文件的基本信息，文件名，类型，大小，临时文件路径</span><br>    <span class="hljs-variable">$filename</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>];<br>    <span class="hljs-variable">$filetype</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;type&#x27;</span>];<br>    <span class="hljs-variable">$tmpname</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;upload_file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>];<br><br>    <span class="hljs-variable">$target_path</span>=UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.basename(<span class="hljs-variable">$filename</span>);<br><br>    <span class="hljs-comment">// 获得上传文件的扩展名</span><br>    <span class="hljs-variable">$fileext</span>= substr(strrchr(<span class="hljs-variable">$filename</span>,<span class="hljs-string">&quot;.&quot;</span>),<span class="hljs-number">1</span>);<br><br>    <span class="hljs-comment">//判断文件后缀与类型，合法才进行上传操作</span><br>    <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;jpg&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/jpeg&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefromjpeg(<span class="hljs-variable">$target_path</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是jpg格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.jpg&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagejpeg(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;png&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/png&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefrompng(<span class="hljs-variable">$target_path</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是png格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                 <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.png&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagepng(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br><br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;               <br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-variable">$fileext</span> == <span class="hljs-string">&quot;gif&quot;</span>) &amp;&amp; (<span class="hljs-variable">$filetype</span>==<span class="hljs-string">&quot;image/gif&quot;</span>))&#123;<br>        <span class="hljs-keyword">if</span>(move_uploaded_file(<span class="hljs-variable">$tmpname</span>,<span class="hljs-variable">$target_path</span>))&#123;<br>            <span class="hljs-comment">//使用上传的图片生成新的图片</span><br>            <span class="hljs-variable">$im</span> = imagecreatefromgif(<span class="hljs-variable">$target_path</span>);<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$im</span> == <span class="hljs-literal">false</span>)&#123;<br>                <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;该文件不是gif格式的图片！&quot;</span>;<br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">//给新图片指定文件名</span><br>                srand(time());<br>                <span class="hljs-variable">$newfilename</span> = strval(rand()).<span class="hljs-string">&quot;.gif&quot;</span>;<br>                <span class="hljs-comment">//显示二次渲染后的图片（使用用户上传图片生成的新图片）</span><br>                <span class="hljs-variable">$img_path</span> = UPLOAD_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$newfilename</span>;<br>                imagegif(<span class="hljs-variable">$im</span>,<span class="hljs-variable">$img_path</span>);<br><br>                @unlink(<span class="hljs-variable">$target_path</span>);<br>                <span class="hljs-variable">$is_upload</span> = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;上传出错！&quot;</span>;<br>        &#125;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-variable">$msg</span> = <span class="hljs-string">&quot;只允许上传后缀为.jpg|.png|.gif的图片文件！&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>提示:本pass重新渲染了图片！</p>
 <p>如果上传之前的图片马，由于二次渲染里面的一句话会被清除</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2021/png/12572139/1628580605293-82134e58-fa29-49b0-8962-a36d452edfac.png" alt="img"></p>
@@ -1230,69 +712,7 @@
 <p>利用成功</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41617034/article/details/104936689">
 </a><img src="https://cdn.nlark.com/yuque/0/2021/png/12572139/1628584795067-eb1e70ce-e411-422c-be5f-1098cb5790ce.png" alt="img"></p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/WEB/">WEB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">文件上传</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker-搭建题目环境" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/06/29/Docker-%E6%90%AD%E5%BB%BA%E9%A2%98%E7%9B%AE%E7%8E%AF%E5%A2%83/" class="article-date">
-      <time datetime="2021-06-29T14:26:42.000Z" itemprop="datePublished">2021-06-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/29/Docker-%E6%90%AD%E5%BB%BA%E9%A2%98%E7%9B%AE%E7%8E%AF%E5%A2%83/">Docker-搭建题目环境</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>1、curl -fsSL <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian/gpg">https://download.docker.com/linux/debian/gpg</a> | sudo apt-key add -</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/06/29/Docker-%E6%90%AD%E5%BB%BA%E9%A2%98%E7%9B%AE%E7%8E%AF%E5%A2%83/">Docker-搭建题目环境</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-29</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.4k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>1、curl -fsSL <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian/gpg">https://download.docker.com/linux/debian/gpg</a> | sudo apt-key add -</p>
 <p>2、echo ‘deb <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian">https://download.docker.com/linux/debian</a> stretch stable’&gt; /etc/apt/sources.list.d/docker.list</p>
 <p>3、apt-get install apt-transport-https  ca-certificates  curl  gnupg2  software-properties-common</p>
 <p>4、apt-get update</p>
@@ -1425,69 +845,7 @@
 <p>8.如果ctf题目源码过多，可以拷贝到container的主目录中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker cp ctfFile 941e5ff0bd2f:var/www/html<br></code></pre></td></tr></table></figure>
 <p>10.导出容器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">export</span> 941e5ff0bd2f &gt; ctf.tar<br></code></pre></td></tr></table></figure>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/WEB/">WEB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/" rel="tag">Dcoker</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker-安装" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/06/21/Docker-%E5%AE%89%E8%A3%85/" class="article-date">
-      <time datetime="2021-06-21T04:26:42.000Z" itemprop="datePublished">2021-06-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/21/Docker-%E5%AE%89%E8%A3%85/">Docker-安装</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h2 id="0x01-Docker"><a href="#0x01-Docker" class="headerlink" title="0x01-Docker"></a>0x01-Docker</h2><p>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">export</span> 941e5ff0bd2f &gt; ctf.tar<br></code></pre></td></tr></table></figure></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/06/21/Docker-%E5%AE%89%E8%A3%85/">Docker-安装</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-21</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.2k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="0x01-Docker"><a href="#0x01-Docker" class="headerlink" title="0x01-Docker"></a>0x01-Docker</h2><p>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。</p>
 <p>Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</p>
 <p>容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
 <h2 id="0x02-Docker-架构"><a href="#0x02-Docker-架构" class="headerlink" title="0x02-Docker 架构"></a>0x02-Docker 架构</h2><h3 id="Docker基本概念"><a href="#Docker基本概念" class="headerlink" title="Docker基本概念"></a>Docker基本概念</h3><p>Docker 包括三个基本概念：</p>
@@ -1561,69 +919,7 @@
 
 <h3 id="第十一步：阿里云镜像加速"><a href="#第十一步：阿里云镜像加速" class="headerlink" title="第十一步：阿里云镜像加速"></a>第十一步：阿里云镜像加速</h3><p>因为默认的 docker 仓库是国外的，所以这里把仓库改为aliyun的。</p>
 <p>打开阿里云镜像加速器网页：<a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo mkdir -p /etc/docker<br><br>sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://mirror.aliyuncs.com&quot;</span>]<br>&#125;<br>EOF<br><br>sudo systemctl daemon-reload<br><br>sudo systemctl restart docker<br></code></pre></td></tr></table></figure>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/WEB/">WEB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/" rel="tag">Dcoker</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Volatility内存取证" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/06/03/Volatility%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" class="article-date">
-      <time datetime="2021-06-03T13:02:15.000Z" itemprop="datePublished">2021-06-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/03/Volatility%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/">Volatility内存取证</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h2 id="安装Volatility"><a href="#安装Volatility" class="headerlink" title="安装Volatility"></a>安装Volatility</h2><p>新版kali不自带Volatility，需要自己安装源码编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo mkdir -p /etc/docker<br><br>sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://mirror.aliyuncs.com&quot;</span>]<br>&#125;<br>EOF<br><br>sudo systemctl daemon-reload<br><br>sudo systemctl restart docker<br></code></pre></td></tr></table></figure></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/06/03/Volatility%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/">Volatility内存取证</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-03</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.5k</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="安装Volatility"><a href="#安装Volatility" class="headerlink" title="安装Volatility"></a>安装Volatility</h2><p>新版kali不自带Volatility，需要自己安装源码编译</p>
 <p>1.下载源码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">https:<span class="hljs-comment">//pan.baidu.com/s/1r-9VC3aG-sP6wWziYNvXxA  </span><br><br>提取码：<span class="hljs-number">4</span>d4w<br></code></pre></td></tr></table></figure>
 <p>2.安装依赖</p>
@@ -1713,69 +1009,7 @@
 <p>二维码信息</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://fanyi.baidu.com/translate?aldtype=16047&amp;query=%E6%B0%9F%E5%BE%95%E6%A0%BC%E4%B9%83%E9%8C%B5%E6%89%A9%E5%8F%B7%E6%AC%B8%E5%BF%85%E8%A5%BF%E5%BC%9F%E4%BA%BF%E8%89%BE%E8%99%8E%E9%94%AF%E9%8C%B5%E6%89%A9%E5%8F%B7&amp;keyfrom=baidu&amp;smartresult=dict&amp;lang=auto2zh<span class="hljs-comment">#zh/en/%E6%B0%9F%E5%BE%95%E6%A0%BC%E4%B9%83%E9%8C%B5%E6%89%A9%E5%8F%B7%E6%AC%B8%E5%BF%85%E8%A5%BF%E5%BC%9F%E4%BA%BF%E8%89%BE%E8%99%8E%E9%94%AF%E9%8C%B5%E6%89%A9%E5%8F%B7</span><br></code></pre></td></tr></table></figure>
 <p>根据读音最终flag为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flag&#123;abcdefg&#125;<br></code></pre></td></tr></table></figure>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/MISC/">MISC</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" rel="tag">流量分析</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ISCC2021-Web-WP" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/27/ISCC2021-Web-WP/" class="article-date">
-      <time datetime="2021-05-27T12:26:07.000Z" itemprop="datePublished">2021-05-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/27/ISCC2021-Web-WP/">ISCC2021 Web WP</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-         <a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flag&#123;abcdefg&#125;<br></code></pre></td></tr></table></figure></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/05/27/ISCC2021-Web-WP/">ISCC2021 Web WP</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-05-27</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"> <a id="more"></a>
 
 <h1 id="练武"><a href="#练武" class="headerlink" title="练武"></a>练武</h1><h2 id="ISCC客服冲冲冲（一）"><a href="#ISCC客服冲冲冲（一）" class="headerlink" title="ISCC客服冲冲冲（一）"></a>ISCC客服冲冲冲（一）</h2><blockquote>
 <p>又到了一年一度的ISCC，客服一号为了保住饭碗（被迫）参与了今年的客服海选投票。经过激烈的角逐，客服一号终于凭借着自己多年的客服经验来到决赛的舞台，却发现对手竟是自己？？？<br>请帮助真正的客服一号在投票中取胜，保住客服一号的饭碗！ 题目入口：<a target="_blank" rel="noopener" href="http://39.96.91.106:7020/">http://39.96.91.106:7020</a></p>
@@ -1969,149 +1203,277 @@
 <p>得到</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">3C3F7068700D0A24666C61673D22697363637B65656565656173795F77656221213636363636367D223B0D0A3F3E<br></code></pre></td></tr></table></figure>
 <p>然后hex转字符串即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">m=<span class="hljs-string">&quot;3C3F7068700D0A24666C61673D22697363637B65656565656173795F77656221213636363636367D223B0D0A3F3E&quot;</span><br>s=<span class="hljs-built_in">bytes</span>.fromhex(m)<br>print(s)<br><br><span class="hljs-comment">#b&#x27;&lt;?php\r\n$flag=&quot;iscc&#123;eeeeeasy_web!!666666&#125;&quot;;\r\n?&gt;&#x27;</span><br></code></pre></td></tr></table></figure>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
-    </div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">m=<span class="hljs-string">&quot;3C3F7068700D0A24666C61673D22697363637B65656565656173795F77656221213636363636367D223B0D0A3F3E&quot;</span><br>s=<span class="hljs-built_in">bytes</span>.fromhex(m)<br>print(s)<br><br><span class="hljs-comment">#b&#x27;&lt;?php\r\n$flag=&quot;iscc&#123;eeeeeasy_web!!666666&#125;&quot;;\r\n?&gt;&#x27;</span><br></code></pre></td></tr></table></figure></div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
 
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
 
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Write-up/" rel="tag">Write up</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                &copy; 2022 Atkx
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
-            </div>
-        </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" >海贼到访数: 
-                            <span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>, </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit">本页阅读量: 
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
-    </div>
-</footer>
-
-    </div>
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-
-<script src="/js/main.js"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            var backgroundnum = 24;
-            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-        })
-    </script>
-
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
-</div>
-<script>
-    $(document).ready(function() {
-        if ($("#comments").length < 1) {
-            $("#scroll > a:nth-child(2)").hide();
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
         };
-    })
-</script>
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
 
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
 
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
             });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
         });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
     });
-</script>
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
 
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
 
-  </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/love.js"></script>
-<!--浏览器搞笑标题-->
-<script type="text/javascript" src="/js/FunnyTitle.js"></script>
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
