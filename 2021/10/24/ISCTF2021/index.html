@@ -1,247 +1,276 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
-  <link rel="icon" href="/img/atkx_16x16.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta charset="utf-8">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
-  <meta name="author" content="Atkx">
-  <meta name="keywords" content="">
+  <title>ISCTF2021 | At的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MISCMisc签到出题人：啊罗小黑战记停更了 学校：焦作大学 帅哥美女，你们考虑过把这串字符串解密一下吗？或许可以考虑下口算md5哦，又或者是base32&#x2F;64……只要你猜对了，伦家就让你嘿嘿嘿… by：啊罗小黑战记停更了（QQ：1813785342）&lt;–这是出题人快去找他嘿嘿嘿 1234SVNDVEZ7aHVhbl95aW5nX2xhaV9kYW9fQ1RGX2RlX3NoaV9qaWV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ISCTF2021">
+<meta property="og:url" content="https://swhat.github.io/2021/10/24/ISCTF2021/index.html">
+<meta property="og:site_name" content="At的小站">
+<meta property="og:description" content="MISCMisc签到出题人：啊罗小黑战记停更了 学校：焦作大学 帅哥美女，你们考虑过把这串字符串解密一下吗？或许可以考虑下口算md5哦，又或者是base32&#x2F;64……只要你猜对了，伦家就让你嘿嘿嘿… by：啊罗小黑战记停更了（QQ：1813785342）&lt;–这是出题人快去找他嘿嘿嘿 1234SVNDVEZ7aHVhbl95aW5nX2xhaV9kYW9fQ1RGX2RlX3NoaV9qaWV">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101455045.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101517-516281.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101533-248294.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101549-65108.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101618-381468.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101637-861761.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101852-438901.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101909-450173.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101925-564989.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101940-975773.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101955528.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102013-412075.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102201-435255.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102216-391368.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102231-697318.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102245-98678.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102302-586704.png">
+<meta property="article:published_time" content="2021-10-24T04:26:42.000Z">
+<meta property="article:modified_time" content="2021-10-31T02:38:04.248Z">
+<meta property="article:author" content="Atkx">
+<meta property="article:tag" content="Write up">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101455045.png">
   
-  <title>ISCTF2021 - At的小站</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
+    <link rel="alternative" href="/atom.xml" title="At的小站" type="application/atom+xml">
   
-    
-    
+  
+    <link rel="icon" href="/img/atkx_16x16.png">
+  
+  
       
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
-    
-  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
 
   
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
+<link rel="stylesheet" href="/css/style.css">
 
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"swhat.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head>
-
-
+<meta name="generator" content="Hexo 5.3.0"></head>
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bg_image2.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="ISCTF2021">
-              
-            </span>
-
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
             
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-10-24 12:26" pubdate>
-        2021年10月24日 中午
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      9.5k 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      173
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
+            <img lazy-src="/img/atkx.png" class="js-avatar">
             
-          </div>
+        </a>
 
-          
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/Home">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/swhat" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/AWD/" style="font-size: 10px;">AWD</a> <a href="/tags/CTFhub/" style="font-size: 16px;">CTFhub</a> <a href="/tags/CTFshow/" style="font-size: 10px;">CTFshow</a> <a href="/tags/Dcoker/" style="font-size: 14px;">Dcoker</a> <a href="/tags/MISC/" style="font-size: 10px;">MISC</a> <a href="/tags/MYSQL/" style="font-size: 10px;">MYSQL</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/RSA/" style="font-size: 10px;">RSA</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/SSTI/" style="font-size: 10px;">SSTI</a> <a href="/tags/Struts2/" style="font-size: 14px;">Struts2</a> <a href="/tags/Write-up/" style="font-size: 20px;">Write up</a> <a href="/tags/XXE/" style="font-size: 10px;">XXE</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 12px;">信息泄露</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">协议基础</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 10px;">命令执行</a> <a href="/tags/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" style="font-size: 10px;">搭建博客</a> <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 12px;">文件上传</a> <a href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/" style="font-size: 12px;">流量分析</a> <a href="/tags/%E6%BC%8F%E6%B4%9E/" style="font-size: 10px;">漏洞</a> <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" style="font-size: 10px;">漏洞复现</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://swhat.github.io/">name</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">CTF小白</div>
+                </section>
+                
+            </div>
         </div>
-      </div>
+    </header>                
+</div>
     </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">ISCTF2021</h1>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/atkx.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
             
-            <div class="markdown-body">
-              <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Misc签到"><a href="#Misc签到" class="headerlink" title="Misc签到"></a>Misc签到</h2><p>出题人：啊罗小黑战记停更了</p>
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/Home">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/swhat" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-ISCTF2021" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/10/24/ISCTF2021/" class="article-date">
+      <time datetime="2021-10-24T04:26:42.000Z" itemprop="datePublished">2021-10-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ISCTF2021
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/CTF/">CTF</a><a class="article-category-link" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Write-up/" rel="tag">Write up</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Misc签到"><a href="#Misc签到" class="headerlink" title="Misc签到"></a>Misc签到</h2><p>出题人：啊罗小黑战记停更了</p>
 <p>学校：焦作大学</p>
 <p>帅哥美女，你们考虑过把这串字符串解密一下吗？或许可以考虑下口算md5哦，又或者是base32/64……只要你猜对了，伦家就让你嘿嘿嘿… by：啊罗小黑战记停更了（QQ：1813785342）&lt;–这是出题人快去找他嘿嘿嘿</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">SVNDVEZ7aHVhbl95aW5nX2xhaV9kYW9fQ1RGX2RlX3NoaV9qaWV9<br><br>Base64解码<br>ISCTF&#123;huan_ying_lai_dao_CTF_de_shi_jie&#125;<br></code></pre></td></tr></table></figure>
@@ -284,7 +313,7 @@
 <p>学校：周口职业技术学院</p>
 <p>题目描述：小明的密码忘了，这里有小明之前登录时候截取的流量，请你帮他从中找到登录密码</p>
 <p>搜索pass信息，然后追踪HTTP流可发现flag</p>
-<p><img src="C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101455045.png" srcset="/img/loading.gif" lazyload alt="image-20211031101455045"></p>
+<p><img src="C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101455045.png" alt="image-20211031101455045"></p>
 <p>flag</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;y723rt3132f88v4&#125;<br></code></pre></td></tr></table></figure>
 
@@ -301,14 +330,14 @@
 <p>题目描述：最近经常在朋友圈刷到，听说这是在一个广场拍的，请问这是在哪？</p>
 <p>flag示例：ISCTF{七花广场}</p>
 <p>百度识图金碧广场</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101517-516281.png" srcset="/img/loading.gif" lazyload alt="image-20211031101516698"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101517-516281.png" alt="image-20211031101516698"></p>
 <p>flag</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;金碧广场&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="受伤的二维码和耳朵"><a href="#受伤的二维码和耳朵" class="headerlink" title="受伤的二维码和耳朵"></a>受伤的二维码和耳朵</h2><p>查看频谱图，摩斯密码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">-.-- ----- ..- ..-. .. -. -.. -- .<br></code></pre></td></tr></table></figure>
 <p>摩斯密码解码得到：Y0UFINDME</p>
 <p>然后拼二维码</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101533-248294.png" srcset="/img/loading.gif" lazyload alt="image-20211031101532903"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101533-248294.png" alt="image-20211031101532903"></p>
 <p>扫码得到：ISCTF{U_f0und_The_half</p>
 <p>最终flag</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;U_f0und_The_half_Y0U_FIND_ME&#125;<br></code></pre></td></tr></table></figure>
@@ -319,9 +348,9 @@
 <p>foremost分离出带密码的压缩包，字典爆破，弱口令admin123,麻了</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;5ecdfs-avcsefh-dhvldncmd&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="你下载的真的是图片吗？-2"><a href="#你下载的真的是图片吗？-2" class="headerlink" title="你下载的真的是图片吗？-2"></a>你下载的真的是图片吗？-2</h2><p>Blue通道有异常</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101549-65108.png" srcset="/img/loading.gif" lazyload alt="image-20211031101548013"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101549-65108.png" alt="image-20211031101548013"></p>
 <p>另存为txt，需要提取后面值然后另存为zip</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101618-381468.png" srcset="/img/loading.gif" lazyload alt="image-20211031101616689"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101618-381468.png" alt="image-20211031101616689"></p>
 <p>删去最后一行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">ff = open(<span class="hljs-string">&#x27;out1.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>a=<span class="hljs-string">&quot;&quot;</span><br>with open(<span class="hljs-string">&#x27;zip.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) as f:<br>    lines = f.readlines()<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:<br>    	a=(a+line[-18:]).replace(<span class="hljs-string">&quot; &quot;</span>,<span class="hljs-string">&quot;&quot;</span>)<br>    	ff.write(a)<br></code></pre></td></tr></table></figure>
 <p>得到的结果在010粘贴为16进制文本，另存为zip</p>
@@ -337,7 +366,7 @@
 <p>题目描述：一只古典的蓝鲨从一条路的尽头上下上下上的走过了弯弯曲曲的小路上，并且经过了5棵树还有5个银行。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#125;I_cFTle_FToneCSWnTC5@0&#123;I<br><br>根据题目提示五个一组，可分为五组<br>&#125;I_cF<br>Tle_F<br>ToneC<br>SWnTC<br>5@0&#123;I<br></code></pre></td></tr></table></figure>
 <p>根据flag格式ISCTF，以及题目提示按照顺序读可得到flag</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101637-861761.png" srcset="/img/loading.gif" lazyload alt="image-20211031101636146"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101637-861761.png" alt="image-20211031101636146"></p>
 <p>ISCTF{Welc0nne_@To_I5CTF}</p>
 <p>预期解：曲路密码脚本解密</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># write by 2021/8/4</span><br><span class="hljs-comment"># 曲路密码</span><br>import re<br><br><br>def encrypt_bend(string, col, row=10):<br>    ciphertext = <span class="hljs-string">&quot;&quot;</span><br>    temp = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(col):<br>        temp.append([])<br>    <span class="hljs-keyword">for</span> index, i <span class="hljs-keyword">in</span> enumerate(string):<br>        temp[index % col].append(i)<br>    re_temp = list(reversed(temp))<br>    <span class="hljs-keyword">for</span> index, i <span class="hljs-keyword">in</span> enumerate(re_temp):<br>        <span class="hljs-keyword">if</span> index % 2 == 0:<br>            i = list(reversed(i))<br>        ciphertext += <span class="hljs-string">&quot;&quot;</span>.join(i)<br>    <span class="hljs-built_in">return</span> ciphertext<br><br><br>def decrypt_bend(string, col, row=10):<br>    plaintext = <span class="hljs-string">&quot;&quot;</span><br>    length = len(string)<br>    min_row = length // col       <span class="hljs-comment"># 最小的行数</span><br>    min_num = col - length % col  <span class="hljs-comment"># 最小行数的列数</span><br>    <span class="hljs-comment"># 分组</span><br>    temp = []<br>    index = 0<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(col):<br>        <span class="hljs-keyword">if</span> i &lt; min_num:<br>            temp.append(string[index:index+min_row])<br>            index += min_row<br>        <span class="hljs-keyword">else</span>:<br>            temp.append(string[index:index+min_row+1])<br>            index += min_row + 1<br>    <span class="hljs-built_in">print</span>(temp)<br>    <span class="hljs-comment"># 改回列顺序</span><br>    <span class="hljs-keyword">for</span> index, i <span class="hljs-keyword">in</span> enumerate(temp):<br>        <span class="hljs-keyword">if</span> index % 2 == 0:<br>            <span class="hljs-comment"># print(re.findall(&quot;.&#123;1&#125;&quot;, temp[index]))</span><br>            temp[index] = <span class="hljs-string">&quot;&quot;</span>.join(list(reversed(re.findall(<span class="hljs-string">&quot;.&#123;1&#125;&quot;</span>, temp[index]))))<br>    temp.reverse()<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length):<br>        plaintext += temp[i % col][i // col]<br>    <span class="hljs-built_in">return</span> plaintext<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    col_ = 7<br>    row_ = 5<br>    <span class="hljs-comment"># ciphertext_ = encrypt_bend(&quot;i will beat you this day&quot;, col_, row_)</span><br>    ciphertext_ =<span class="hljs-string">&#x27;&#125;I_cFTle_FToneCSWnTC5@0&#123;I&#x27;</span><br>    plaintext_ = decrypt_bend(ciphertext_, col_, row_)<br>    <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;&#123;plaintext_&#125; : &#123;ciphertext_&#125;&quot;</span>)<br><br><br><br>[<span class="hljs-string">&#x27;&#125;I_&#x27;</span>, <span class="hljs-string">&#x27;cFT&#x27;</span>, <span class="hljs-string">&#x27;le_&#x27;</span>, <span class="hljs-string">&#x27;FTon&#x27;</span>, <span class="hljs-string">&#x27;eCSW&#x27;</span>, <span class="hljs-string">&#x27;nTC5&#x27;</span>, <span class="hljs-string">&#x27;@0&#123;I&#x27;</span>]<br>InWF_c_&#123;TSTeFI0CColT&#125;@5en : &#125;I_cFTle_FToneCSWnTC5@0&#123;I<br></code></pre></td></tr></table></figure>
@@ -458,23 +487,23 @@
 <p>结果</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/桌面]<br>└─$ python3 1.py                                                                        <br>[+] Opening connection to 123.57.253.184 on port 10001: Done<br>[*] Switching to interactive mode<br>   ____ ____ _____ ______ ____ <br>  /  _// __// ___//_  __// __/ <br> _/ / _\ \ / /__   / /  / _/   <br>/___//___/ \___/  /_/  /_/     <br>Sponsored by http://www.bluesharkinfo.com/<br><br><br><br><span class="hljs-built_in">help</span> me : $ ls<br>bin<br>dev<br>flag.txt<br>help_my_shark<br>lib<br>lib32<br>lib64<br>$ cat flag.txt<br>ISCTF&#123;Xiao_fei_sha_send_a_like_to_YoU&#125;<br></code></pre></td></tr></table></figure>
 <h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="简单的Re"><a href="#简单的Re" class="headerlink" title="简单的Re"></a>简单的Re</h2><p>IDA打开shift+F12</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101852-438901.png" srcset="/img/loading.gif" lazyload alt="image-20211031101851517"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101852-438901.png" alt="image-20211031101851517"></p>
 <p>flag</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;debugdebugdebug_@&#125;<br></code></pre></td></tr></table></figure>
 
 
 <h2 id="re签到"><a href="#re签到" class="headerlink" title="re签到"></a>re签到</h2><p>查壳工具链接：<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-437586-1-1.html">https://www.52pojie.cn/thread-437586-1-1.html</a><br>脱壳工具链接：<a target="_blank" rel="noopener" href="https://github.com/upx/upx/releases">https://github.com/upx/upx/releases</a></p>
 <p>UPX</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101909-450173.png" srcset="/img/loading.gif" lazyload alt="image-20211031101907920"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101909-450173.png" alt="image-20211031101907920"></p>
 <p>010打开RPX全替换为UPX</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101925-564989.png" srcset="/img/loading.gif" lazyload alt="image-20211031101922962"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101925-564989.png" alt="image-20211031101922962"></p>
 <p>然后upx脱壳</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101940-975773.png" srcset="/img/loading.gif" lazyload alt="image-20211031101938670"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/101940-975773.png" alt="image-20211031101938670"></p>
 <p>IDA打开查看伪代码</p>
-<p><img src="C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101955528.png" srcset="/img/loading.gif" lazyload alt="image-20211031101955528"></p>
+<p><img src="C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20211031101955528.png" alt="image-20211031101955528"></p>
 <p>代码逻辑：输入字符串s的每一位和10异或  ，然后+2 ，最后得到的字符串再和a[j]数组对比  ，</p>
 <p>可以看到a=”E[K`Ns;5mpp:5?4jnAj@5Ay”</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102013-412075.png" srcset="/img/loading.gif" lazyload alt="image-20211031102011131"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102013-412075.png" alt="image-20211031102011131"></p>
 <p>exp：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">list_a=[]<br>a=<span class="hljs-string">&quot;E[K`Ns;5mpp:5?4jnAj@5Ay&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:<br>    list_a.append(ord(i))<br><span class="hljs-built_in">print</span>(list_a)<br><br>flag = <span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(0,len(a)):<br>    flag += chr((list_a[i]-2)^10)<br><span class="hljs-built_in">print</span>(flag)<br><br><span class="hljs-comment">#ISCTF&#123;39add2978bf5b495&#125;</span><br></code></pre></td></tr></table></figure>
 
@@ -484,21 +513,21 @@
 <p>题目描述：一种编码和加密</p>
 <p>1.进入文件夹，正常是打不开的，需要使用cmd命令打开：</p>
 <p>2.jar文件，使用jd_gui打开：</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102201-435255.png" srcset="/img/loading.gif" lazyload alt="image-20211031102200027"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102201-435255.png" alt="image-20211031102200027"></p>
 <p>\3. 看对NBEKABsLBisvMDcyJUZWUUU=加密的代码：</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102216-391368.png" srcset="/img/loading.gif" lazyload alt="image-20211031102215111"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102216-391368.png" alt="image-20211031102215111"></p>
 <p>得到代码以后编写脚本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">import base64<br>m=base64.b64decode(<span class="hljs-string">&#x27;NBEKABsLBisvMDcyJUZWUUU=&#x27;</span>)<br>k=b<span class="hljs-string">&#x27;ctf&#x27;</span><br>flag=<span class="hljs-string">&quot;&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(m)):<br>   flag+=chr(m[i]^k[i%3])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ISCTF&#123;&quot;</span>+flag+<span class="hljs-string">&quot;&#125;&quot;</span>)<br><br><span class="hljs-comment">#ISCTF&#123;Welcome_ISCTF2021&#125;</span><br></code></pre></td></tr></table></figure>
 
 
 <h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="猜数字"><a href="#猜数字" class="headerlink" title="猜数字"></a>猜数字</h2><p>apk反编译</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102231-697318.png" srcset="/img/loading.gif" lazyload alt="image-20211031102229830"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102231-697318.png" alt="image-20211031102229830"></p>
 <p>按照顺序拼接flag</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;5ec07215-716f-498a-85ad-5f39322f707b&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="锁机病毒"><a href="#锁机病毒" class="headerlink" title="锁机病毒"></a>锁机病毒</h2><p>六位密码，后缀改为zip，解压出liblock.so，IDA打开搜索main函数</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102245-98678.png" srcset="/img/loading.gif" lazyload alt="image-20211031102243174"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102245-98678.png" alt="image-20211031102243174"></p>
 <p>密码是173572</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102302-586704.png" srcset="/img/loading.gif" lazyload alt="image-20211031102300738"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202110/31/102302-586704.png" alt="image-20211031102300738"></p>
 <p>ISCTF{b3d3b0eO-ccfd-4d7b-be78-0ab81da3d334}</p>
 <h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><h2 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h2><p>出题人：Marcher</p>
 <p>学校：大理大学</p>
@@ -513,270 +542,251 @@
 <p>flag：ISCTF{zk09000090900~00000007900900009000000900000}</p>
 <h1 id="问卷题"><a href="#问卷题" class="headerlink" title="问卷题"></a>问卷题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ISCTF&#123;Thank_U_4_Participating_ISCTF2021_AnD_C_U_Next_Ye@r&#125;<br></code></pre></td></tr></table></figure>
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
-                    
-                      <a class="hover-with-bg" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Write-up/">Write up</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/08/13/RCTS-CERT-CTF2021/">
-                        <span class="hidden-mobile">RCTS CERT CTF2021</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
+      
+      
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
   </div>
-</div>
-
-<!-- Custom -->
-
-
+  
     
-
-    
-      <a id="scroll-top-button" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/10/24/ISCTF2021/">ISCTF2021</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2021年10月24日 - 12时26分</p>
+        <p><span>最后更新:</span>2021年10月31日 - 10时38分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/10/24/ISCTF2021/" title="ISCTF2021">https://swhat.github.io/2021/10/24/ISCTF2021/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://swhat.github.io/2021/10/24/ISCTF2021/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
-  </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/08/13/RCTS-CERT-CTF2021/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RCTS CERT CTF2021</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-number">1.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc%E7%AD%BE%E5%88%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Misc签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%B3%E7%A5%9E%E7%9A%84%E5%98%B2%E8%AE%BD"><span class="toc-number">1.2.</span> <span class="toc-text">女神的嘲讽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E8%A3%82%E5%BC%80%E4%BA%86"><span class="toc-number">1.3.</span> <span class="toc-text">我裂开了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E4%B8%8B%E8%BD%BD%E7%9A%84%E7%9C%9F%E7%9A%84%E6%98%AF%E5%9B%BE%E7%89%87%E5%90%97%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">你下载的真的是图片吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Welcome-To-ISCTF-World"><span class="toc-number">1.5.</span> <span class="toc-text">Welcome To ISCTF World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.6.</span> <span class="toc-text">登录流量分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99%E6%9C%AF"><span class="toc-number">1.7.</span> <span class="toc-text">简单图片隐写术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-osint"><span class="toc-number">1.8.</span> <span class="toc-text">easy_osint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%97%E4%BC%A4%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%92%8C%E8%80%B3%E6%9C%B5"><span class="toc-number">1.9.</span> <span class="toc-text">受伤的二维码和耳朵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%EF%BC%9F%E7%BE%8E%E5%A5%B3%EF%BC%9F"><span class="toc-number">1.10.</span> <span class="toc-text">文件？美女？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E4%B8%8B%E8%BD%BD%E7%9A%84%E7%9C%9F%E7%9A%84%E6%98%AF%E5%9B%BE%E7%89%87%E5%90%97%EF%BC%9F-2"><span class="toc-number">1.11.</span> <span class="toc-text">你下载的真的是图片吗？-2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRYPTO"><span class="toc-number">2.</span> <span class="toc-text">CRYPTO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%AF%E5%BC%AF%E6%9B%B2%E6%9B%B2%E7%9A%84%E8%B7%AF"><span class="toc-number">2.1.</span> <span class="toc-text">弯弯曲曲的路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EasyRSA"><span class="toc-number">2.2.</span> <span class="toc-text">EasyRSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MediumRSA"><span class="toc-number">2.3.</span> <span class="toc-text">MediumRSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HardRSA1"><span class="toc-number">2.4.</span> <span class="toc-text">HardRSA1*</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.5.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HardRSA2"><span class="toc-number">2.6.</span> <span class="toc-text">HardRSA2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Circular-Game"><span class="toc-number">2.7.</span> <span class="toc-text">Circular Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Do-u-know-coding"><span class="toc-number">2.8.</span> <span class="toc-text">Do_u_know_coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RdEs"><span class="toc-number">2.9.</span> <span class="toc-text">RdEs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%B2%A8%E7%B1%B3%E5%B0%94"><span class="toc-number">2.10.</span> <span class="toc-text">鲨米尔*</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB"><span class="toc-number">3.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web%E7%AD%BE%E5%88%B0"><span class="toc-number">3.1.</span> <span class="toc-text">Web签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%97%E5%BF%83%E7%9A%84%E5%B0%8F%E8%93%9D%E9%B2%A8"><span class="toc-number">3.2.</span> <span class="toc-text">粗心的小蓝鲨</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E8%9C%98%E8%9B%9B"><span class="toc-number">3.3.</span> <span class="toc-text">小蜘蛛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pop-unserialize"><span class="toc-number">3.4.</span> <span class="toc-text">pop_unserialize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BC%E5%9B%BE"><span class="toc-number">3.5.</span> <span class="toc-text">拼图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-flask"><span class="toc-number">3.6.</span> <span class="toc-text">easy flask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easysql"><span class="toc-number">3.7.</span> <span class="toc-text">easysql</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PWN"><span class="toc-number">4.</span> <span class="toc-text">PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%B0%E5%93%A5%E7%9A%84nc"><span class="toc-number">4.1.</span> <span class="toc-text">杰哥的nc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%91%E6%95%91%E5%B0%8F%E8%82%A5%E9%B2%A8%E5%90%A7"><span class="toc-number">4.2.</span> <span class="toc-text">救救小肥鲨吧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-1"><span class="toc-number">5.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RE"><span class="toc-number">6.</span> <span class="toc-text">RE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84Re"><span class="toc-number">6.1.</span> <span class="toc-text">简单的Re</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#re%E7%AD%BE%E5%88%B0"><span class="toc-number">6.2.</span> <span class="toc-text">re签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse-Easy-JAR"><span class="toc-number">6.3.</span> <span class="toc-text">Reverse-Easy_JAR</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android"><span class="toc-number">7.</span> <span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8C%9C%E6%95%B0%E5%AD%97"><span class="toc-number">7.1.</span> <span class="toc-text">猜数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%81%E6%9C%BA%E7%97%85%E6%AF%92"><span class="toc-number">7.2.</span> <span class="toc-text">锁机病毒</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Coding"><span class="toc-number">8.</span> <span class="toc-text">Coding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#KNN"><span class="toc-number">8.1.</span> <span class="toc-text">KNN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E5%8D%B7%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">问卷题</span></a></li></ol>
 </div>
-    
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
-    
-  </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    <!--《添加网站运行时间 -->
-<br/>
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
 <script>
-var now = new Date(); 
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
 
-function createtime() {
-    //此处修改你的建站时间或者网站上线时间
-    var grt = new Date('03/01/2020 8:00:00');
-    now.setTime(now.getTime() + 250);
-    days = (now - grt) / 1000 / 60 / 60 / 24;
-
-    dnum = Math.floor(days);
-    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-    hnum = Math.floor(hours);
-    if (String(hnum).length == 1) {
-        hnum = "0" + hnum;
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
     }
-    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-    mnum = Math.floor(minutes);
-    if (String(mnum).length == 1) {
-        mnum = "0" + mnum;
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
     }
-    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-    snum = Math.round(seconds);
-    if (String(snum).length == 1) {
-        snum = "0" + snum;
-    }
-    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
-    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
-}
-setInterval("createtime()", 250);
 </script>
 
-<!-- 添加网站运行时间》-->
-  </div>
-  
 
-  
 
-    <div class="footer-center">
-         <!--添加工信备案号-->
-         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
-         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
-         <br/>
-         <!--添加公安备案号-->
-         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
-         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
-      </div>
-  
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'swhat',
+      repo: 'swhat.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/08/13/RCTS-CERT-CTF2021/" title="下一篇: RCTS CERT CTF2021">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/24/ISCTF2021/">ISCTF2021</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/13/RCTS-CERT-CTF2021/">RCTS CERT CTF2021</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/09/2021DASCTF-July-X-CBCTF-4th/">2021DASCTF July X CBCTF 4th</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/04/PHP%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%8F%E6%B4%9E/">PHP伪随机数漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/05/Docker-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83/">Docker-练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93/">文件上传之二次渲染</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Docker-%E6%90%AD%E5%BB%BA%E9%A2%98%E7%9B%AE%E7%8E%AF%E5%A2%83/">Docker-搭建题目环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/21/Docker-%E5%AE%89%E8%A3%85/">Docker-安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/Volatility%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/">Volatility内存取证</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/ISCC2021-Web-WP/">ISCC2021 Web WP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/26/ISCC2021-MISC-WP/">ISCC2021 MISC WP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/25/XXE%E6%BC%8F%E6%B4%9E/">XXE漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/23/%E6%B5%85%E6%9E%90%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%E6%BC%8F%E6%B4%9E/">浅析条件竞争漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/21/CISCN2021%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/">CISCN2021赛后复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/21/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/">SSTI模板注入漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/Struts2%E6%8B%A6%E6%88%AA%E5%99%A8/">Struts2之拦截器</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">USB流量分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/">HTTP请求走私漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/">虎符+红明谷+ctfshow渔人杯赛后复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/">Struts2核心配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/26/CTFshow-Web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">CTFshow-Web入门-信息泄露</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/19/Struts2%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/">Struts2框架入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/%E6%98%A5%E7%A7%8B%E6%9D%AF%E6%96%B0%E5%B9%B4%E6%AC%A2%E4%B9%90%E8%B5%9B/">春秋杯新年欢乐赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/16/CTFHub-Web-RCE%E7%BB%83%E4%B9%A0/">CTFHub-Web-RCE练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/16/%E7%BA%BF%E4%B8%8BAWD%E6%94%BB%E9%98%B2%E8%B5%9B%E6%80%BB%E7%BB%93/">线下AWD攻防赛总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/15/PHP%20%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/">PHP 数据库操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/CTFHub-Web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%83%E4%B9%A0/">CTFHub-Web-文件上传练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/">CTFHub-Web-sql注入练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/">代码审计之弱类型绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/">CTFHub-Web-信息泄露练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">浅谈PHP反序列化漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/">RSA算法详解与练习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/PHP%20%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/">PHP 文件与目录操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/03/PHP%20cookie%E4%B8%8Esession/">PHP cookie与session</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/PHP%20%E8%BF%90%E7%AE%97%E7%AC%A6/">PHP 运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/PHP%20%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8F%98%E9%87%8F/">PHP的基本概念和变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/20/CTF-MISC%E6%80%BB%E7%BB%93/">CTF-MISC总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/04/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8E%86%E7%A8%8B/">个人博客搭建历程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/02/hello-world/">Hello World</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2022 Atkx
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
 </footer>
 
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
     })
-  </script>
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
-
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/search.json";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
-<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
+  </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
