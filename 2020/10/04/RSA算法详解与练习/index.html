@@ -1,77 +1,247 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="摘要：做题遇到的一些RSA脚本">
-<meta property="og:type" content="article">
-<meta property="og:title" content="RSA算法详解与练习">
-<meta property="og:url" content="https://swhat.github.io/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/index.html">
-<meta property="og:site_name" content="At的小站">
-<meta property="og:description" content="摘要：做题遇到的一些RSA脚本">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004174827178.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004113320969.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004171147495.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004171222132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020100417135991.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004172026759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004172409410.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020100417261163.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005193350346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005193500626.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200930105157902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200930105901703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200930110203438.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004194955531.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201129000806367.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004200123150.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/202010042038209.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/202010042008171.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011162231603.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011162321313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011162453842.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011162645687.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011162813249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011163120354.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011163224705.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005193829462.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005194550372.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005194804576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011163855598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011164021212.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011164858631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201011164737363.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201109201954658.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210201110739494.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210201111109395.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201004175237397.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="article:published_time" content="2020-10-04T07:50:38.000Z">
-<meta property="article:modified_time" content="2021-08-15T03:59:06.568Z">
-<meta property="article:author" content="Atkx">
-<meta property="article:tag" content="RSA">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201004174827178.png#pic_center"><title>RSA算法详解与练习 | At的小站</title><link ref="canonical" href="https://swhat.github.io/2020/10/04/RSA%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%B8%8E%E7%BB%83%E4%B9%A0/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: false,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">RSA算法详解与练习</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2020-10-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.9k</span></span></div></header><div class="post-body"><p>摘要：做题遇到的一些RSA脚本</p>
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="摘要：做题遇到的一些RSA脚本">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>RSA算法详解与练习 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.gitee.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="RSA算法详解与练习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-04 15:50" pubdate>
+        2020年10月4日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">RSA算法详解与练习</h1>
+            
+            <div class="markdown-body">
+              <p>摘要：做题遇到的一些RSA脚本</p>
 <a id="more"></a>
 
 <h2 id="1-什么是RSA"><a href="#1-什么是RSA" class="headerlink" title="1. 什么是RSA"></a>1. 什么是RSA</h2><p>1977年，麻省理工学院的 Ron Rivest、Adi Shamir 和 Leonard Adleman 共同提出了一种非对称加密算法，用他们三人的姓氏缩写命名为 RSA。RSA 既不是惟一，也不是最早的非对称加密算法。但它是使用最广泛，因而也是最重要的非对称加密算法。</p>
@@ -79,10 +249,10 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <p>1.随机选择两个不相等的质数p和q。<br>2.计算p和q的乘积n(n=p*q),n的长度就是密钥长度。<br>3.计算n的欧拉函数φ(n)： φ(n) = (p-1)(q-1)<br>4.随机选择一个整数e，也就是公钥当中用来加密的那个数字 条件是1&lt; e &lt; φ(n)，且e与φ(n) 互质。<br>5.取e的模反数d，计算方法为:e * d ≡ 1 (mod φ)<br>6.将n和e封装成公钥，n和d封装成私钥，（n，e),(n，d)就是密钥对。</p>
 </blockquote>
 <p>补充说明:<br>1.下面代码中使用<code>phi</code>代替欧拉函数φ(n)<br>2.如果两个正整数e和n互质，那么一定可以找到整数d，使得 e * d - 1 被n整除，或者说e * d被n除的余数是1。这时，d就叫做e的“模反元素”。</p>
-<h3 id="2-2-RSA加密"><a href="#2-2-RSA加密" class="headerlink" title="2.2 RSA加密"></a>2.2 RSA加密</h3><p> 首先对明文进行比特串分组，使得每个分组对应的十进制数小于n，然后依次对每个分组m做一次加密，所有分组的密文构成的序列就是原始消息的加密结果，即m满足0&lt;=m&lt;n，则加密算法为：<br> <code>c≡ m^e mod n</code>; c为密文，且0&lt;=c&lt;n。 （还可以表示为c = pow(m, e, N）<br> <img src="https://img-blog.csdnimg.cn/20201004174827178.png#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="2-2-RSA加密"><a href="#2-2-RSA加密" class="headerlink" title="2.2 RSA加密"></a>2.2 RSA加密</h3><p> 首先对明文进行比特串分组，使得每个分组对应的十进制数小于n，然后依次对每个分组m做一次加密，所有分组的密文构成的序列就是原始消息的加密结果，即m满足0&lt;=m&lt;n，则加密算法为：<br> <code>c≡ m^e mod n</code>; c为密文，且0&lt;=c&lt;n。 （还可以表示为c = pow(m, e, N）<br> <img src="https://img-blog.csdnimg.cn/20201004174827178.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>也就是说RSA加密是对明文的E次方后除以N后求余数的过程。只要知道E和N就可以进行RSA加密了，所以说E、N是RSA加密的密钥，也就是说E和N的组合就是公钥。即<code>公钥=(E,N)</code></p>
 <h3 id="2-3-RSA解密"><a href="#2-3-RSA解密" class="headerlink" title="2.3 RSA解密"></a>2.3 RSA解密</h3><p>对于密文0&lt;=c&lt;n，解密算法为： <code>m≡ c^d mod n</code>;（还可以表示为m = pow(c, d, N)）</p>
-<p><img src="https://img-blog.csdnimg.cn/20201004113320969.png#pic_center" alt="在这里插入图片描述"><br>也就是说对密文进行D次方后除以N的余数就是明文，这就是RSA解密过程。知道D和N就能进行解密密文了，所以D和N的组合就是私钥。即<code>私钥=(D,N)</code></p>
+<p><img src="https://img-blog.csdnimg.cn/20201004113320969.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>也就是说对密文进行D次方后除以N的余数就是明文，这就是RSA解密过程。知道D和N就能进行解密密文了，所以D和N的组合就是私钥。即<code>私钥=(D,N)</code></p>
 <h3 id="2-4-RSA相关值"><a href="#2-4-RSA相关值" class="headerlink" title="2.4 RSA相关值"></a>2.4 RSA相关值</h3><table>
 <thead>
 <tr>
@@ -107,52 +277,52 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <td>分别是密文和明文</td>
 </tr>
 </tbody></table>
-<h2 id="3-安装gmpy2"><a href="#3-安装gmpy2" class="headerlink" title="3. 安装gmpy2"></a>3. 安装gmpy2</h2><p>检查一下是否安装了wheel文件包，在cmd中输入<code>wheel</code>，查看一下<br><img src="https://img-blog.csdnimg.cn/20201004171147495.png#pic_center" alt="在这里插入图片描述"><br>如果没有安装，则输入<code>pip install wheel</code>安装<br><img src="https://img-blog.csdnimg.cn/20201004171222132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>安装好wheel后，还需要再安装gmpy2所需要的whl文件，查找需要的<a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">whl文件包</a>。注意，whl文件包需要和你所安装的python3版本一致；</p>
-<p>输入python查看电脑Python版本所支持的whl文件版本<br><img src="https://img-blog.csdnimg.cn/2020100417135991.png#pic_center" alt="在这里插入图片描述"><br>我使用的是python3.8 32位，下载gmpy2‑2.0.8‑cp38‑cp38‑win32.whl，放到python文件目录下。<br><img src="https://img-blog.csdnimg.cn/20201004172026759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<p>然后再在cmd中输入：pip install （whl文件的路径）<br><img src="https://img-blog.csdnimg.cn/20201004172409410.png#pic_center" alt="在这里插入图片描述"><br>最后输入：<code>pip install gmpy2</code>就可以安装，没有报错即安装成功<br><img src="https://img-blog.csdnimg.cn/2020100417261163.png#pic_center" alt="在这里插入图片描述"></p>
-<h2 id="4-实战练习"><a href="#4-实战练习" class="headerlink" title="4. 实战练习"></a>4. 实战练习</h2><h3 id="4-1-已知p、q、e，求d"><a href="#4-1-已知p、q、e，求d" class="headerlink" title="4.1 已知p、q、e，求d"></a>4.1 已知p、q、e，求d</h3><p><strong>[BUUCTF]RSA</strong><br><img src="https://img-blog.csdnimg.cn/20201005193350346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="3-安装gmpy2"><a href="#3-安装gmpy2" class="headerlink" title="3. 安装gmpy2"></a>3. 安装gmpy2</h2><p>检查一下是否安装了wheel文件包，在cmd中输入<code>wheel</code>，查看一下<br><img src="https://img-blog.csdnimg.cn/20201004171147495.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>如果没有安装，则输入<code>pip install wheel</code>安装<br><img src="https://img-blog.csdnimg.cn/20201004171222132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>安装好wheel后，还需要再安装gmpy2所需要的whl文件，查找需要的<a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">whl文件包</a>。注意，whl文件包需要和你所安装的python3版本一致；</p>
+<p>输入python查看电脑Python版本所支持的whl文件版本<br><img src="https://img-blog.csdnimg.cn/2020100417135991.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我使用的是python3.8 32位，下载gmpy2‑2.0.8‑cp38‑cp38‑win32.whl，放到python文件目录下。<br><img src="https://img-blog.csdnimg.cn/20201004172026759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>然后再在cmd中输入：pip install （whl文件的路径）<br><img src="https://img-blog.csdnimg.cn/20201004172409410.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>最后输入：<code>pip install gmpy2</code>就可以安装，没有报错即安装成功<br><img src="https://img-blog.csdnimg.cn/2020100417261163.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="4-实战练习"><a href="#4-实战练习" class="headerlink" title="4. 实战练习"></a>4. 实战练习</h2><h3 id="4-1-已知p、q、e，求d"><a href="#4-1-已知p、q、e，求d" class="headerlink" title="4.1 已知p、q、e，求d"></a>4.1 已知p、q、e，求d</h3><p><strong>[BUUCTF]RSA</strong><br><img src="https://img-blog.csdnimg.cn/20201005193350346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>编写脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br>p = <span class="hljs-number">473398607161</span><br>q = <span class="hljs-number">4511491</span><br>e = <span class="hljs-number">17</span><br>d = gmpy2.invert(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>print(d)<br></code></pre></td></tr></table></figure>
-<p>运行得到<br><img src="https://img-blog.csdnimg.cn/20201005193500626.png#pic_center" alt="在这里插入图片描述"></p>
+<p>运行得到<br><img src="https://img-blog.csdnimg.cn/20201005193500626.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="4-2-1-已知p、q、e、密文c，求明文m"><a href="#4-2-1-已知p、q、e、密文c，求明文m" class="headerlink" title="4.2.1 已知p、q、e、密文c，求明文m"></a>4.2.1 已知p、q、e、密文c，求明文m</h3><p><strong>[BUUCTF] rsarsa</strong></p>
-<p>打开文档，给出了p、q、e的值<br><img src="https://img-blog.csdnimg.cn/20200930105157902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><em>方法一</em>：使用RSAtool工具<br>使用rsatool工具计算d的值，直接填入p,q,把e =  65537转换为16进制在再填入，再点击Calc.D,即可获得D的值。<br><img src="https://img-blog.csdnimg.cn/20200930105901703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>然后编写脚本</p>
+<p>打开文档，给出了p、q、e的值<br><img src="https://img-blog.csdnimg.cn/20200930105157902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><em>方法一</em>：使用RSAtool工具<br>使用rsatool工具计算d的值，直接填入p,q,把e =  65537转换为16进制在再填入，再点击Calc.D,即可获得D的值。<br><img src="https://img-blog.csdnimg.cn/20200930105901703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后编写脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">p = <span class="hljs-number">9648423029010515676590551740010426534945737639235739800643989352039852507298491399561035009163427050370107570733633350911691280297777160200625281665378483</span><br>q = <span class="hljs-number">11874843837980297032092405848653656852760910154543380907650040190704283358909208578251063047732443992230647903887510065547947313543299303261986053486569407</span><br>C = <span class="hljs-number">83208298995174604174773590298203639360540024871256126892889661345742403314929861939100492666605647316646576486526217457006376842280869728581726746401583705899941768214138742259689334840735633553053887641847651173776251820293087212885670180367406807406765923638973161375817392737747832762751690104423869019034</span><br>d = <span class="hljs-number">56632047571190660567520341028861194862411428416862507034762587229995138605649836960220619903456392752115943299335385163216233744624623848874235303309636393446736347238627793022725260986466957974753004129210680401432377444984195145009801967391196615524488853620232925992387563270746297909112117451398527453977</span><br>n = p*q<br>flag = <span class="hljs-built_in">pow</span>(C,d,n)<br>print(flag)<br></code></pre></td></tr></table></figure>
-<p>得到明文flag<br><img src="https://img-blog.csdnimg.cn/20200930110203438.png#pic_center" alt="在这里插入图片描述"><br><em>方法二</em>：利用<code>gmpy2</code>直接写脚本</p>
+<p>得到明文flag<br><img src="https://img-blog.csdnimg.cn/20200930110203438.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><em>方法二</em>：利用<code>gmpy2</code>直接写脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br>p = <span class="hljs-number">9648423029010515676590551740010426534945737639235739800643989352039852507298491399561035009163427050370107570733633350911691280297777160200625281665378483</span><br>q = <span class="hljs-number">11874843837980297032092405848653656852760910154543380907650040190704283358909208578251063047732443992230647903887510065547947313543299303261986053486569407</span><br>e = <span class="hljs-number">65537</span><br>C = <span class="hljs-number">83208298995174604174773590298203639360540024871256126892889661345742403314929861939100492666605647316646576486526217457006376842280869728581726746401583705899941768214138742259689334840735633553053887641847651173776251820293087212885670180367406807406765923638973161375817392737747832762751690104423869019034</span><br><span class="hljs-comment">#1.求d</span><br>d = gmpy2.invert(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br><span class="hljs-comment">#2.求n</span><br>n = p*q<br><span class="hljs-comment">#3.m=pow(c,d,n)</span><br>flag = <span class="hljs-built_in">pow</span>(C,d,n)<br>print(flag)<br></code></pre></td></tr></table></figure>
-<p>得到明文flag<br><img src="https://img-blog.csdnimg.cn/20201004194955531.png#pic_center" alt="在这里插入图片描述"></p>
+<p>得到明文flag<br><img src="https://img-blog.csdnimg.cn/20201004194955531.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="4-2-2-已知c、q、n、e，求明文m"><a href="#4-2-2-已知c、q、n、e，求明文m" class="headerlink" title="4.2.2 已知c、q、n、e，求明文m"></a>4.2.2 已知c、q、n、e，求明文m</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shenshuoyaoyouguang/p/14025343.html">参考文章</a><br>给了 c, q, n ,e</p>
 <p>求 p : n//q</p>
 <p>求 d: d = invmod(e,(p-1)*(q-1))</p>
 <p>求 flag : flag = pow(c,d,n)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> libnum<br><br>n = <span class="hljs-number">191051885543358947736760989661967468461742175898801910645529003886391047898839624568290216360845330501814019720570327197669064365268607597117598905046895097642708006373182989953758208523010345148200475257538336602695211819055893667974317905617522838840325499754862033348148407978527792816186094297381925119601464149</span><br>q = <span class="hljs-number">166836705584681518148179737955842605213272207836752187845124149461151181903779374775281529346854786259719545699157508885500818994019618158708212777833768444327658647324555090459233657737950932895018766440119999513331707759691054888319029069397903003240927552065429412176600134636921146805408664505115889561043</span><br>c = <span class="hljs-number">177177672061025662936587345347268313127241651965256882323180749317515733256088163186914550682635245294414879862810654773207644687262596440870094409378849307188485755700138797651039936445998433830516207630858733090581643592843521203499818069822504434370840254518614785953412492701730326524258672860416318501278155194</span><br>e = <span class="hljs-number">0x10001</span><br><br>p = n//q<br>print(p)<br><br>d = libnum.invmod(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>print(d)<br><br>i = <span class="hljs-built_in">pow</span>(c,d,n)<br>print(libnum.n2s(i))<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201129000806367.png" alt="在这里插入图片描述"></p>
-<h3 id="4-3-已知n、e、密文c，求明文m"><a href="#4-3-已知n、e、密文c，求明文m" class="headerlink" title="4.3 已知n、e、密文c，求明文m"></a>4.3 已知n、e、密文c，求明文m</h3><p><strong>[ctfshow]easyrsa1</strong><br><img src="https://img-blog.csdnimg.cn/20201004200123150.png#pic_center" alt="在这里插入图片描述"><br>分解质因数n<br><img src="https://img-blog.csdnimg.cn/202010042038209.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201129000806367.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="4-3-已知n、e、密文c，求明文m"><a href="#4-3-已知n、e、密文c，求明文m" class="headerlink" title="4.3 已知n、e、密文c，求明文m"></a>4.3 已知n、e、密文c，求明文m</h3><p><strong>[ctfshow]easyrsa1</strong><br><img src="https://img-blog.csdnimg.cn/20201004200123150.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>分解质因数n<br><img src="https://img-blog.csdnimg.cn/202010042038209.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>编写脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">import</span> binascii<br><br>e = <span class="hljs-number">65537</span><br>n = <span class="hljs-number">1455925529734358105461406532259911790807347616464991065301847</span><br>c = <span class="hljs-number">69380371057914246192606760686152233225659503366319332065009</span><br><span class="hljs-comment">#1.将n分解为p和q</span><br>p = <span class="hljs-number">1201147059438530786835365194567</span><br>q = <span class="hljs-number">1212112637077862917192191913841</span><br><br>phi = (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>) <br><span class="hljs-comment">#2.求d</span><br>d = gmpy2.invert(e,phi)<br><span class="hljs-comment">#3.m=pow(c,d,n)</span><br>m = gmpy2.powmod(c,d,n) <br>print(binascii.unhexlify(<span class="hljs-built_in">hex</span>(m)[<span class="hljs-number">2</span>:]))<br><span class="hljs-comment">#binascii.unhexlify(hexstr):从十六进制字符串hexstr返回二进制数据</span><br></code></pre></td></tr></table></figure>
-<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/202010042008171.png#pic_center" alt="在这里插入图片描述"><br>注：<br>1.在线分解质因数：<a target="_blank" rel="noopener" href="http://www.factordb.com/">http://www.factordb.com</a> </p>
+<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/202010042008171.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>注：<br>1.在线分解质因数：<a target="_blank" rel="noopener" href="http://www.factordb.com/">http://www.factordb.com</a> </p>
 <p>2.代码中涉及到了<a target="_blank" rel="noopener" href="https://blog.csdn.net/xc_zhou/article/details/82079762">python之binascii模块</a>相关知识</p>
-<h3 id="4-4-已知public-key、密文c，求明文m"><a href="#4-4-已知public-key、密文c，求明文m" class="headerlink" title="4.4 已知public key、密文c，求明文m"></a>4.4 已知public key、密文c，求明文m</h3><p> <strong>[BUUCTF]RSA</strong><br>下载附件<br><img src="https://img-blog.csdnimg.cn/20201011162231603.png#pic_center" alt="在这里插入图片描述"><br>用记事本打开pub.key<br><img src="https://img-blog.csdnimg.cn/20201011162321313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="http://tool.chacuo.net/cryptrsakeyparse">解析公钥</a><br><img src="https://img-blog.csdnimg.cn/20201011162453842.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>模数和指数即为n和e，还需要把n从十六进制转换为十进制<br><img src="https://img-blog.csdnimg.cn/20201011162645687.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="http://www.factordb.com/">分解n</a>，得到p和q</p>
-<p><img src="https://img-blog.csdnimg.cn/20201011162813249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>接下来就是通过脚本求出明文m</p>
-<p>脚本需要用到python的rsa库，在cmd中输入<code>pip install rsa</code>即可完成安装<br><img src="https://img-blog.csdnimg.cn/20201011163120354.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>脚本</p>
+<h3 id="4-4-已知public-key、密文c，求明文m"><a href="#4-4-已知public-key、密文c，求明文m" class="headerlink" title="4.4 已知public key、密文c，求明文m"></a>4.4 已知public key、密文c，求明文m</h3><p> <strong>[BUUCTF]RSA</strong><br>下载附件<br><img src="https://img-blog.csdnimg.cn/20201011162231603.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>用记事本打开pub.key<br><img src="https://img-blog.csdnimg.cn/20201011162321313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="http://tool.chacuo.net/cryptrsakeyparse">解析公钥</a><br><img src="https://img-blog.csdnimg.cn/20201011162453842.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>模数和指数即为n和e，还需要把n从十六进制转换为十进制<br><img src="https://img-blog.csdnimg.cn/20201011162645687.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="http://www.factordb.com/">分解n</a>，得到p和q</p>
+<p><img src="https://img-blog.csdnimg.cn/20201011162813249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>接下来就是通过脚本求出明文m</p>
+<p>脚本需要用到python的rsa库，在cmd中输入<code>pip install rsa</code>即可完成安装<br><img src="https://img-blog.csdnimg.cn/20201011163120354.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">import</span> rsa<br> <br>e=<span class="hljs-number">65537</span><br>n=<span class="hljs-number">86934482296048119190666062003494800588905656017203025617216654058378322103517</span><br>p=<span class="hljs-number">285960468890451637935629440372639283459</span><br>q=<span class="hljs-number">304008741604601924494328155975272418463</span><br> <br>phin = (p-<span class="hljs-number">1</span>) * (q-<span class="hljs-number">1</span>)<br>d=gmpy2.invert(e, phin)<br> <br>key=rsa.PrivateKey(n,e,<span class="hljs-built_in">int</span>(d),p,q)<br> <br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag.enc&quot;</span>,<span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f=f.read()<br>    print(rsa.decrypt(f,key))<br><br></code></pre></td></tr></table></figure>
-<p>运行脚本，得到flag。<br><img src="https://img-blog.csdnimg.cn/20201011163224705.png#pic_center" alt="在这里插入图片描述"></p>
+<p>运行脚本，得到flag。<br><img src="https://img-blog.csdnimg.cn/20201011163224705.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="4-5-已知p、q、dp、dq、c求明文m"><a href="#4-5-已知p、q、dp、dq、c求明文m" class="headerlink" title="4.5 已知p、q、dp、dq、c求明文m"></a>4.5 已知p、q、dp、dq、c求明文m</h3><p><strong>[BUUCTF]RSA1</strong></p>
-<p>这道题属于已知p、q、dp、dq、c求明文类型<br><img src="https://img-blog.csdnimg.cn/20201005193829462.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/MikeCoke/article/details/105959599">上脚本</a></p>
+<p>这道题属于已知p、q、dp、dq、c求明文类型<br><img src="https://img-blog.csdnimg.cn/20201005193829462.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/MikeCoke/article/details/105959599">上脚本</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">p = <span class="hljs-number">8637633767257008567099653486541091171320491509433615447539162437911244175885667806398411790524083553445158113502227745206205327690939504032994699902053229</span> <br>q = <span class="hljs-number">12640674973996472769176047937170883420927050821480010581593137135372473880595613737337630629752577346147039284030082593490776630572584959954205336880228469</span> <br>dp = <span class="hljs-number">6500795702216834621109042351193261530650043841056252930930949663358625016881832840728066026150264693076109354874099841380454881716097778307268116910582929</span> <br>dq = <span class="hljs-number">783472263673553449019532580386470672380574033551303889137911760438881683674556098098256795673512201963002175438762767516968043599582527539160811120550041</span> <br>c = <span class="hljs-number">24722305403887382073567316467649080662631552905960229399079107995602154418176056335800638887527614164073530437657085079676157350205351945222989351316076486573599576041978339872265925062764318536089007310270278526159678937431903862892400747915525118983959970607934142974736675784325993445942031372107342103852</span><br><br><span class="hljs-keyword">import</span> gmpy2<br>I = gmpy2.invert(q,p)<br>mp = <span class="hljs-built_in">pow</span>(c,dp,p)<br>mq = <span class="hljs-built_in">pow</span>(c,dq,q)               <span class="hljs-comment">#求幂取模运算</span><br><br>m = (((mp-mq)*I)%p)*q+mq       <span class="hljs-comment">#求明文公式</span><br><br>print(<span class="hljs-built_in">hex</span>(m))                  <span class="hljs-comment">#转为十六进制</span><br><br></code></pre></td></tr></table></figure>
-<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/20201005194550372.png#pic_center" alt="在这里插入图片描述"><br>然后将16进制转换成字符串</p>
-<p><img src="https://img-blog.csdnimg.cn/20201005194804576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/20201005194550372.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后将16进制转换成字符串</p>
+<p><img src="https://img-blog.csdnimg.cn/20201005194804576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h3 id="4-6已知n、e、dp、c，求m"><a href="#4-6已知n、e、dp、c，求m" class="headerlink" title="4.6已知n、e、dp、c，求m"></a>4.6已知n、e、dp、c，求m</h3><p><strong>[BUUCTF]RSA2</strong></p>
-<p>下载附件，题目给出公钥n,e以及dp<br><img src="https://img-blog.csdnimg.cn/20201011163855598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>下载附件，题目给出公钥n,e以及dp<br><img src="https://img-blog.csdnimg.cn/20201011163855598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">dp=d%(p-<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
 <p>脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>  gmpy2<br><span class="hljs-keyword">import</span>  rsa<br><span class="hljs-keyword">import</span>  binascii<br>p=<span class="hljs-number">0</span><br>e=<span class="hljs-number">65537</span><br>c = <span class="hljs-number">140423670976252696807533673586209400575664282100684119784203527124521188996403826597436883766041879067494280957410201958935737360380801845453829293997433414188838725751796261702622028587211560353362847191060306578510511380965162133472698713063592621028959167072781482562673683090590521214218071160287665180751</span><br>dp=<span class="hljs-number">905074498052346904643025132879518330691925174573054004621877253318682675055421970943552016695528560364834446303196939207056642927148093290374440210503657</span><br>n=<span class="hljs-number">248254007851526241177721526698901802985832766176221609612258877371620580060433101538328030305219918697643619814200930679612109885533801335348445023751670478437073055544724280684733298051599167660303645183146161497485358633681492129668802402065797789905550489547645118787266601929429724133167768465309665906113</span><br>temp=dp*e<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,e) :<br>    <span class="hljs-keyword">if</span> (temp-<span class="hljs-number">1</span>)%i==<span class="hljs-number">0</span>:<br>        x=(temp-<span class="hljs-number">1</span>)//i+<span class="hljs-number">1</span><br>        y=n%x<br>        <span class="hljs-keyword">if</span> y==<span class="hljs-number">0</span>:<br>            p=x<br>            <span class="hljs-keyword">break</span><br>q=n//p<br><span class="hljs-comment">#&#x27;//&#x27;代表向下取整,&#x27;/&#x27;得到的是浮点数</span><br>d=gmpy2.invert(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>key=rsa.PrivateKey(n,e,d,p,q)<br>m=<span class="hljs-built_in">pow</span>(c,d,n)<br>print(binascii.unhexlify(<span class="hljs-built_in">hex</span>(m)[<span class="hljs-number">2</span>:]))<br><span class="hljs-comment">#unhexlify()的作用是返回16进制数对应的字符串</span><br></code></pre></td></tr></table></figure>
-<p>运行结果<br><img src="https://img-blog.csdnimg.cn/20201011164021212.png#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="4-7共模攻击"><a href="#4-7共模攻击" class="headerlink" title="4.7共模攻击"></a>4.7共模攻击</h3><p><strong>[BUUCTF]RSA3</strong><br>出现两个加密使用相同的模，可以在不知道私钥的情况下得到明文，这就是RSA中的<strong>共模攻击</strong>。<br><img src="https://img-blog.csdnimg.cn/20201011164858631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>脚本</p>
+<p>运行结果<br><img src="https://img-blog.csdnimg.cn/20201011164021212.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="4-7共模攻击"><a href="#4-7共模攻击" class="headerlink" title="4.7共模攻击"></a>4.7共模攻击</h3><p><strong>[BUUCTF]RSA3</strong><br>出现两个加密使用相同的模，可以在不知道私钥的情况下得到明文，这就是RSA中的<strong>共模攻击</strong>。<br><img src="https://img-blog.csdnimg.cn/20201011164858631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> invert<br><span class="hljs-comment"># 欧几里得算法</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">egcd</span>(<span class="hljs-params">a, b</span>):</span><br>  <span class="hljs-keyword">if</span> a == <span class="hljs-number">0</span>:<br>    <span class="hljs-keyword">return</span> (b, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br>  <span class="hljs-keyword">else</span>:<br>    g, y, x = egcd(b % a, a)<br>    <span class="hljs-keyword">return</span> (g, x - (b // a) * y, y)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>  n = <span class="hljs-number">22708078815885011462462049064339185898712439277226831073457888403129378547350292420267016551819052430779004755846649044001024141485283286483130702616057274698473611149508798869706347501931583117632710700787228016480127677393649929530416598686027354216422565934459015161927613607902831542857977859612596282353679327773303727004407262197231586324599181983572622404590354084541788062262164510140605868122410388090174420147752408554129789760902300898046273909007852818474030770699647647363015102118956737673941354217692696044969695308506436573142565573487583507037356944848039864382339216266670673567488871508925311154801</span><br>  c1 = <span class="hljs-number">22322035275663237041646893770451933509324701913484303338076210603542612758956262869640822486470121149424485571361007421293675516338822195280313794991136048140918842471219840263536338886250492682739436410013436651161720725855484866690084788721349555662019879081501113222996123305533009325964377798892703161521852805956811219563883312896330156298621674684353919547558127920925706842808914762199011054955816534977675267395009575347820387073483928425066536361482774892370969520740304287456555508933372782327506569010772537497541764311429052216291198932092617792645253901478910801592878203564861118912045464959832566051361</span><br>  c2 = <span class="hljs-number">18702010045187015556548691642394982835669262147230212731309938675226458555210425972429418449273410535387985931036711854265623905066805665751803269106880746769003478900791099590239513925449748814075904017471585572848473556490565450062664706449128415834787961947266259789785962922238701134079720414228414066193071495304612341052987455615930023536823801499269773357186087452747500840640419365011554421183037505653461286732740983702740822671148045619497667184586123657285604061875653909567822328914065337797733444640351518775487649819978262363617265797982843179630888729407238496650987720428708217115257989007867331698397</span><br>  e1 = <span class="hljs-number">11187289</span><br>  e2 = <span class="hljs-number">9647291</span><br>  s = egcd(e1, e2)<br>  s1 = s[<span class="hljs-number">1</span>]<br>  s2 = s[<span class="hljs-number">2</span>]<br>  <span class="hljs-comment"># 求模反元素</span><br>  <span class="hljs-keyword">if</span> s1&lt;<span class="hljs-number">0</span>:<br>    s1 = - s1<br>    c1 = invert(c1, n)<br>  <span class="hljs-keyword">elif</span> s2&lt;<span class="hljs-number">0</span>:<br>    s2 = - s2<br>    c2 = invert(c2, n)<br><br>  m = <span class="hljs-built_in">pow</span>(c1,s1,n)*<span class="hljs-built_in">pow</span>(c2,s2,n) % n<br>  print(m)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  main()<br><br><br></code></pre></td></tr></table></figure>
-<p>运行脚本，得到明文m<br><img src="https://img-blog.csdnimg.cn/20201011164737363.png#pic_center" alt="在这里插入图片描述"><br>转16进制</p>
+<p>运行脚本，得到明文m<br><img src="https://img-blog.csdnimg.cn/20201011164737363.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>转16进制</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">666</span>c61677b34396439313037376131616263623134663161396435343663383062653965667d<br></code></pre></td></tr></table></figure>
-<p>十六进制转字符串<br><img src="https://img-blog.csdnimg.cn/20201109201954658.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="4-8已知p-q、（p-1-q-1-、e、d、以及密文C，求明文m"><a href="#4-8已知p-q、（p-1-q-1-、e、d、以及密文C，求明文m" class="headerlink" title="4.8已知p+q、（p+1)(q+1)、e、d、以及密文C，求明文m"></a>4.8已知p+q、（p+1)(q+1)、e、d、以及密文C，求明文m</h3><p><strong>[GUET-CTF2019]BabyRSA</strong><br><img src="https://img-blog.csdnimg.cn/20210201110739494.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>十六进制转字符串<br><img src="https://img-blog.csdnimg.cn/20201109201954658.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="4-8已知p-q、（p-1-q-1-、e、d、以及密文C，求明文m"><a href="#4-8已知p-q、（p-1-q-1-、e、d、以及密文C，求明文m" class="headerlink" title="4.8已知p+q、（p+1)(q+1)、e、d、以及密文C，求明文m"></a>4.8已知p+q、（p+1)(q+1)、e、d、以及密文C，求明文m</h3><p><strong>[GUET-CTF2019]BabyRSA</strong><br><img src="https://img-blog.csdnimg.cn/20210201110739494.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>已知<code>p+q</code>、<code>（p+1)(q+1</code>)、<code>e</code>、<code>d</code>,以及密文<code>c</code>.</p>
 <p>利用 RSA的解密公式：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">M=C^d  mod n<br>n = p*q<br></code></pre></td></tr></table></figure>
@@ -160,281 +330,281 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">n = (p+<span class="hljs-number">1</span>)*(q+<span class="hljs-number">1</span>) - (p+q) - <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <p>脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> libnum<br>a = <span class="hljs-number">0x1232fecb92adead91613e7d9ae5e36fe6bb765317d6ed38ad890b4073539a6231a6620584cea5730b5af83a3e80cf30141282c97be4400e33307573af6b25e2ea</span><br>b = <span class="hljs-number">0x5248becef1d925d45705a7302700d6a0ffe5877fddf9451a9c1181c4d82365806085fd86fbaab08b6fc66a967b2566d743c626547203b34ea3fdb1bc06dd3bb765fd8b919e3bd2cb15bc175c9498f9d9a0e216c2dde64d81255fa4c05a1ee619fc1fc505285a239e7bc655ec6605d9693078b800ee80931a7a0c84f33c851740</span><br>e = <span class="hljs-number">0xe6b1bee47bd63f615c7d0a43c529d219</span><br>d = <span class="hljs-number">0x2dde7fbaed477f6d62838d55b0d0964868cf6efb2c282a5f13e6008ce7317a24cb57aec49ef0d738919f47cdcd9677cd52ac2293ec5938aa198f962678b5cd0da344453f521a69b2ac03647cdd8339f4e38cec452d54e60698833d67f9315c02ddaa4c79ebaa902c605d7bda32ce970541b2d9a17d62b52df813b2fb0c5ab1a5</span><br>c= <span class="hljs-number">0x50ae00623211ba6089ddfae21e204ab616f6c9d294e913550af3d66e85d0c0693ed53ed55c46d8cca1d7c2ad44839030df26b70f22a8567171a759b76fe5f07b3c5a6ec89117ed0a36c0950956b9cde880c575737f779143f921d745ac3bb0e379c05d9a3cc6bf0bea8aa91e4d5e752c7eb46b2e023edbc07d24a7c460a34a9a</span><br><br>n = b-a-<span class="hljs-number">1</span><br><br>m = <span class="hljs-built_in">pow</span>(c,d,n)<br><br>print(libnum.n2s(m))  <span class="hljs-comment">#（n2s将数值转化为字符串）</span><br></code></pre></td></tr></table></figure>
-<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/20210201111109395.png" alt="在这里插入图片描述"></p>
+<p>运行脚本<br><img src="https://img-blog.csdnimg.cn/20210201111109395.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <hr>
 <p>看到一份来自漏斗社区的<a target="_blank" rel="noopener" href="https://www.freebuf.com/column/148898.html">RSA解题思路思维导图</a>，收藏起来8。</p>
-<p><img src="https://img-blog.csdnimg.cn/20201004175237397.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://swhat.github.io/tags/RSA/">RSA</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">浅谈PHP反序列化漏洞</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/09/20/PHP%20%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/"><span class="paginator-prev__text">PHP 文件与目录操作</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFRSA"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RSA%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">2. RSA算法描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%A7%E7%94%9F%E5%85%AC%E7%A7%81%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 产生公私密钥对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-RSA%E5%8A%A0%E5%AF%86"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 RSA加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-RSA%E8%A7%A3%E5%AF%86"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 RSA解密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-RSA%E7%9B%B8%E5%85%B3%E5%80%BC"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 RSA相关值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85gmpy2"><span class="toc-number">3.</span> <span class="toc-text">3. 安装gmpy2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0"><span class="toc-number">4.</span> <span class="toc-text">4. 实战练习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B7%B2%E7%9F%A5p%E3%80%81q%E3%80%81e%EF%BC%8C%E6%B1%82d"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 已知p、q、e，求d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-%E5%B7%B2%E7%9F%A5p%E3%80%81q%E3%80%81e%E3%80%81%E5%AF%86%E6%96%87c%EF%BC%8C%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.2.</span> <span class="toc-text">4.2.1 已知p、q、e、密文c，求明文m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-%E5%B7%B2%E7%9F%A5c%E3%80%81q%E3%80%81n%E3%80%81e%EF%BC%8C%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.3.</span> <span class="toc-text">4.2.2 已知c、q、n、e，求明文m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%B7%B2%E7%9F%A5n%E3%80%81e%E3%80%81%E5%AF%86%E6%96%87c%EF%BC%8C%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.4.</span> <span class="toc-text">4.3 已知n、e、密文c，求明文m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%B7%B2%E7%9F%A5public-key%E3%80%81%E5%AF%86%E6%96%87c%EF%BC%8C%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.5.</span> <span class="toc-text">4.4 已知public key、密文c，求明文m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%B7%B2%E7%9F%A5p%E3%80%81q%E3%80%81dp%E3%80%81dq%E3%80%81c%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.6.</span> <span class="toc-text">4.5 已知p、q、dp、dq、c求明文m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6%E5%B7%B2%E7%9F%A5n%E3%80%81e%E3%80%81dp%E3%80%81c%EF%BC%8C%E6%B1%82m"><span class="toc-number">4.7.</span> <span class="toc-text">4.6已知n、e、dp、c，求m</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7%E5%85%B1%E6%A8%A1%E6%94%BB%E5%87%BB"><span class="toc-number">4.8.</span> <span class="toc-text">4.7共模攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8%E5%B7%B2%E7%9F%A5p-q%E3%80%81%EF%BC%88p-1-q-1-%E3%80%81e%E3%80%81d%E3%80%81%E4%BB%A5%E5%8F%8A%E5%AF%86%E6%96%87C%EF%BC%8C%E6%B1%82%E6%98%8E%E6%96%87m"><span class="toc-number">4.9.</span> <span class="toc-text">4.8已知p+q、（p+1)(q+1)、e、d、以及密文C，求明文m</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
+<p><img src="https://img-blog.csdnimg.cn/20201004175237397.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/CRYPTO/">CRYPTO</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/RSA/">RSA</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/18/%E6%B5%85%E8%B0%88PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">浅谈PHP反序列化漏洞</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/20/PHP%20%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/">
+                        <span class="hidden-mobile">PHP 文件与目录操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
+      </div>
+    
+  </div>
+</div>
 
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
+<!-- Custom -->
 
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
 
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
+    
 
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
 
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
+    
+  </main>
 
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
 
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
 
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
 
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
     }
-  });
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
 }
+setInterval("createtime()", 250);
+</script>
 
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
+<!-- 添加网站运行时间》-->
+  </div>
+  
 
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
+  
 
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
 
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
 
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-var assistSearchList = window.CONFIG.assistSearch;
+<!-- Plugins -->
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

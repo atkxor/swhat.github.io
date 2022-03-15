@@ -1,57 +1,247 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/atkx_16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/atkx-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="摘要：PHP弱类型绕过方法">
-<meta property="og:type" content="article">
-<meta property="og:title" content="代码审计之弱类型绕过">
-<meta property="og:url" content="https://swhat.github.io/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/index.html">
-<meta property="og:site_name" content="At的小站">
-<meta property="og:description" content="摘要：PHP弱类型绕过方法">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425110348780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425113316110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201031180041123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425115133708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201031185451492.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201031185650537.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201031192339220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201031215444337.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201103191138163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201102122943381.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201102124459121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201102125444628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201103190435176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020110318591559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201103185441793.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210201120107109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-11-04T07:48:04.000Z">
-<meta property="article:modified_time" content="2021-08-15T03:59:06.599Z">
-<meta property="article:author" content="Atkx">
-<meta property="article:tag" content="代码审计">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200425110348780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70"><title>代码审计之弱类型绕过 | At的小站</title><link ref="canonical" href="https://swhat.github.io/2020/11/04/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E5%BC%B1%E7%B1%BB%E5%9E%8B%E7%BB%95%E8%BF%87/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: false,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
-</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fas-folder-open"></i></span><span class="header-nav-menu-item__text">menu.links</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">At的小站</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">代码审计之弱类型绕过</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2020-11-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.1k</span></span></div></header><div class="post-body"><p>摘要：PHP弱类型绕过方法</p>
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/atkx_16x16.png">
+  <link rel="icon" href="/img/atkx_16x16.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="摘要：PHP弱类型绕过方法">
+  <meta name="author" content="Atkx">
+  <meta name="keywords" content="">
+  
+  <title>代码审计之弱类型绕过 - At的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"atkx.gitee.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="At的小站" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Atkx</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg_image2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="代码审计之弱类型绕过">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-04 15:48" pubdate>
+        2020年11月4日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">代码审计之弱类型绕过</h1>
+            
+            <div class="markdown-body">
+              <p>摘要：PHP弱类型绕过方法</p>
  <a id="more"></a>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
@@ -91,7 +281,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <p>在第三行, 运用了extract()函数, 将GET方式获得的变量导入到当前的符号表中,然后判断$ flag和$ shiyan两个变量的内容是否相等。</p>
 <p>extract()函数导致这段代码存在一个变量覆盖漏洞,构造Payload</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload:?flag=&amp;shiyan=<br></code></pre></td></tr></table></figure>
-<p> $ flag和$ shiyan这两个变量的内容都会被设置成空字符串。这样,就满足$shiyan == $content的条件，输出flag。<br><img src="https://img-blog.csdnimg.cn/20200425110348780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p> $ flag和$ shiyan这两个变量的内容都会被设置成空字符串。这样,就满足$shiyan == $content的条件，输出flag。<br><img src="https://img-blog.csdnimg.cn/20200425110348780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="2-strcmp比较字符串"><a href="#2-strcmp比较字符串" class="headerlink" title="2.strcmp比较字符串"></a>2.strcmp比较字符串</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&quot;flag&#123;xxxxx&#125;&quot;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;a&#x27;</span>])) &#123;<br>	<span class="hljs-keyword">if</span> (strcmp(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-variable">$flag</span>) == <span class="hljs-number">0</span>) <span class="hljs-comment">//如果 str1 小于 str2 返回 &lt; 0； 如果 str1大于 str2返回 &gt; 0；如果两者相等，返回 0。</span><br>	<span class="hljs-comment">//比较两个字符串（区分大小写）</span><br>	    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Flag: &#x27;</span>.<span class="hljs-variable">$flag</span>); <br>    <span class="hljs-keyword">else</span><br>		<span class="hljs-keyword">print</span> <span class="hljs-string">&#x27;No&#x27;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -109,7 +299,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 </tbody></table>
 <p>对于传入非字符串类型的数据的时候，strcmp函数会报错，将return 0 ，但却判定其相等了。<br> 所以，strcmp()在比较字符串和数组的时候直接返回0，这样通过把目标变量设置成数组就可以绕过该函数的限制。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload:?a[]=<span class="hljs-number">123</span> <br></code></pre></td></tr></table></figure>
-<p> <img src="https://img-blog.csdnimg.cn/20200425113316110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p> <img src="https://img-blog.csdnimg.cn/20200425113316110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="3-urldecode二次编码绕过"><a href="#3-urldecode二次编码绕过" class="headerlink" title="3.urldecode二次编码绕过"></a>3.urldecode二次编码绕过</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>(eregi(<span class="hljs-string">&quot;hackerDJ&quot;</span>,<span class="hljs-variable">$_GET</span>[id])) &#123;<br>	<span class="hljs-keyword">echo</span>(<span class="hljs-string">&quot;not allowed!&quot;</span>);<br>	<span class="hljs-keyword">exit</span>();<br>&#125;<br><span class="hljs-variable">$_GET</span>[id] = urldecode(<span class="hljs-variable">$_GET</span>[id]);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$_GET</span>[id] == <span class="hljs-string">&quot;hackerDJ&quot;</span>) &#123;<br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;Access granted!&quot;</span>;<br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;flag&quot;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -125,7 +315,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 </tbody></table>
 <p>使用GET传参时，浏览器就已经把hakerDJ进行了一次解码了，然后又用了urldecode函数又再次进行了一次解码。所以我们要将hakerDJ进行二次编码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?id=%<span class="hljs-number">25</span>%<span class="hljs-number">36</span>%<span class="hljs-number">38</span>%<span class="hljs-number">25</span>%<span class="hljs-number">36</span>%<span class="hljs-number">31</span>%<span class="hljs-number">25</span>%<span class="hljs-number">36</span>%<span class="hljs-number">33</span>%<span class="hljs-number">25</span>%<span class="hljs-number">36</span>%<span class="hljs-number">42</span>%<span class="hljs-number">25</span>%<span class="hljs-number">36</span>%<span class="hljs-number">35</span>%<span class="hljs-number">25</span>%<span class="hljs-number">37</span>%<span class="hljs-number">32</span>%<span class="hljs-number">25</span>%<span class="hljs-number">34</span>%<span class="hljs-number">34</span>%<span class="hljs-number">25</span>%<span class="hljs-number">34</span>%<span class="hljs-number">41</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201031180041123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201031180041123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="4-md5-函数"><a href="#4-md5-函数" class="headerlink" title="4.md5()函数"></a>4.md5()函数</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&#x27;flag&#123;test&#125;&#x27;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;username&#x27;</span>]) <span class="hljs-keyword">and</span> <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>])) &#123;<br>	<span class="hljs-keyword">if</span> (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;username&#x27;</span>] == <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>])<br>	      <span class="hljs-keyword">print</span> <span class="hljs-string">&#x27;Your password can not be your username.&#x27;</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (md5(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;username&#x27;</span>]) === md5(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>]))<br>	      <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Flag: &#x27;</span>.<span class="hljs-variable">$flag</span>);<br>    <span class="hljs-keyword">else</span><br>	      <span class="hljs-keyword">print</span> <span class="hljs-string">&#x27;Invalid password&#x27;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -149,7 +339,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 </tbody></table>
 <p>md5()函数无法处理数组，如果传入的为数组，会返回NULL，所以两个数组经过加密后得到的都是NULL,也就是相等的。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload:?username[]=<span class="hljs-number">1</span>&amp;password[]=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20200425115133708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200425115133708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="5-数组返回NULL绕过"><a href="#5-数组返回NULL绕过" class="headerlink" title="5.数组返回NULL绕过"></a>5.数组返回NULL绕过</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&quot;flag&quot;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span> (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>])) &#123;<br>	<span class="hljs-keyword">if</span> (ereg (<span class="hljs-string">&quot;^[a-zA-Z0-9]+$&quot;</span>, <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>]) === <span class="hljs-literal">FALSE</span>)<br>	     <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;You password must be alphanumeric&#x27;</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (strpos (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>], <span class="hljs-string">&#x27;--&#x27;</span>) !== <span class="hljs-literal">FALSE</span>)<br>	     <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Flag: &#x27;</span> . <span class="hljs-variable">$flag</span>);<br>    <span class="hljs-keyword">else</span><br>	     <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Invalid password&#x27;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -170,11 +360,11 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <p>第4行代码，ereg函数会对传入的password从<code>a-z,A-Z,0-9</code> 进行匹配，将你的密码限制在这三种字符中。</p>
 <p><strong>方法一</strong>：<br><code>strpos()</code>需要匹配到<code>--</code>才能输出flag，所以我们需要绕过<code>strpos()</code>函数。<code>strpos()</code>如果传入数组，会返回NULL。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?password[]=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201031185451492.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201031185451492.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p><strong>方法二</strong>：</p>
 <p>搜索字母的字符是大小写敏感的, 我们可以用%00来截断，在%00之后的数值函数无法识别</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?password=<span class="hljs-number">1</span>%<span class="hljs-number">00</span>--<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201031185650537.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201031185650537.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="6-弱类型整数大小比较绕过"><a href="#6-弱类型整数大小比较绕过" class="headerlink" title="6. 弱类型整数大小比较绕过"></a>6. 弱类型整数大小比较绕过</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$temp</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>];<br>is_numeric(<span class="hljs-variable">$temp</span>)?<span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no numeric&quot;</span>):<span class="hljs-literal">NULL</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$temp</span>&gt;<span class="hljs-number">1336</span>) &#123;<br>	<span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br></code></pre></td></tr></table></figure>
 <table>
 <thead>
@@ -190,19 +380,19 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 </tbody></table>
 <p>传入的值会被is_numeric函数进行检测，如果为数字就直接输出no numeric，传参<code>password=2000a</code>既不是一个数字又大于1336,返回NULL，可以绕过。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?password=<span class="hljs-number">2000</span>a<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201031192339220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201031192339220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="7-sha-函数比较绕过"><a href="#7-sha-函数比较绕过" class="headerlink" title="7. sha()函数比较绕过"></a>7. sha()函数比较绕过</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/7.php">http://123.206.87.240:9009/7.php</a></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&quot;flag&quot;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;name&#x27;</span>]) <span class="hljs-keyword">and</span> <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>])) &#123;<br>	var_dump(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;name&#x27;</span>]);<br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;  &quot;</span>;<br>	var_dump(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>]);<br>	var_dump(sha1(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;name&#x27;</span>]));<br>	var_dump(sha1(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>]));<br>	<span class="hljs-keyword">if</span> (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;name&#x27;</span>] == <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>])<br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Your password can not be your name!&#x27;</span>; <br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sha1(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;name&#x27;</span>]) === sha1(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;password&#x27;</span>]))<br>	<span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Flag: &#x27;</span>.<span class="hljs-variable">$flag</span>); <span class="hljs-keyword">else</span><br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Invalid password.&#x27;</span>;<br>&#125; <span class="hljs-keyword">else</span><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Login first!&#x27;</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <p>sha1()函数无法处理数组类型，通过构造数组，将报错并返回false，使条件成立，这样就绕过了sha1()函数，获得flag</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?name[]=<span class="hljs-number">1</span>&amp;password[]=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201031215444337.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201031215444337.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="8-md5加密相等绕过"><a href="#8-md5加密相等绕过" class="headerlink" title="8. md5加密相等绕过"></a>8. md5加密相等绕过</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/13.php">http://123.206.87.240:9009/13.php</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>$md51 = md5(&#x27;QNKCDZO&#x27;);<br>$a = @$_GET[<span class="hljs-string">&#x27;a&#x27;</span>];<br>$md52 = @md5($a);<br><span class="hljs-keyword">if</span>(isset($a)) &#123;<br>	if ($a != &#x27;QNKCDZO&#x27; &amp;&amp; $md51 == $md52) &#123;<br>		echo <span class="hljs-string">&quot;flag&#123;*&#125;&quot;</span>;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		echo <span class="hljs-string">&quot;false!!!&quot;</span>;<br>	&#125;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>	echo <span class="hljs-string">&quot;please input a&quot;</span>;<br>&#125;<br>?&gt;<br></code></pre></td></tr></table></figure>
 
 
 <p>字符串QNKCDZO被md5加密后之后是前两位为<code>0e</code>，然后我们找一个字符串的md5之后的结果也为e0xxx的就可以绕过。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?a=s878926199a<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201103191138163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201103191138163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>原理：</p>
 <blockquote>
 <p>PHP在处理哈希字符串时，会利用”!=”或”==”来对哈希值进行比较，它把每一个以”0E”开头的哈希值都解释为0，</p>
@@ -214,20 +404,20 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-function">function <span class="hljs-title">noother_says_correct</span><span class="hljs-params">($temp)</span> </span>&#123;<br>	$flag = &#x27;flag&#123;test&#125;&#x27;;<br>	$one = ord(<span class="hljs-string">&#x27;1&#x27;</span>);<br>	<span class="hljs-comment">//ord — 返回字符的 ASCII 码值</span><br>	$nine = ord(<span class="hljs-string">&#x27;9&#x27;</span>);<br>	<span class="hljs-comment">//ord — 返回字符的 ASCII 码值</span><br>	$number = &#x27;3735929054&#x27;;<br>	<span class="hljs-comment">// Check all the input characters!</span><br>	<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; <span class="hljs-built_in">strlen</span>($number); $i++) &#123;<br>		<span class="hljs-comment">// Disallow all the digits!</span><br>		$digit = ord($temp &#123;$i&#125;);<br>		<span class="hljs-keyword">if</span> ( ($digit &gt;= $one) &amp;&amp; ($digit &lt;= $nine) ) &#123;<br>			<span class="hljs-comment">// Aha, digit not allowed!</span><br>			<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;flase&quot;</span>;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span>($number == $temp)<br>	<span class="hljs-keyword">return</span> $flag;<br>&#125;<br>$temp = $_GET[&#x27;password&#x27;];<br><span class="hljs-function">echo <span class="hljs-title">noother_says_correct</span><span class="hljs-params">($temp)</span></span>;<br>?&gt;<br></code></pre></td></tr></table></figure>
 <p>参数不能有1-9的数字，同时要求该参数值为3735929054，所以把值转换成十六进制传参。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">Payload: ?password=<span class="hljs-number">0xdeadc0de</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201102122943381.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201102122943381.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="10-ereg正则-00截断"><a href="#10-ereg正则-00截断" class="headerlink" title="10. ereg正则%00截断"></a>10. ereg正则%00截断</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/5.php">http://123.206.87.240:9009/5.php</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>$flag = <span class="hljs-string">&quot;xxx&quot;</span>;<br>if (isset ($_GET[&#x27;password&#x27;])) &#123;<br>	if (ereg (&quot;^[a-zA-Z0-9]+$&quot;, $_GET[&#x27;password&#x27;]) === FALSE) &#123;<br>		echo &#x27;You password must be alphanumeric&#x27;;<br>	&#125; else if (strlen($_GET[&#x27;password&#x27;]) &lt; 8 &amp;&amp; $_GET[&#x27;password&#x27;] &gt; 9999999) &#123;<br>		if (strpos ($_GET[&#x27;password&#x27;], &#x27;-&#x27;) !== FALSE) //strpos — 查找字符串首次出现的位置 &#123;<br>			die(&#x27;Flag: &#x27; . $flag);<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			echo(&#x27;have not been found&#x27;);<br>		&#125;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		echo &#x27;Invalid password&#x27;;<br>	&#125;<br>&#125;<br>?&gt;<br></code></pre></td></tr></table></figure>
 
 <p>传入的值必须是数字或大小写字符，长度小于8且大于9999999,且匹配到”<em>-</em>“才能输出flag。</p>
 <p>可以使用<code>%00</code>来截断，当ereg函数读到 <code>%00</code>的时候，就截止了。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: ?password=<span class="hljs-number">1e8</span>%<span class="hljs-number">00</span>*-*<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201102124459121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201102124459121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="11-strpos数组绕过"><a href="#11-strpos数组绕过" class="headerlink" title="11. strpos数组绕过"></a>11. strpos数组绕过</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/15.php">http://123.206.87.240:9009/15.php</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>$flag = <span class="hljs-string">&quot;flag&quot;</span>;<br>if (isset ($_GET[&#x27;ctf&#x27;])) &#123;<br>	if (@ereg (&quot;^[1-9]+$&quot;, $_GET[&#x27;ctf&#x27;]) === FALSE)<br>	     echo &#x27;必须输入数字才行&#x27;; <br>	else if (strpos ($_GET[&#x27;ctf&#x27;], &#x27;#biubiubiu&#x27;) !== FALSE)<br>	     die(&#x27;Flag: &#x27;.$flag); <br>	<span class="hljs-keyword">else</span><br>	     echo &#x27;骚年，继续努力吧啊~&#x27;;<br>&#125;<br>?&gt;<br></code></pre></td></tr></table></figure>
 <p>要求传入的参数为数字并且包含字符串“#biubiubiu”，有点难搞。</p>
 <p>可以通过数组绕过<code>strpos</code>与<code>ereg</code>函数，遇到数组返回NULL，数值和类型相同。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">Payload: ?ctf[]=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201102125444628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201102125444628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="12-数字验证正则绕过"><a href="#12-数字验证正则绕过" class="headerlink" title="12. 数字验证正则绕过"></a>12. 数字验证正则绕过</h2><p><a target="_blank" rel="noopener" href="http://123.206.87.240:9009/21.php">http://123.206.87.240:9009/21.php</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;?php<br>error_reporting(<span class="hljs-number">0</span>);<br>$flag = &#x27;flag&#123;test&#125;&#x27;;<br>if (&quot;POST&quot; == $_SERVER[&#x27;REQUEST_METHOD&#x27;]) &#123;<br>	$password = $_POST[&#x27;password&#x27;];<br>	if (0 &gt;= preg_match(&#x27;/^[[:graph:]]&#123;12,&#125;$/&#x27;, $password)) //preg_match — 执行一个正则表达式匹配 &#123;<br>		echo &#x27;flag&#x27;;<br>		<span class="hljs-built_in">exit</span>;<br>	&#125;<br>	<span class="hljs-keyword">while</span> (TRUE) &#123;<br>		$reg = &#x27;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&#x27;;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-number">6</span> &gt; preg_match_all($reg, $password, $arr))<br>		<span class="hljs-keyword">break</span>;<br>		$c = <span class="hljs-number">0</span>;<br>		$ps = array(&#x27;punct&#x27;, &#x27;digit&#x27;, &#x27;upper&#x27;, &#x27;lower&#x27;);<br>		<span class="hljs-comment">//[[:punct:]] 任何标点符号 [[:digit:]] 任何数字 [[:upper:]] 任何大写字母 [[:lower:]] 任何小写字母</span><br>		foreach ($ps as $pt) &#123;<br>			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">&quot;/[[:$pt:]]+/&quot;</span>, $password))<br>			$c += <span class="hljs-number">1</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> ($c &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">break</span>;<br>		<span class="hljs-comment">//&gt;=3，必须包含四种类型三种与三种以上</span><br>		<span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;42&quot;</span> == $password) <br>              echo $flag; <br>        <span class="hljs-keyword">else</span> <br>              echo &#x27;Wrong password&#x27;;<br>		<span class="hljs-built_in">exit</span>;<br>	&#125;<br>&#125;<br>?&gt;<br></code></pre></td></tr></table></figure>
 <p>代码中涉及到的一些正则函数</p>
@@ -299,10 +489,10 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">请求方法必须为POST<br><span class="hljs-number">1</span>、正则匹配，[:graph:]为任意字符，要求password长度超过<span class="hljs-number">12</span><br><span class="hljs-number">2</span>、password中必须包含标点符号，数字，大写字母，小写字母，并且检测次数要超过<span class="hljs-number">6</span>次<br><span class="hljs-number">3</span>、标点符号，数字，大写字母，小写字母，包含<span class="hljs-number">3</span>种以上绕过<br><span class="hljs-number">4</span>、弱类型比较，42abc,强制转换为数字<br></code></pre></td></tr></table></figure>
 <p>构造Payload，居然提示<code>Wrong password</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Payload: password=42BugKuctf.a<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20201103190435176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>仔细看了一下代码，变量原来是flag，改一下Payload</p>
+<p><img src="https://img-blog.csdnimg.cn/20201103190435176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>仔细看了一下代码，变量原来是flag，改一下Payload</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Payload: flag=42BugKuctf.a<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/2020110318591559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<p>这道题有点奇怪，随便post一个值也能得到flag，小小脑袋有大大疑问。<br><img src="https://img-blog.csdnimg.cn/20201103185441793.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/2020110318591559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这道题有点奇怪，随便post一个值也能得到flag，小小脑袋有大大疑问。<br><img src="https://img-blog.csdnimg.cn/20201103185441793.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <h2 id="13-md4绕过"><a href="#13-md4绕过" class="headerlink" title="13.md4绕过"></a>13.md4绕过</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;a&quot;</span>] != hash(<span class="hljs-string">&quot;md4&quot;</span>, <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;a&quot;</span>])) &#123;<br>	<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>	<span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Theshy is locked&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这段代码中get进来的参数a，使<code>a=md4(a)</code>才行。</p>
 <p>百度一下md4绕过，发现可以通过科学计算法比较绕过。找一个值是一个科学计算法0e开头的，其md4加密后也为0e开头，弱类型比较绕过。</p>
@@ -335,278 +525,278 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.3.0"><lin
 <p>1.isset函数，POST传入参数login和yingzi。<br>2.strlen函数，参数yingzi的值长度小于10，且数值大于987654321。<br>3.strpos函数，参数yingzi的值是否匹配<code>#BIG#</code>，如果有，则包含一个flag.php文件，输出flag。</p>
 <p>使用科学计数法绕过strlen函数，令yingzi=e9，此时strlen=3，为了匹配<code>#BIG#</code>，所以yingzi=1e9#BIG#</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">Payload: login=<span class="hljs-number">1</span>&amp;yingzi=<span class="hljs-number">1e9</span><span class="hljs-comment">#BIG#</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20210201120107109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://swhat.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">CTFHub-Web-sql注入练习</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/"><span class="paginator-prev__text">CTFHub-Web-信息泄露练习</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-extract%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96"><span class="toc-number">2.</span> <span class="toc-text">1.extract变量覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-strcmp%E6%AF%94%E8%BE%83%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">3.</span> <span class="toc-text">2.strcmp比较字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-urldecode%E4%BA%8C%E6%AC%A1%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">4.</span> <span class="toc-text">3.urldecode二次编码绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-md5-%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">4.md5()函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E7%BB%84%E8%BF%94%E5%9B%9ENULL%E7%BB%95%E8%BF%87"><span class="toc-number">6.</span> <span class="toc-text">5.数组返回NULL绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%95%B4%E6%95%B0%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83%E7%BB%95%E8%BF%87"><span class="toc-number">7.</span> <span class="toc-text">6. 弱类型整数大小比较绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-sha-%E5%87%BD%E6%95%B0%E6%AF%94%E8%BE%83%E7%BB%95%E8%BF%87"><span class="toc-number">8.</span> <span class="toc-text">7. sha()函数比较绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-md5%E5%8A%A0%E5%AF%86%E7%9B%B8%E7%AD%89%E7%BB%95%E8%BF%87"><span class="toc-number">9.</span> <span class="toc-text">8. md5加密相等绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E4%B8%8E%E6%95%B0%E5%AD%97%E6%AF%94%E8%BE%83"><span class="toc-number">10.</span> <span class="toc-text">9. 十六进制与数字比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-ereg%E6%AD%A3%E5%88%99-00%E6%88%AA%E6%96%AD"><span class="toc-number">11.</span> <span class="toc-text">10. ereg正则%00截断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-strpos%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87"><span class="toc-number">12.</span> <span class="toc-text">11. strpos数组绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%95%B0%E5%AD%97%E9%AA%8C%E8%AF%81%E6%AD%A3%E5%88%99%E7%BB%95%E8%BF%87"><span class="toc-number">13.</span> <span class="toc-text">12. 数字验证正则绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-md4%E7%BB%95%E8%BF%87"><span class="toc-number">14.</span> <span class="toc-text">13.md4绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-json%E7%BB%95%E8%BF%87"><span class="toc-number">15.</span> <span class="toc-text">14.json绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E7%BB%95%E8%BF%87"><span class="toc-number">16.</span> <span class="toc-text">15.科学计数法绕过</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/2.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">Atkx</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/swhat" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">22</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
+<p><img src="https://img-blog.csdnimg.cn/20210201120107109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTUwOTQw,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/">CTF</a>
+                    
+                      <a class="hover-with-bg" href="/categories/CTF/WEB/">WEB</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/15/CTFHub-Web-sql%E6%B3%A8%E5%85%A5%E7%BB%83%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CTFHub-Web-sql注入练习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/24/CTFHub-Web-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%BB%83%E4%B9%A0/">
+                        <span class="hidden-mobile">CTFHub-Web-信息泄露练习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
+      </div>
+    
+  </div>
+</div>
 
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
+<!-- Custom -->
 
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
 
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
+    
 
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
 
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
+    
+  </main>
 
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <!--《添加网站运行时间 -->
+<br/>
 
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+var now = new Date(); 
 
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+function createtime() {
+    //此处修改你的建站时间或者网站上线时间
+    var grt = new Date('03/01/2020 8:00:00');
+    now.setTime(now.getTime() + 250);
+    days = (now - grt) / 1000 / 60 / 60 / 24;
 
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
+    dnum = Math.floor(days);
+    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+        hnum = "0" + hnum;
     }
-  });
+    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+        mnum = "0" + mnum;
+    }
+    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+        snum = "0" + snum;
+    }
+    document.getElementById("timeDate").innerHTML = " 本站已安全运行 " + dnum + " 天 ";
+    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
 }
+setInterval("createtime()", 250);
+</script>
 
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
+<!-- 添加网站运行时间》-->
+  </div>
+  
 
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
+  
 
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
+    <div class="footer-center">
+         <!--添加工信备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备2021010365号-1</a>
+         <br/>
+         <!--添加公安备案号-->
+         <!--img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png"-->
+         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41040202000160"  style="color:#f72b07" target="_blank">豫公网安备41040202000160号</a>
+      </div>
+  
+</footer>
 
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
 
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-var assistSearchList = window.CONFIG.assistSearch;
+<!-- Plugins -->
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/search.json";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/boom.js"></script>
+<script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/qipao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
